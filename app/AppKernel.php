@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             // APPLICATION
             new AppBundle\AppBundle(),
             new Ood\BlogpostBundle\OodBlogpostBundle(),
+            new Ood\CommentBundle\OodCommentBundle(),
             new Ood\UserBundle\OodUserBundle(),
         ];
 
