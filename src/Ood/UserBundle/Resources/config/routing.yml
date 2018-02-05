@@ -1,0 +1,10 @@
+#/**
+# * This file is part of oc_snowtricks project
+# *
+# * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# * @since 2018/02
+# */
+
+#ood_user_homepage:
+#    path:     /
+#    defaults: { _controller: OodUserBundle:Default:index }

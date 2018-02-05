@@ -1,3 +1,22 @@
+#/**
+# * This file is part of oc_snowtricks project
+# *
+# * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# * @since 2018/02
+# */
+#
+
+# ###############################
+# Vendor bundle
+
+
+# ###############################
+# Application bundle
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+ood_user:
+    resource: "@OodUserBundle/Resources/config/routing.yml"
+    prefix:   /
