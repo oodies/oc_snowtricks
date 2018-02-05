@@ -17,6 +17,10 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
+ood_blogpost:
+    resource: "@OodBlogpostBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ood_user:
     resource: "@OodUserBundle/Resources/config/routing.yml"
     prefix:   /
