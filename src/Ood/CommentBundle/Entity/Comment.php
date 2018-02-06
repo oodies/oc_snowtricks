@@ -145,10 +145,13 @@ class Comment
      * CONSTRUCT
      */
 
-     public function __construct()
-     {
-         $this->createAt = $this->updateAt = new \DateTime();
-     }
+    public function __construct()
+    {
+        $dateAt = new \DateTime();
+        $this->setCreateAt($dateAt)
+             ->setUpdateAt($dateAt)
+             ->setEnabled(true);
+    }
 
     /** *******************************
      * GETTER / SETTER

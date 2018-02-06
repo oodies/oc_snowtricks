@@ -105,7 +105,7 @@ class Post
     /**
      * @var Category
      *
-     * @ORM\OneToOne(
+     * @ORM\ManyToOne(
      *     targetEntity="Ood\BlogpostBundle\Entity\Category",
      *     cascade={"persist"}
      * )
@@ -120,6 +120,18 @@ class Post
      *     )
      */
     protected $category;
+
+    /** *******************************
+     *  CONSTRUCT
+     */
+
+    public function __construct()
+    {
+        $dateAt = new \DateTime();
+        $this->setCreateAt($dateAt)
+             ->setUpdateAt($dateAt);
+    }
+
 
     /** *******************************
      *  GETTER / SETTER

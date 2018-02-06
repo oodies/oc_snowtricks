@@ -269,9 +269,21 @@ class User
      */
     protected $role;
 
+    /** *******************************
+     *  CONSTRUCT
+     */
+
+    public function __construct()
+    {
+        $dateAt = new \DateTime();
+        $this
+            ->setRegisteredAt($dateAt)
+            ->setUpdateAt($dateAt)
+            ->setLocked(false);;
+    }
 
     /** *******************************
-     * METHODS
+     *  GETTER / SETTER
      */
 
     /**
@@ -374,25 +386,6 @@ class User
     public function setEmail(string $email): User
     {
         $this->email = $email;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEnabled(): bool
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * @param bool $enabled
-     *
-     * @return User
-     */
-    public function setEnabled(bool $enabled): User
-    {
-        $this->enabled = $enabled;
         return $this;
     }
 
