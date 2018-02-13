@@ -176,7 +176,7 @@ class User implements AdvancedUserInterface, \Serializable
      * )
      *
      * @Assert\Length(
-     *     max=2,
+     *     max=64,
      *     maxMessage="user.password.max_length"
      * )
      */
