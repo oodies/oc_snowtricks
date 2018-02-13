@@ -1,0 +1,29 @@
+#
+# @author    s
+# @date      01/06/2017
+#
+
+
+## ************************************
+## Title        : login page
+## Description  :
+## URL          : /login
+## Type         : Page
+
+login:
+    title: "Authentification"
+    title-desc: "Qu'allez-vous faire aujourd'hui !"
+    # Input label, username
+    username:
+        label: "Email"
+    # Input label, password
+    password:
+        label: "Mot de passe"
+    # Link : password forgotten
+    form-resetting:
+        label: "Mot de passe oublié ?"
+    # btn submit
+    submit:
+        label: "Connexion"
+    # Error
+    error: "Identifiant invalide !"

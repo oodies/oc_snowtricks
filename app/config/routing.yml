@@ -14,8 +14,8 @@
 # Application bundle
 
 app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix:   /
 
 ood_blogpost:
     resource: "@OodBlogpostBundle/Resources/config/routing.yml"
@@ -28,3 +28,6 @@ ood_comment:
 ood_user:
     resource: "@OodUserBundle/Resources/config/routing.yml"
     prefix:   /
+
+logout:
+    path: /logout

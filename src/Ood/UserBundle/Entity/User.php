@@ -11,6 +11,7 @@ namespace Ood\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * User
@@ -18,11 +19,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="user_user")
  * @ORM\Entity(repositoryClass="Ood\UserBundle\Repository\UserRepository")
  *
- * @UniqueEntity("username",
- *      message="user.username.unique_entity"
+ * @UniqueEntity(
+ *     fields={
+ *          "username",
+ *          "email"
+ *     },
+ *     message="user.username.unique_entity"
  * )
  */
-class User
+class User implements AdvancedUserInterface, \Serializable
 {
     /** *******************************
      *  PROPERTIES
@@ -46,7 +51,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $idUser;
+    protected $id;
 
     /**
      * Contains the nickname of the person
@@ -141,7 +146,7 @@ class User
      * @ORM\Column(
      *     name="email",
      *     type="string",
-     *     length=255,
+     *     length=60,
      *     nullable=false,
      *     options={"comment":"Contains the email address of the person"}
      * )
@@ -151,7 +156,7 @@ class User
      * )
      *
      * @Assert\Length(
-     *     max=255,
+     *     max=60,
      *     maxMessage="user.email.max_length"
      * )
      */
@@ -165,13 +170,13 @@ class User
      * @ORM\Column(
      *     name="password",
      *     type="string",
-     *     length=255,
+     *     length=64,
      *     nullable=true,
      *     options={"comment"="Encrypted password. Must be persisted."}
      * )
      *
      * @Assert\Length(
-     *     max=255,
+     *     max=2,
      *     maxMessage="user.password.max_length"
      * )
      */
@@ -250,24 +255,36 @@ class User
     protected $locked;
 
     /**
+     * user is active ?
+     *
+     * @var boolean
+     *
+     * @ORM\Column (
+     *     name="is_active",
+     *     type="boolean",
+     *     nullable=false,
+     *     options={"comment"="user is active",
+     *              "default"="0"
+     *              }
+     *     )
+     */
+    protected $isActive = true;
+
+    /**
      * Role of the user
      *
-     * @var string
+     * @var array
      *
      * @ORM\Column(
      *      name="role",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *      options={"comment"="Role of the user"}
+     *      type="array",
+     *      nullable=false,
+     *      options={"comment"="Roles of the user"}
      * )
      *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="user.role.max_length"
-     * )
+     * @Assert\Type("array")
      */
-    protected $role;
+    protected $roles = [];
 
     /** *******************************
      *  CONSTRUCT
@@ -289,9 +306,9 @@ class User
     /**
      * @return int
      */
-    public function getIdUser(): int
+    public function getId(): int
     {
-        return $this->idUser;
+        return $this->id;
     }
 
     /**
@@ -352,9 +369,9 @@ class User
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -390,9 +407,9 @@ class User
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -485,21 +502,177 @@ class User
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getRole(): string
+    public function isActive(): bool
     {
-        return $this->role;
+        return $this->isActive;
     }
 
     /**
-     * @param string $role
+     * @param bool $isActive
      *
      * @return User
      */
-    public function setRole(string $role): User
+    public function setIsActive(bool $isActive): User
     {
-        $this->role = $role;
+        $this->isActive = $isActive;
         return $this;
     }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return array The user roles
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     *
+     * @return User
+     */
+    public function setRoles(array $roles): User
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    /** *******************************
+     *  BEHAVIOR METHOD
+     */
+
+    /**
+     * Checks whether the user's account has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw an AccountExpiredException and prevent login.
+     *
+     * @return bool true if the user's account is non expired, false otherwise
+     *
+     * @see AccountExpiredException
+     */
+    public function isAccountNonExpired()
+    {
+        // TODO STUB to implement
+        return true;
+    }
+
+    /**
+     * Checks whether the user is locked.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a LockedException and prevent login.
+     *
+     * @return bool true if the user is not locked, false otherwise
+     *
+     * @see LockedException
+     */
+    public function isAccountNonLocked()
+    {
+        // TODO STUB to implement
+        return true;
+    }
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a CredentialsExpiredException and prevent login.
+     *
+     * @return bool true if the user's credentials are non expired, false otherwise
+     *
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        // TODO STUB to implement
+        return true;
+    }
+
+    /**
+     * Checks whether the user is enabled.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a DisabledException and prevent login.
+     *
+     * @return bool true if the user is enabled, false otherwise
+     *
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * String representation of object
+     * @See \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(
+            [
+                $this->id,
+                $this->username,
+                $this->password,
+                $this->isActive
+            ]
+        );
+    }
+
+    /**
+     * Constructs the object
+     * @See \Serializable::unserialize()
+     *
+     * @param $serialized
+     */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->isActive
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+
 }

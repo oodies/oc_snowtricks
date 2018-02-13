@@ -1,0 +1,55 @@
+{% extends "layout.html.twig" %}
+
+{% trans_default_domain 'application' %}
+{% block main %}
+{#
+ #/**
+ # * This file is part login_content.html.twif the website http://oodie.fr
+ # *
+ # * @copyright  Copyright (c) 2017  The OODIE Team
+ # * @author Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # * @filesource Ood\UserBundle\Resources\views\Security\login_content.html.twig
+ # * @since 2017/6
+ # */
+ #}
+
+<div class="container">
+<div class="form-user text-center">
+    <div class="form-user-title">
+        <h1>{{ 'login.title'|trans }}</h1>
+        <h4>{{ 'login.title-desc'|trans }}</h4>
+    </div>
+    <div class="form-user-form">
+        <form action="{{ path('ood_user_security_login') }}" method="post" novalidate="novalidate"
+              class="ui large form{% if error %} error{% endif %}">
+            <div class="ui left icon input fluid">
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"
+                       placeholder="{{ 'login.username.label'|trans }}" tabindex="1" autofocus>
+                <i class="user outline icon" aria-hidden="true"></i>
+            </div>
+            <div class="ui left icon input field fluid">
+                <input type="password" id="password" name="_password" required="required"
+                       placeholder="{{ 'login.password.label'|trans }}" tabindex="2">
+                <i class="lock icon" aria-hidden="true"></i>
+            </div>
+            <div class="ui error message">
+                {% if error %}
+                    <div>{{ 'login.error'|trans|nl2br }}</div>
+                {% endif %}
+            </div>
+            <div class="ui field">
+                <a href="#" id="resetting-request" tabindex="4">{{ 'login.form-resetting.label'|trans }}</a>
+            </div>
+            <input type="hidden" name="_crsf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+            <input type="submit" id="_submit" name="_submit" value="{{ 'login.submit.label'|trans|upper }}"
+                   class="ui large button fluid login" tabindex="3">
+        </form>
+    </div>
+</div>
+</div>
+{% endblock main %}
+
+{% block title %}{{ 'login.title'|trans }}{% endblock title %}
+{% block page %}login{% endblock page %}
