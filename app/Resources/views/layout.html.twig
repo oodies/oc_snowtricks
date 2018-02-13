@@ -1,0 +1,27 @@
+{#
+ #
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/02
+ #}
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')[0] }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="none, nofollow"/>
+    <link rel="stylesheet" href="{{ asset('build/global.css') }}">
+</head>
+<body id="page-{% block page %}{% endblock page %}">
+    <header></header>
+    <main>
+        {% block main %}{% endblock main %}
+    </main>
+    <footer></footer>
+</body>
+<script src="{{ asset('build/global.js') }}"></script>
+</html>
