@@ -1,5 +1,4 @@
 {#
- #
  # This file is part of oc_snowtricks project
  #
  # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
@@ -19,6 +18,7 @@
 <body id="page-{% block page %}{% endblock page %}">
     <header></header>
     <main>
+        {{ include('menu.html.twig') }}
         {% block main %}{% endblock main %}
     </main>
     <footer></footer>

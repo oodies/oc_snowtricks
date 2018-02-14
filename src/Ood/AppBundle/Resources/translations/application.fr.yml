@@ -6,6 +6,14 @@
 # */
 
 ## ************************************
+## *    MENU
+## ************************************
+menu:
+  login: "Connexion"
+  logout: "Déconnexion"
+  register: "Inscription"
+
+## ************************************
 ## Title        : name of the application
 ## page         : homepage
 ## Description  :
