@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Ood\BlogpostBundle\OodBlogpostBundle(),
             new Ood\CommentBundle\OodCommentBundle(),
             new Ood\UserBundle\OodUserBundle(),
+            new Ood\PictureBundle\OodPictureBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
