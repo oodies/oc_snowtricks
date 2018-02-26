@@ -100,6 +100,7 @@ class Header
      *
      * @ORM\OneToOne(
      *     targetEntity="Ood\BlogpostBundle\Entity\Post",
+     *     mappedBy="header",
      *     cascade={"persist"}
      * )
      *

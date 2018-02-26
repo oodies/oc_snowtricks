@@ -8,6 +8,7 @@
 
 namespace Ood\BlogpostBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ood\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -87,6 +88,45 @@ class Post
      */
 
     /**
+     * @var Body
+     *
+     * @ORM\OneToOne (
+     *     targetEntity="Ood\BlogpostBundle\Entity\Body",
+     *     cascade={"persist"}
+     * )
+     *
+     * @ORM\JoinColumn(
+     *     name="body",
+     *     referencedColumnName="id_body"
+     *     )
+     *
+     * @Assert\NotNull(
+     *     message="post.body.not_null"
+     *     )
+     */
+    protected $body;
+
+    /**
+     * @var Header
+     *
+     * @ORM\OneToOne (
+     *     targetEntity="Ood\BlogpostBundle\Entity\Header",
+     *     mappedBy="post",
+     *     cascade={"persist"}
+     * )
+     *
+     * @ORM\JoinColumn(
+     *     name="header",
+     *     referencedColumnName="id_header"
+     *     )
+     *
+     * @Assert\NotNull(
+     *     message="post.header.not_null"
+     *     )
+     */
+    protected $header;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(
@@ -121,6 +161,41 @@ class Post
      */
     protected $category;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Image")
+     * @ORM\JoinTable(name="posts_images",
+     *      joinColumns={
+     *              @ORM\JoinColumn(name="post_id",
+     *              referencedColumnName="id_post")
+     *      },
+     *      inverseJoinColumns={
+     *              @ORM\JoinColumn(name="image_id",
+     *              referencedColumnName="id_image")
+     *      }
+     * )
+     */
+    protected $images;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Embed")
+     * @ORM\JoinTable(name="posts_embeds",
+     *      joinColumns={
+     *              @ORM\JoinColumn(name="post_id",
+     *              referencedColumnName="id_post")
+     *      },
+     *      inverseJoinColumns={
+     *              @ORM\JoinColumn(name="embed_id",
+     *              referencedColumnName="id_embed")
+     *      }
+     * )
+     */
+    protected $embeds;
+
+
     /** *******************************
      *  CONSTRUCT
      */
@@ -130,6 +205,9 @@ class Post
         $dateAt = new \DateTime();
         $this->setCreateAt($dateAt)
              ->setUpdateAt($dateAt);
+
+        $this->images = new ArrayCollection();
+        $this->embeds = new ArrayCollection();
     }
 
 
@@ -219,5 +297,103 @@ class Post
     {
         $this->category = $category;
         return $this;
+    }
+
+    /**
+     * @return Body
+     */
+    public function getBody(): Body
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param Body $body
+     *
+     * @return Post
+     */
+    public function setBody(Body $body): Post
+    {
+        $this->body = $body;
+        return $this;
+    }
+
+    /**
+     * @return Header
+     */
+    public function getHeader(): Header
+    {
+        return $this->header;
+    }
+
+    /**
+     * @param Header $header
+     *
+     * @return Post
+     */
+    public function setHeader(Header $header): Post
+    {
+        $this->header = $header;
+        return $this;
+    }
+
+    /**
+     * @param \Ood\PictureBundle\Entity\Image $image
+     *
+     * @return Post
+     */
+    public function addImage(\Ood\PictureBundle\Entity\Image $image): Post
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * @param \Ood\PictureBundle\Entity\Image $image
+     *
+     * @return void
+     */
+    public function removeImage(\Ood\PictureBundle\Entity\Image $image): void
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getImages(): ArrayCollection
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param \Ood\PictureBundle\Entity\Embed $embed
+     *
+     * @return Post
+     */
+    public function addEmbed(\Ood\PictureBundle\Entity\Embed $embed): Post
+    {
+        $this->embeds[] = $embed;
+
+        return $this;
+    }
+
+    /**
+     * @param \Ood\PictureBundle\Entity\Embed $embed
+     *
+     * @return void
+     */
+    public function removeEmbed(\Ood\PictureBundle\Entity\Embed $embed): void
+    {
+        $this->embeds->removeElement($embed);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function geEmbeds(): ArrayCollection
+    {
+        return $this->embeds;
     }
 }

@@ -9,7 +9,6 @@
 namespace Ood\BlogpostBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Body
@@ -56,25 +55,6 @@ class Body
      */
     protected $content;
 
-    /**
-     * @var Post
-     *
-     * @ORM\OneToOne(
-     *     targetEntity="Ood\BlogpostBundle\Entity\Post",
-     *     cascade={"persist"}
-     * )
-     *
-     * @ORM\JoinColumn(
-     *     name="post",
-     *     referencedColumnName="id_post"
-     * )
-     *
-     * @Assert\NotNull(
-     *     message="body.post.not_null"
-     *     )
-     */
-    protected $post;
-
 
     /** *******************************
      *  GETTER / SETTER
@@ -104,25 +84,6 @@ class Body
     public function setContent(string $content): Body
     {
         $this->content = $content;
-        return $this;
-    }
-
-    /**
-     * @return Post
-     */
-    public function getPost(): Post
-    {
-        return $this->post;
-    }
-
-    /**
-     * @param Post $post
-     *
-     * @return Body
-     */
-    public function setPost(Post $post): Body
-    {
-        $this->post = $post;
         return $this;
     }
 }
