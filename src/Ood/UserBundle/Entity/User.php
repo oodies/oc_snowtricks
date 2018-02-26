@@ -200,7 +200,7 @@ class User implements AdvancedUserInterface, \Serializable
      *     maxMessage="user.password.max_length"
      * )
      */
-    protected $plainPassword;
+    protected $plainPassword = "";
 
     /**
      * Date of registration
@@ -221,7 +221,7 @@ class User implements AdvancedUserInterface, \Serializable
     protected $registeredAt;
 
     /**
-     * Last update date
+     * Last update data
      *
      * @var \DateTime
      *
@@ -256,6 +256,8 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * user is active ?
+     * Depending on whether the user's registration
+     * has been validated or not (in the case of a confirmation by email for example)
      *
      * @var boolean
      *
@@ -286,6 +288,32 @@ class User implements AdvancedUserInterface, \Serializable
      */
     protected $roles = [];
 
+
+    /*
+     * *******************************
+     * ASSOCIATION MAPPING
+     * *******************************
+     */
+
+    /**
+     * @var \Ood\PictureBundle\Entity\Image
+     *
+     * @ORM\OneToOne(
+     *     targetEntity="Ood\PictureBundle\Entity\Image",
+     *     cascade={"persist", "remove"}
+     * )
+     *
+     * @ORM\JoinColumn(
+     *     name="image_id",
+     *     referencedColumnName="id_image",
+     *     nullable=true
+     * )
+     *
+     * @Assert\Valid()
+     */
+    private $photo = null;
+
+
     /** *******************************
      *  CONSTRUCT
      */
@@ -296,7 +324,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this
             ->setRegisteredAt($dateAt)
             ->setUpdateAt($dateAt)
-            ->setLocked(false);;
+            ->setLocked(false);
     }
 
     /** *******************************
@@ -388,9 +416,9 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -552,6 +580,25 @@ class User implements AdvancedUserInterface, \Serializable
         return $this;
     }
 
+    /**
+     * @return \Ood\PictureBundle\Entity\Image
+     */
+    public function getPhoto(): \Ood\PictureBundle\Entity\Image
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param \Ood\PictureBundle\Entity\Image $photo
+     *
+     * @return User
+     */
+    public function setPhoto(\Ood\PictureBundle\Entity\Image $photo): User
+    {
+        $this->photo = $photo;
+        return $this;
+    }
+
     /** *******************************
      *  BEHAVIOR METHOD
      */
@@ -564,7 +611,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return bool true if the user's account is non expired, false otherwise
      *
-     * @see AccountExpiredException
+     * AccountExpiredException
      */
     public function isAccountNonExpired()
     {
@@ -580,7 +627,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return bool true if the user is not locked, false otherwise
      *
-     * @see LockedException
+     * LockedException
      */
     public function isAccountNonLocked()
     {
@@ -596,7 +643,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return bool true if the user's credentials are non expired, false otherwise
      *
-     * @see CredentialsExpiredException
+     * CredentialsExpiredException
      */
     public function isCredentialsNonExpired()
     {
@@ -612,7 +659,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return bool true if the user is enabled, false otherwise
      *
-     * @see DisabledException
+     * DisabledException
      */
     public function isEnabled()
     {
@@ -621,7 +668,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * String representation of object
-     * @See \Serializable::serialize()
+     * \Serializable::serialize()
      */
     public function serialize()
     {
@@ -637,7 +684,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * Constructs the object
-     * @See \Serializable::unserialize()
+     * \Serializable::unserialize()
      *
      * @param $serialized
      */
@@ -673,6 +720,4 @@ class User implements AdvancedUserInterface, \Serializable
     {
         // TODO: Implement eraseCredentials() method.
     }
-
-
 }
