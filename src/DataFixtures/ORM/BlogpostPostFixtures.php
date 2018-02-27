@@ -30,7 +30,10 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return [
+            BlogpostBodyFixtures::class,
             BlogpostCategoryFixtures::class,
+            BlogpostHeaderFixtures::class,
+            PictureImageFixtures::class,
             UserUserFixtures::class
         ];
     }
@@ -52,18 +55,34 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
             'b9s'    => 'Fli',
         ];
 
+        $i = 26;
         foreach ($data as $index => $category) {
             $post = new Post();
             /** @var \Ood\BlogpostBundle\Entity\Category $category */
             $category = $this->getReference($category);
             /** @var \Ood\UserBundle\Entity\User $blogger */
             $blogger = $this->getReference('user_' . (string)rand(1, 5));
+            /** @var \Ood\BlogpostBundle\Entity\Header $header */
+            $header = $this->getReference('header_' . $index);
+            /** @var \Ood\BlogpostBundle\Entity\Body $body */
+            $body = $this->getReference('body_' . $index);
+            /** @var \Ood\PictureBundle\Entity\Image $image1 */
+            $image1 = $this->getReference('image_' . (string)$i);
+            /** @var \Ood\PictureBundle\Entity\Image $image2 */
+            $image2 = $this->getReference('image_' . (string)($i + 1));
+
             $post
                 ->setCategory($category)
-                ->setBlogger($blogger);
+                ->setBlogger($blogger)
+                ->setHeader($header)
+                ->setBody($body)
+                ->addImage($image1)
+                ->addImage($image2);
 
             $manager->persist($post);
             $this->addReference('post_' . $index, $post);
+
+            $i = $i + 2;
         }
         $manager->flush();
     }

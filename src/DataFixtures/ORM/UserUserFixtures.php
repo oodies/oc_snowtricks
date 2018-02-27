@@ -8,6 +8,7 @@
 
 namespace DataFixtures\ORM;
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Ood\UserBundle\Entity\User;
 use Faker\Generator as FakerGenerator;
@@ -23,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @package DataFixtures\ORM
  */
-class UserUserFixtures extends Fixture implements ContainerAwareInterface
+class UserUserFixtures extends Fixture implements ContainerAwareInterface, DependentFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -31,6 +32,18 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface
     protected $container;
 
     protected $encoder;
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array
+     */
+    function getDependencies()
+    {
+        return [ PictureImageFixtures::class ];
+    }
+
 
     /**
      * Performs the actual fixtures loading.
@@ -56,6 +69,9 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface
 
             $hashPassword = $this->encoder->encodePassword($user, '12345pass');
             $user->setPassword($hashPassword);
+            /** @var \Ood\PictureBundle\Entity\Image $image */
+            $image = $this->getReference('image_'.(string)$i);
+            $user->setPhoto($image);
 
             $manager->persist($user);
 
@@ -69,6 +85,8 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface
 
     /**
      * @param ContainerInterface|null $container
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -78,6 +96,7 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface
 
     /**
      * @return User
+     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
      */
     protected function createJDoeUser(): User
     {
