@@ -34,6 +34,7 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
             BlogpostCategoryFixtures::class,
             BlogpostHeaderFixtures::class,
             PictureImageFixtures::class,
+            PictureVideoFixtures::class,
             UserUserFixtures::class
         ];
     }
@@ -70,6 +71,10 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
             $image1 = $this->getReference('image_' . (string)$i);
             /** @var \Ood\PictureBundle\Entity\Image $image2 */
             $image2 = $this->getReference('image_' . (string)($i + 1));
+            /** @var \Ood\PictureBundle\Entity\Video $video1 */
+            $video1 = $this->getReference('video_' . (string)$i);
+            /** @var \Ood\PictureBundle\Entity\Video $video2 */
+            $video2 = $this->getReference('video_' . (string)($i + 1));
 
             $post
                 ->setCategory($category)
@@ -77,7 +82,9 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
                 ->setHeader($header)
                 ->setBody($body)
                 ->addImage($image1)
-                ->addImage($image2);
+                ->addImage($image2)
+                ->addVideo($video1)
+                ->addVideo($video2);
 
             $manager->persist($post);
             $this->addReference('post_' . $index, $post);
