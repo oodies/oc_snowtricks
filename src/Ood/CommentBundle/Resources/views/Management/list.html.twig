@@ -1,0 +1,54 @@
+{#
+ # /**
+ #  * This file is part of oc_snowtricks project
+ #  *
+ #  * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ #  * @since 2018/02
+ #  */
+ #}
+{% extends 'layout.admin.html.twig' %}
+
+{% trans_default_domain 'application' %}
+{% block content %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <h1>{{ 'comments_list.title'|trans }}</h1>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" role="grid">
+                    <thead>
+                    <tr>
+                        <th>{{ 'comments_list.table_header.post_title'|trans }}</th>
+                        <th>{{ 'comments_list.table_header.author'|trans }}</th>
+                        <th>{{ 'comments_list.table_header.commentary'|trans }}</th>
+                        <th>{{ 'comments_list.table_header.posted'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for comment in comments %}
+                        <tr>
+                            <td>{{ comment.thread.post.header.title }}</td>
+                            <td>{{ comment.author.username }}</td>
+                            <td>{{ comment.body }}</td>
+                            <td>{{ comment.createAt|date() }}</td>
+                            <td>
+                                {% if (comment.enabled) %}
+                                    <a href="/admin/comment/disapprove/{{ comment.idComment }}"
+                                       class="btn btn-primary">{{ 'comments_list.btn_disapprove'|trans }}</a>
+                                {% else %}
+                                    <a href="/admin/comment/approve/{{ comment.IdComment }}"
+                                       class="btn btn-primary">{{ 'comments_list.btn_approve'|trans }}</a>
+                                {% endif %}
+                                <a href="/admin/comment/change/{{ comment.IdComment }}"
+                                   class="btn btn-danger">{{ 'comments_list.btn_change'|trans }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block actionTitle %}Comments{% endblock actionTitle %}

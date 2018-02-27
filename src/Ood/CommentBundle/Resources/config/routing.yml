@@ -5,6 +5,7 @@
 # * @since 2018/02
 # */
 
-#ood_comment_homepage:
-#    path:     /
-#    defaults: { _controller: OodCommentBundle:Default:index }
+ood_comment_management_list:
+    path: /admin/comments
+    defaults: { _controller: OodCommentBundle:Management:list}
+    methods: ["GET"]

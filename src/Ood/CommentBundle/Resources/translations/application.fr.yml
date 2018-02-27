@@ -1,0 +1,24 @@
+#/**
+# * This file is part of oc_snowtricks project
+# *
+# * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# * @since 2018/02
+# */
+
+
+## ************************************
+## Title        : Show all comments
+## page         : Comments
+## Description  :
+## URL          : /admin/comments
+## Type         : Page
+comments_list:
+  title: "Commentaires"
+  table_header:
+      post_title: "Article"
+      author: "Auteur"
+      commentary: "Message"
+      posted: "Posté le"
+  btn_approve: "Approuver"
+  btn_disapprove: "Désapprouver"
+  btn_change: "Modifier"
