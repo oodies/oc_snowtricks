@@ -10,7 +10,6 @@ namespace Ood\BlogpostBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Ood\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -127,7 +126,7 @@ class Post
     protected $header;
 
     /**
-     * @var User
+     * @var \Ood\UserBundle\Entity\User
      *
      * @ORM\ManyToOne(
      *     targetEntity="Ood\UserBundle\Entity\User",
@@ -181,19 +180,19 @@ class Post
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Embed")
-     * @ORM\JoinTable(name="posts_embeds",
+     * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Video")
+     * @ORM\JoinTable(name="posts_videos",
      *      joinColumns={
      *              @ORM\JoinColumn(name="post_id",
      *              referencedColumnName="id_post")
      *      },
      *      inverseJoinColumns={
-     *              @ORM\JoinColumn(name="embed_id",
-     *              referencedColumnName="id_embed")
+     *              @ORM\JoinColumn(name="video_id",
+     *              referencedColumnName="id_video")
      *      }
      * )
      */
-    protected $embeds;
+    protected $videos;
 
 
     /** *******************************
@@ -207,7 +206,7 @@ class Post
              ->setUpdateAt($dateAt);
 
         $this->images = new ArrayCollection();
-        $this->embeds = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
 
@@ -262,19 +261,19 @@ class Post
     }
 
     /**
-     * @return User
+     * @return \Ood\UserBundle\Entity\User
      */
-    public function getBlogger(): User
+    public function getBlogger(): \Ood\UserBundle\Entity\User
     {
         return $this->blogger;
     }
 
     /**
-     * @param User $blogger
+     * @param \Ood\UserBundle\Entity\User $blogger
      *
      * @return Post
      */
-    public function setBlogger(User $blogger): Post
+    public function setBlogger(\Ood\UserBundle\Entity\User $blogger): Post
     {
         $this->blogger = $blogger;
         return $this;
@@ -368,32 +367,32 @@ class Post
     }
 
     /**
-     * @param \Ood\PictureBundle\Entity\Embed $embed
+     * @param \Ood\PictureBundle\Entity\Video $video
      *
      * @return Post
      */
-    public function addEmbed(\Ood\PictureBundle\Entity\Embed $embed): Post
+    public function addVideo(\Ood\PictureBundle\Entity\Video $video): Post
     {
-        $this->embeds[] = $embed;
+        $this->videos[] = $video;
 
         return $this;
     }
 
     /**
-     * @param \Ood\PictureBundle\Entity\Embed $embed
+     * @param \Ood\PictureBundle\Entity\Video $video
      *
      * @return void
      */
-    public function removeEmbed(\Ood\PictureBundle\Entity\Embed $embed): void
+    public function removeVideo(\Ood\PictureBundle\Entity\Video $video): void
     {
-        $this->embeds->removeElement($embed);
+        $this->videos->removeElement($video);
     }
 
     /**
      * @return ArrayCollection
      */
-    public function geEmbeds(): ArrayCollection
+    public function getVideos(): ArrayCollection
     {
-        return $this->embeds;
+        return $this->videos;
     }
 }
