@@ -18,7 +18,11 @@
 <body id="page-{% block page %}{% endblock page %}">
 <header></header>
 <main>
-    {% block main %}{% endblock main %}
+    {% block main %}
+        {% block content %}
+
+        {% endblock content %}
+    {% endblock main %}
 </main>
 <footer></footer>
 </body>
