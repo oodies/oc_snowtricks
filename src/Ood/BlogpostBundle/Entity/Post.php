@@ -110,7 +110,7 @@ class Post
      *
      * @ORM\OneToOne (
      *     targetEntity="Ood\BlogpostBundle\Entity\Header",
-     *     mappedBy="post",
+     *     inversedBy="post",
      *     cascade={"persist"}
      * )
      *
