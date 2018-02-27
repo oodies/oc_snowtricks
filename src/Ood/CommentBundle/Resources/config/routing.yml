@@ -14,3 +14,8 @@ ood_comment_management_approve:
     path: /admin/comment/{commentId}/approve
     defaults: { _controller: OodCommentBundle:Management:approve}
     methods: ["GET"]
+
+ood_comment_management_disapprove:
+    path: /admin/comment/{commentId}/disapprove
+    defaults: { _controller: OodCommentBundle:Management:disapprove}
+    methods: ["GET"]

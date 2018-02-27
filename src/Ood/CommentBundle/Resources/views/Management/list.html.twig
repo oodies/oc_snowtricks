@@ -33,7 +33,7 @@
                             <td>{{ comment.createAt|date() }}</td>
                             <td>
                                 {% if (comment.enabled) %}
-                                    <a href="/admin/comment/disapprove/{{ comment.idComment }}"
+                                    <a href="{{ path('ood_comment_management_disapprove', {"commentId": comment.IdComment }) }}"
                                        class="btn btn-primary">{{ 'comments_list.btn_disapprove'|trans }}</a>
                                 {% else %}
                                     <a href="{{ path('ood_comment_management_approve', {"commentId": comment.IdComment }) }}"

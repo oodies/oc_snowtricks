@@ -54,4 +54,27 @@ class ManagementController extends Controller
 
         return $this->redirectToRoute('ood_comment_management_list');
     }
+
+    /**
+     * Disapprove a comment
+     *
+     * @param Comment $comment
+     *
+     * @ParamConverter("comment",
+     *                  options={"id"="commentId"})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function disapproveAction(Comment $comment)
+    {
+        $comment
+            ->setEnabled(false)
+            ->setUpdateAt(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($comment);
+        $em->flush();
+
+        return $this->redirectToRoute('ood_comment_management_list');
+    }
 }
