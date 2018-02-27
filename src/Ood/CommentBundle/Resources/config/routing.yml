@@ -9,3 +9,8 @@ ood_comment_management_list:
     path: /admin/comments
     defaults: { _controller: OodCommentBundle:Management:list}
     methods: ["GET"]
+
+ood_comment_management_approve:
+    path: /admin/comment/{commentId}/approve
+    defaults: { _controller: OodCommentBundle:Management:approve}
+    methods: ["GET"]
