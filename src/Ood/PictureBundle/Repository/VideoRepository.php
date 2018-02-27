@@ -11,10 +11,10 @@ namespace Ood\PictureBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class EmbedRepository
+ * Class VideoRepository
  *
  * @package Ood\PictureBundle\Repository
  */
-class EmbedRepository extends EntityRepository
+class VideoRepository extends EntityRepository
 {
 }

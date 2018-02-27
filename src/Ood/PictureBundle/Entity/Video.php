@@ -12,36 +12,40 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Embed entity
+ * Class Video entity
  *
  * @package Ood\PictureBundle\Entity
  *
- * @ORM\Table(name="picture_embed")
- * @ORM\Entity(repositoryClass="Ood\PictureBundle\Repository\EmbedRepository")
+ * @ORM\Table(name="picture_video")
+ * @ORM\Entity(repositoryClass="Ood\PictureBundle\Repository\VideoRepository")
  */
-class Embed
+class Video
 {
     /** *******************************
      *  PROPERTIES ORM
      */
 
     /**
+     * The ID of the video
+     *
      * @var int
      *
      * @ORM\Id()
      * @ORM\column(
-     *     name="id_embed",
+     *     name="id_video",
      *     type="integer",
      *     unique=true,
-     *     options={"unsigned"=true}
+     *     options={"unsigned"=true,
+     *              "comment"= "Contains the ID of the video"
+     *              }
      * )
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      */
-    protected $idEmbed;
+    protected $idVideo;
 
     /**
-     * The MIME type to use to select the plug-in to instantiate.
+     * The video host name
      *
      * @var string
      *
@@ -49,22 +53,22 @@ class Embed
      *      name="type",
      *      type="string",
      *      length=255,
-     *      options={"comment"="The MIME type to use to select the plug-in to instantiate."}
+     *      options={"comment"="The video host name."}
      * )
      *
      * @Assert\NotBlank(
-     *     message="embed.type.not_blank"
+     *     message="video.platform.not_blank"
      *     )
      *
      * @Assert\Length(
      *     max="255",
-     *     maxMessage="embed.type.max_length"
+     *     maxMessage="video.platform.max_length"
      * )
      */
-    protected $type = "";
+    protected $platform = "";
 
     /**
-     * The URL of the resource being embedded.
+     * The ID of the video resource for this platform
      *
      * @var string
      *
@@ -72,20 +76,19 @@ class Embed
      *      name="src",
      *      type="string",
      *      length=255,
-     *      options={"comment"="The URL of the resource being embedded."}
+     *      options={"comment"="The ID of the video resource for this platform"}
      * )
      *
      * @Assert\NotBlank(
-     *     message="embed.src.not_blank"
+     *     message="video.identifier.not_blank"
      *     )
      *
      * @Assert\Length(
      *     max="255",
-     *     maxMessage="embed.src.max_length"
+     *     maxMessage="video.identifier.max_length"
      * )
      */
-
-    protected $src = "";
+    protected $identifier = "";
 
     /** *******************************
      *      GETTER / SETTER
@@ -94,46 +97,46 @@ class Embed
     /**
      * @return int
      */
-    public function getIdEmbed(): int
+    public function getIdVideo(): int
     {
-        return $this->idEmbed;
+        return $this->idVideo;
     }
 
     /**
      * @return string
      */
-    public function getType(): string
+    public function getPlatform(): string
     {
-        return $this->type;
+        return $this->platform;
     }
 
     /**
-     * @param string $type
+     * @param string $platform
      *
-     * @return Embed
+     * @return Video
      */
-    public function setType(string $type): Embed
+    public function setPlatform(string $platform): Video
     {
-        $this->type = $type;
+        $this->platform = $platform;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getSrc(): string
+    public function getIdentifier(): string
     {
-        return $this->src;
+        return $this->identifier;
     }
 
     /**
-     * @param string $src
+     * @param string $identifier
      *
-     * @return Embed
+     * @return Video
      */
-    public function setSrc(string $src): Embed
+    public function setIdentifier(string $identifier): Video
     {
-        $this->src = $src;
+        $this->identifier = $identifier;
         return $this;
     }
 }
