@@ -9,8 +9,10 @@
 namespace Ood\CommentBundle\Controller;
 
 use Ood\CommentBundle\Entity\Comment;
+use Ood\CommentBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ManagementController
@@ -76,5 +78,50 @@ class ManagementController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('ood_comment_management_list');
+    }
+
+    /**
+     * Change a text comment
+     *
+     * @param Request $request
+     * @param Comment $comment
+     *
+     * @ParamConverter("comment",
+     *                  options={"id"="commentId"})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, Comment $comment)
+    {
+        $form = $this->createForm(
+            CommentType::class,
+            $comment,
+            [
+                'action' => $this->generateUrl(
+                    'ood_comment_management_edit',
+                    ['commentId' => $comment->getIdComment()]
+                ),
+                'method' => 'POST'
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setUpdateAt(new \DateTime());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('ood_comment_management_list');
+        }
+
+        return $this->render(
+            '@OodComment/Management/edit.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
     }
 }

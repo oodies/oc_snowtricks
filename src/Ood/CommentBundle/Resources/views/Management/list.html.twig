@@ -39,7 +39,7 @@
                                     <a href="{{ path('ood_comment_management_approve', {"commentId": comment.IdComment }) }}"
                                        class="btn btn-primary">{{ 'comments_list.btn_approve'|trans }}</a>
                                 {% endif %}
-                                <a href="/admin/comment/change/{{ comment.IdComment }}"
+                                <a href="{{ path('ood_comment_management_edit', {"commentId": comment.IdComment }) }}"
                                    class="btn btn-danger">{{ 'comments_list.btn_change'|trans }}</a>
                             </td>
                         </tr>
