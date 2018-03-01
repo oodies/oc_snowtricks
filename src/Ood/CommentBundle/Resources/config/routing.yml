@@ -6,7 +6,7 @@
 # */
 
 ood_comment_getComments_getComments:
-    path: /getComments/article/{postId}
+    path: /comments/{threadId}
     defaults: { _controller: OodCommentBundle:GetComments:getComments}
     methods: ["GET"]
 

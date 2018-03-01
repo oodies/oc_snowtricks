@@ -8,9 +8,8 @@
 
 namespace Ood\CommentBundle\Controller;
 
-use Ood\BlogpostBundle\Entity\Post;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class getCommentsController
@@ -20,17 +19,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class GetCommentsController extends Controller
 {
     /**
-     * @param Post $post
-     *
-     * @ParamConverter("post", options={"id"="postId"})
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \LogicException
      */
-    public function getCommentsAction(Post $post)
+    public function getCommentsAction(Request $request)
     {
+        $idThread = $request->get('threadId');
+
         $repositoryThread = $this->getDoctrine()->getManager()->getRepository('OodCommentBundle:Thread');
-        $thread = $repositoryThread->findOneBy(['post' => $post]);
+        $thread = $repositoryThread->find($idThread);
 
         $repositoryComment = $this->getDoctrine()->getManager()->getRepository('OodCommentBundle:Comment');
         $comments = $repositoryComment->findBy(['thread' => $thread]);

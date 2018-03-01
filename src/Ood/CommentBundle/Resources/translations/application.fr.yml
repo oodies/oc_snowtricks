@@ -24,7 +24,6 @@ comments:
 comments_list:
   title: "Commentaires"
   table_header:
-      post_title: "Article"
       author: "Auteur"
       commentary: "Message"
       posted: "Posté le"
