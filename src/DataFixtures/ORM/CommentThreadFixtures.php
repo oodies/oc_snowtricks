@@ -52,7 +52,7 @@ class CommentThreadFixtures extends Fixture implements DependentFixtureInterface
             $thread = new Thread();
             /** @var \Ood\BlogpostBundle\Entity\Post $post */
             $post = $this->getReference('post_' . $index);
-            $thread->setPost($post)
+            $thread->setIdThread($post->getIdPost())
                    ->setNumberOfComment(rand(1, 5));
 
             $manager->persist($thread);

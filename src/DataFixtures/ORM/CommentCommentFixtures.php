@@ -65,7 +65,8 @@ class CommentCommentFixtures extends Fixture implements DependentFixtureInterfac
                 $comment
                     ->setThread($thread)
                     ->setBody($faker->paragraph(1))
-                    ->setAuthor($author);
+                    ->setAuthor($author)
+                    ->setEnabled(rand(0,1));
 
                 $manager->persist($comment);
             }
