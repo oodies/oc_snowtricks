@@ -5,6 +5,6 @@
 # * @since 2018/02
 # */
 
-#ood_blogpost_homepage:
-#    path:     /
-#    defaults: { _controller: OodBlogpostBundle:Default:index }
+ood_blogpost_removeBlogpost_removeBlogpost:
+    path:     /article/{postId}/remove
+    defaults: { _controller: OodBlogpostBundle:RemoveBlogpost:removeBlogpost }
