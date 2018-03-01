@@ -11,7 +11,7 @@ ood_comment_getComments_getComments:
     methods: ["GET"]
 
 ood_comment_postComments_postComments:
-    path: /postComments/article/{postId}
+    path: /newComment/{threadId}
     defaults: { _controller: OodCommentBundle:PostComments:postComments}
     methods: ["GET","POST"]
 
