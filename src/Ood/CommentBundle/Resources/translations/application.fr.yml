@@ -5,6 +5,15 @@
 # * @since 2018/02
 # */
 
+## ************************************
+## Title        : View all comments by blogpost
+## page         : Article
+## Description  :
+## URL          : /getComments/article/{postId}
+## Type         : subview
+comments:
+  title: "[0,0]Aucun commentaire|[1,1]Comment|[2,+Inf]Comments"
+  unknown: "Soyez le premier à poster un commentaire !"
 
 ## ************************************
 ## Title        : Show all comments
