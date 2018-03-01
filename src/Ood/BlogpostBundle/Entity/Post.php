@@ -91,7 +91,7 @@ class Post
      *
      * @ORM\OneToOne (
      *     targetEntity="Ood\BlogpostBundle\Entity\Body",
-     *     cascade={"persist"}
+     *     cascade={"persist", "remove"}
      * )
      *
      * @ORM\JoinColumn(
@@ -110,8 +110,7 @@ class Post
      *
      * @ORM\OneToOne (
      *     targetEntity="Ood\BlogpostBundle\Entity\Header",
-     *     inversedBy="post",
-     *     cascade={"persist"}
+     *     cascade={"persist", "remove"}
      * )
      *
      * @ORM\JoinColumn(
@@ -163,7 +162,9 @@ class Post
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Image")
+     * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Image",
+     *     cascade={"persist", "remove"}
+     *     )
      * @ORM\JoinTable(name="posts_images",
      *      joinColumns={
      *              @ORM\JoinColumn(name="post_id",
@@ -180,7 +181,9 @@ class Post
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Video")
+     * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Video",
+     *      cascade={"persist", "remove"}
+     * )
      * @ORM\JoinTable(name="posts_videos",
      *      joinColumns={
      *              @ORM\JoinColumn(name="post_id",

@@ -91,34 +91,6 @@ class Header
      */
     protected $brief;
 
-    /** *******************************
-     *  ASSOCIATION MAPPING
-     */
-
-    /**
-     * @var Post
-     *
-     * @ORM\OneToOne(
-     *     targetEntity="Ood\BlogpostBundle\Entity\Post",
-     *     mappedBy="header",
-     *     cascade={"persist"}
-     * )
-     *
-     * @ORM\JoinColumn(
-     *     name="post",
-     *     referencedColumnName="id_post"
-     * )
-     *
-     * @Assert\NotNull(
-     *     message="header.post.not_null"
-     * )
-     */
-    protected $post;
-
-    /** *******************************
-     *  CONSTRUCT
-     */
-
 
     /** *******************************
      *  GETTER / SETTER
@@ -167,25 +139,6 @@ class Header
     public function setBrief(string $brief): Header
     {
         $this->brief = $brief;
-        return $this;
-    }
-
-    /**
-     * @return Post
-     */
-    public function getPost(): Post
-    {
-        return $this->post;
-    }
-
-    /**
-     * @param Post $post
-     *
-     * @return Header
-     */
-    public function setPost(Post $post): Header
-    {
-        $this->post = $post;
         return $this;
     }
 }

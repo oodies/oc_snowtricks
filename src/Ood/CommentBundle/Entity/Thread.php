@@ -42,7 +42,6 @@ class Thread
      * )
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $idThread;
 
@@ -96,29 +95,6 @@ class Thread
      */
     protected $numberOfComment;
 
-    /** *******************************
-     *  ASSOCIATION MAPPING
-     */
-
-    /**
-     * @var Post
-     *
-     * @ORM\OneToOne(
-     *     targetEntity="Ood\BlogpostBundle\Entity\Post",
-     *     cascade={"persist"}
-     * )
-     *
-     * @ORM\JoinColumn(
-     *     name="post",
-     *     referencedColumnName="id_post"
-     * )
-     *
-     * @Assert\NotNull(
-     *     message="thread.post.not_null"
-     *     )
-     */
-    protected $post;
-
 
     /** *******************************
      *  CONSTRUCT
@@ -140,6 +116,17 @@ class Thread
     public function getIdThread(): int
     {
         return $this->idThread;
+    }
+
+    /**
+     * @param int $idThread
+     *
+     * @return Thread
+     */
+    public function setIdThread(int $idThread): Thread
+    {
+        $this->idThread = $idThread;
+        return $this;
     }
 
     /**
@@ -196,25 +183,6 @@ class Thread
     public function setNumberOfComment(int $numberOfComment): Thread
     {
         $this->numberOfComment = $numberOfComment;
-        return $this;
-    }
-
-    /**
-     * @return Post
-     */
-    public function getPost(): Post
-    {
-        return $this->post;
-    }
-
-    /**
-     * @param Post $post
-     *
-     * @return Thread
-     */
-    public function setPost(Post $post): Thread
-    {
-        $this->post = $post;
         return $this;
     }
 }
