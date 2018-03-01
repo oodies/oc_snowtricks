@@ -5,6 +5,11 @@
 # * @since 2018/02
 # */
 
+ood_comment_postComments_postComments:
+    path: /postComments/article/{postId}
+    defaults: { _controller: OodCommentBundle:PostComments:postComments}
+    methods: ["GET","POST"]
+
 ood_comment_management_list:
     path: /admin/comments
     defaults: { _controller: OodCommentBundle:Management:list}

@@ -95,7 +95,7 @@ class Comment
      *     options={"comment"="Contains the body of the comment"}
      * )
      */
-    protected $body;
+    protected $body = '';
 
     /**
      * Says whether or not the how is active
@@ -158,9 +158,9 @@ class Comment
      */
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getIdComment(): int
+    public function getIdComment(): ?int
     {
         return $this->idComment;
     }
