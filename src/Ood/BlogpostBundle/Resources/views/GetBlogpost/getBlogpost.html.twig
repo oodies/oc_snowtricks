@@ -1,0 +1,51 @@
+{#
+ # /**
+ #  * This file is part of oc_snowtricks project
+ #  *
+ #  * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ #  * @since 2018/03
+ #  */
+ #}
+{% extends 'layout.html.twig' %}
+
+{% trans_default_domain 'application' %}
+{% block main %}
+    {% if post.images is not empty %}
+        {% set image = post.images[0] %}
+        <img class="img-fluid" src="{{ asset('img/') }}" alt="{{ image.alt }}">
+    {% else %}
+        <img class="img-fluid" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
+    {% endif %}
+    <h1>{{ post.header.title }}</h1>
+    <h4>{{ post.header.brief }}</h4>
+
+    <div class="d-flex">
+        <!-- images -->
+        {% for image in post.images %}
+            <div class="mr-2 border" style="width: 18rem;">
+                <img class="img-fluid" src="{{ asset('img/') }}" alt="{{ image.alt }}">
+            </div>
+        {% endfor %}
+        <!-- videos -->
+        {% for video in post.videos %}
+            <div class="mr-2 border" style="width: 18rem;">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" width="560" height="315" src="{{ video.identifier }}"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- Text content -->
+    <p>{{ post.body.content }}</p>
+    <!-- Extra information -->
+    <div class="d-flex">
+        <div class="mr-4">{{ post.createAt|date() }}</div>
+        <div class="mr-4">{{ post.category.name }}</div>
+        <div class="mr-4">{{ post.updateAt|date }}</div>
+    </div>
+    <hr class="divider">
+    {{ render(controller('OodCommentBundle:PostComments:postComments', {threadId : post.idPost})) }}
+    <hr class="divider">
+    {{ render(controller('OodCommentBundle:GetComments:getComments', {threadId : post.idPost})) }}
+{% endblock main %}

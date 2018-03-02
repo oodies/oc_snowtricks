@@ -5,11 +5,19 @@
 # * @since 2018/02
 # */
 
-ood_blogpost_removeBlogpost_removeBlogpost:
-    path:     /article/{postId}/remove
-    defaults: { _controller: OodBlogpostBundle:RemoveBlogpost:removeBlogpost }
-
 ood_blogpost_getBlogposts_getBlogposts:
     path:     /articles
     defaults: { _controller: OodBlogpostBundle:GetBlogposts:getBlogposts }
+    methods: ['GET']
+
+ood_blogpost_getBlogpost_getBlogpost:
+    path:     /article/{postId}
+    defaults: { _controller: OodBlogpostBundle:GetBlogpost:getBlogpost }
+    methods: ['GET']
+
+ood_blogpost_removeBlogpost_removeBlogpost:
+    path:     /article/{postId}/remove
+    defaults: { _controller: OodBlogpostBundle:RemoveBlogpost:removeBlogpost }
+    methods: ['GET']
+
 
