@@ -1,0 +1,42 @@
+{#
+ # /**
+ #  * This file is part of oc_snowtricks project
+ #  *
+ #  * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ #  * @since 2018/03
+ #  */
+ #}
+{% extends 'layout.html.twig' %}
+
+{% trans_default_domain 'application' %}
+{% block main %}
+    <div class="d-flex">
+        {% for post in posts %}
+            <div class="mr-2 border" style="width: 18rem;">
+                {% if post.images is not empty %}
+                    {% set image = post.images[0] %}
+                    <img class="img-fluid" src="{{ asset('img/') }}" alt="{{ image.alt }}">
+                {% elseif post.videos is not empty %}
+                    {% set video = videos.video[0] %}
+                    <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" width="560" height="315" src="{{ video.identifier }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                {% else %}
+                    <img class="img-fluid" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
+                {% endif %}
+                <div class="">
+                    <div class="d-flex">
+                        <div class="card-title mr-auto m-1">{{ post.header.title }}</div>
+                        <a class="btn btn-sm btn-primary m-1" role="button" href="#">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-sm btn-primary m-1" role="button"
+                           href="{{ path('ood_blogpost_removeBlogpost_removeBlogpost', { "postId": post.idPost } ) }} ">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock main %}

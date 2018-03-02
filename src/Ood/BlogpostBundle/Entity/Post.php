@@ -362,9 +362,9 @@ class Post
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getImages(): ArrayCollection
+    public function getImages()
     {
         return $this->images;
     }
@@ -392,9 +392,9 @@ class Post
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getVideos(): ArrayCollection
+    public function getVideos()
     {
         return $this->videos;
     }
