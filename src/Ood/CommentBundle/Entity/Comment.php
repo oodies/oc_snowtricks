@@ -126,6 +126,8 @@ class Comment
      * )
      *
      * @ORM\JoinColumn(name="author", referencedColumnName="id_user")
+     *
+     * @Assert\Valid()
      */
     protected $author;
 

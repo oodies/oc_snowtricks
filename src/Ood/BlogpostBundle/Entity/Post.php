@@ -100,9 +100,7 @@ class Post
      *     referencedColumnName="id_header"
      *     )
      *
-     * @Assert\NotNull(
-     *     message="post.header.not_null"
-     *     )
+     * @Assert\Valid()
      */
     protected $header = null;
 
@@ -119,9 +117,7 @@ class Post
      *     referencedColumnName="id_body"
      *     )
      *
-     * @Assert\NotNull(
-     *     message="post.body.not_null"
-     *     )
+     * @Assert\Valid()
      */
     protected $body = null;
 
@@ -135,9 +131,7 @@ class Post
      *
      * @ORM\JoinColumn(name="blogger", referencedColumnName="id_user")
      *
-     * @Assert\NotNull(
-     *     message="post.blogger.not_null"
-     * )
+     * @Assert\Valid()
      */
     protected $blogger = null;
 
@@ -176,6 +170,8 @@ class Post
      *              referencedColumnName="id_image")
      *      }
      * )
+     *
+     * @Assert\Valid()
      */
     protected $images;
 
@@ -195,6 +191,8 @@ class Post
      *              referencedColumnName="id_video")
      *      }
      * )
+     *
+     * @Assert\Valid()
      */
     protected $videos;
 
