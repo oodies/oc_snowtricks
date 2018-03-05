@@ -105,38 +105,38 @@ class Header
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      *
      * @return Header
      */
-    public function setTitle(string $title): Header
+    public function setTitle(?string $title): Header
     {
         $this->title = $title;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getBrief(): string
+    public function getBrief(): ?string
     {
         return $this->brief;
     }
 
     /**
-     * @param string $brief
+     * @param string|null $brief
      *
      * @return Header
      */
-    public function setBrief(string $brief): Header
+    public function setBrief(?string $brief): Header
     {
         $this->brief = $brief;
         return $this;

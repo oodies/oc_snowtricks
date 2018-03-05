@@ -69,19 +69,19 @@ class Body
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
     /**
-     * @param string $content
+     * @param string|null $content
      *
      * @return Body
      */
-    public function setContent(string $content): Body
+    public function setContent(?string $content): Body
     {
         $this->content = $content;
         return $this;

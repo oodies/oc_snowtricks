@@ -9,6 +9,7 @@
 namespace Ood\BlogpostBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -87,25 +88,6 @@ class Post
      */
 
     /**
-     * @var Body
-     *
-     * @ORM\OneToOne (
-     *     targetEntity="Ood\BlogpostBundle\Entity\Body",
-     *     cascade={"persist", "remove"}
-     * )
-     *
-     * @ORM\JoinColumn(
-     *     name="body",
-     *     referencedColumnName="id_body"
-     *     )
-     *
-     * @Assert\NotNull(
-     *     message="post.body.not_null"
-     *     )
-     */
-    protected $body;
-
-    /**
      * @var Header
      *
      * @ORM\OneToOne (
@@ -122,7 +104,26 @@ class Post
      *     message="post.header.not_null"
      *     )
      */
-    protected $header;
+    protected $header = null;
+
+    /**
+     * @var Body
+     *
+     * @ORM\OneToOne (
+     *     targetEntity="Ood\BlogpostBundle\Entity\Body",
+     *     cascade={"persist", "remove"}
+     * )
+     *
+     * @ORM\JoinColumn(
+     *     name="body",
+     *     referencedColumnName="id_body"
+     *     )
+     *
+     * @Assert\NotNull(
+     *     message="post.body.not_null"
+     *     )
+     */
+    protected $body = null;
 
     /**
      * @var \Ood\UserBundle\Entity\User
@@ -138,7 +139,7 @@ class Post
      *     message="post.blogger.not_null"
      * )
      */
-    protected $blogger;
+    protected $blogger = null;
 
     /**
      * @var Category
@@ -157,10 +158,10 @@ class Post
      *     message="body.category.not_null"
      *     )
      */
-    protected $category;
+    protected $category = null;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Image",
      *     cascade={"persist", "remove"}
@@ -179,7 +180,7 @@ class Post
     protected $images;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Video",
      *      cascade={"persist", "remove"}
@@ -283,9 +284,9 @@ class Post
     }
 
     /**
-     * @return Category
+     * @return Category|null
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
@@ -302,9 +303,9 @@ class Post
     }
 
     /**
-     * @return Body
+     * @return Body|null
      */
-    public function getBody(): Body
+    public function getBody(): ?Body
     {
         return $this->body;
     }
@@ -321,9 +322,9 @@ class Post
     }
 
     /**
-     * @return Header
+     * @return Header|null
      */
-    public function getHeader(): Header
+    public function getHeader(): ?Header
     {
         return $this->header;
     }
@@ -362,7 +363,7 @@ class Post
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
     public function getImages()
     {
@@ -392,7 +393,7 @@ class Post
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
     public function getVideos()
     {
