@@ -19,14 +19,17 @@
                 {% elseif post.videos is not empty %}
                     {% set video = videos.video[0] %}
                     <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" width="560" height="315" src="{{ video.identifier }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <iframe class="embed-responsive-item" width="560" height="315" src="{{ video.identifier }}"
+                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     </div>
                 {% else %}
                     <img class="img-fluid" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
                 {% endif %}
                 <div class="">
                     <div class="d-flex">
-                        <div class="card-title mr-auto m-1">{{ post.header.title }}</div>
+                        <div class="card-title mr-auto m-1"><a
+                                    href="{{ path('ood_blogpost_getBlogpost_getBlogpost', {"postId" : post.idPost} ) }}">{{ post.header.title }}</a>
+                        </div>
                         <a class="btn btn-sm btn-primary m-1" role="button" href="#">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
