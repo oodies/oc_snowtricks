@@ -20,6 +20,11 @@ ood_blogpost_getBlogpost_getBlogpost:
     defaults: { _controller: OodBlogpostBundle:GetBlogpost:getBlogpost }
     methods: ['GET']
 
+ood_blogpost_putBlogpost_putBlogpost:
+    path:     /article/{postId}/change
+    defaults: { _controller: OodBlogpostBundle:PutBlogpost:putBlogpost }
+    methods: ['GET','POST']
+
 ood_blogpost_removeBlogpost_removeBlogpost:
     path:     /article/{postId}/remove
     defaults: { _controller: OodBlogpostBundle:RemoveBlogpost:removeBlogpost }
