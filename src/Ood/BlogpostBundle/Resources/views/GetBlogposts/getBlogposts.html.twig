@@ -30,7 +30,7 @@
                         <div class="card-title mr-auto m-1"><a
                                     href="{{ path('ood_blogpost_getBlogpost_getBlogpost', {"postId" : post.idPost} ) }}">{{ post.header.title }}</a>
                         </div>
-                        <a class="btn btn-sm btn-primary m-1" role="button" href="#">
+                        <a class="btn btn-sm btn-primary m-1" role="button" href="{{ path('ood_blogpost_putBlogpost_putBlogpost', {"postId" : post.idPost} ) }}">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
                         <a class="btn btn-sm btn-primary m-1" role="button"
