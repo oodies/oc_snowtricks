@@ -47,6 +47,7 @@ class PostType extends AbstractType
                 [
                     'entry_type' => ImageType::class,
                     'entry_options' => ['label' => false],
+                    'by_reference' => false,
                     'allow_add' => true,
                     'allow_delete' => true,
                 ]

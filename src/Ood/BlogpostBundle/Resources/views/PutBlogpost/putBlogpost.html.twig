@@ -1,5 +1,18 @@
+{% extends 'layout.html.twig' %}
+{% block main %}
 {{ form_start(form, {attr : {novalidate: 'novalidate'}} ) }}
+<ul class="images"  data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+{% for image in form.images %}
+    <li>
+        <img id="image_{{ image.vars.value.idImage }}" src="{{ asset(image.vars.value.webpath) }}" alt="{{ image.vars.value.alt }}" height="120">
+        {{ form_row(image) }}
+        <a href="#" class="remove-image">x</a>
+    </li>
+
+{% endfor %}
+</ul>
 {{ form_errors(form) }}
 {{ form_rest(form) }}
 <button type="submit">Validate</button>
 {{ form_end(form) }}
+{% endblock %}

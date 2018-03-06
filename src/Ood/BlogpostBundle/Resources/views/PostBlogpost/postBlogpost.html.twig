@@ -1,5 +1,10 @@
+{% extends 'layout.html.twig' %}
+{% block main %}
 {{ form_start(form, {attr : {novalidate: 'novalidate'}} ) }}
 {{ form_errors(form) }}
+<ul class="images"  data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+</ul>
 {{ form_rest(form) }}
 <button type="submit">Validate</button>
 {{ form_end(form) }}
+{% endblock main %}
