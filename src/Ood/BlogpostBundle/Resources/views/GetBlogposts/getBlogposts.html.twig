@@ -15,7 +15,7 @@
             <div class="mr-2 border" style="width: 18rem;">
                 {% if post.images is not empty %}
                     {% set image = post.images[0] %}
-                    <img class="img-fluid" src="{{ asset('img/') }}" alt="{{ image.alt }}">
+                    <img class="img-fluid" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
                 {% elseif post.videos is not empty %}
                     {% set video = videos.video[0] %}
                     <div class="embed-responsive embed-responsive-16by9">

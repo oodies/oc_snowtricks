@@ -12,7 +12,7 @@
 {% block main %}
     {% if post.images is not empty %}
         {% set image = post.images[0] %}
-        <img class="img-fluid" src="{{ asset('img/') }}" alt="{{ image.alt }}">
+        <img class="img-fluid" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
     {% else %}
         <img class="img-fluid" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
     {% endif %}
@@ -23,7 +23,7 @@
         <!-- images -->
         {% for image in post.images %}
             <div class="mr-2 border" style="width: 18rem;">
-                <img class="img-fluid" src="{{ asset('img/') }}" alt="{{ image.alt }}">
+                <img  id="image_{{ image.idImage }}" class="img-fluid" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
             </div>
         {% endfor %}
         <!-- videos -->
