@@ -6,12 +6,12 @@
  * @since 2018/01
  */
 
-namespace Ood\BlogpostBundle\Repository;
+namespace Ood\BlogBundle\Repository;
 
 /**
  * Class CategoryRepository
  *
- * @package Ood\BlogpostBundle\Repository
+ * @package Ood\BlogBundle\Repository
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {

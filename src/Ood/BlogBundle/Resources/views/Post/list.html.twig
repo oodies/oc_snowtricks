@@ -28,13 +28,13 @@
                 <div class="">
                     <div class="d-flex">
                         <div class="card-title mr-auto m-1"><a
-                                    href="{{ path('ood_blogpost_getBlogpost_getBlogpost', {"postId" : post.idPost} ) }}">{{ post.header.title }}</a>
+                                    href="{{ path('ood_blog_post_show', {"postId" : post.idPost} ) }}">{{ post.header.title }}</a>
                         </div>
-                        <a class="btn btn-sm btn-primary m-1" role="button" href="{{ path('ood_blogpost_putBlogpost_putBlogpost', {"postId" : post.idPost} ) }}">
+                        <a class="btn btn-sm btn-primary m-1" role="button" href="{{ path('ood_blog_post_edit', {"postId" : post.idPost} ) }}">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </a>
                         <a class="btn btn-sm btn-primary m-1" role="button"
-                           href="{{ path('ood_blogpost_removeBlogpost_removeBlogpost', { "postId": post.idPost } ) }} ">
+                           href="{{ path('ood_blog_post_remove', { "postId": post.idPost } ) }} ">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </a>
                     </div>

@@ -6,6 +6,6 @@
 # */
 
 services:
-#    ood_blogpost.example:
-#        class: Ood\BlogpostBundle\Example
+#    ood_blog.example:
+#        class: Ood\BlogBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]

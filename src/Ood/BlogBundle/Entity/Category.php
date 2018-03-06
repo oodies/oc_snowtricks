@@ -6,7 +6,7 @@
  * @since 2018/01
  */
 
-namespace Ood\BlogpostBundle\Entity;
+namespace Ood\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,10 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Category
  *
- * @package Ood\BlogpostBundle\Entity
+ * @package Ood\BlogBundle\Entity
  *
  * @ORM\Table(name="blogpost_category")
- * @ORM\Entity(repositoryClass="Ood\BlogpostBundle\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\CategoryRepository")
  *
  * @UniqueEntity("name", message="category.name.unique_entity")
  */

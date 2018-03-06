@@ -10,7 +10,7 @@ namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Ood\BlogpostBundle\Entity\Header;
+use Ood\BlogBundle\Entity\Header;
 
 /**
  * Class BlogpostHeaderFixtures

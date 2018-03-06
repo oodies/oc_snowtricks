@@ -6,7 +6,7 @@
  * @since 2018/01
  */
 
-namespace Ood\BlogpostBundle\Repository;
+namespace Ood\BlogBundle\Repository;
 
 /**
  * PostRepository

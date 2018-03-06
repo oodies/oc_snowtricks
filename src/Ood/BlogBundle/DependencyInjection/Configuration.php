@@ -6,7 +6,7 @@
  * @since 2018/02
  */
 
-namespace Ood\BlogpostBundle\DependencyInjection;
+namespace Ood\BlogBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

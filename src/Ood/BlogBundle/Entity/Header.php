@@ -6,7 +6,7 @@
  * @since 2018/01
  */
 
-namespace Ood\BlogpostBundle\Entity;
+namespace Ood\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,10 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Header
  *
- * @package Ood\BlogpostBundle\Entity
+ * @package Ood\BlogBundle\Entity
  *
  * @ORM\Table(name="blogpost_header")
- * @ORM\Entity(repositoryClass="Ood\BlogpostBundle\Repository\HeaderRepository")
+ * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\HeaderRepository")
  */
 class Header
 {

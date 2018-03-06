@@ -6,9 +6,9 @@
  * @since 2018/03
  */
 
-namespace Ood\BlogpostBundle\Form;
+namespace Ood\BlogBundle\Form;
 
-use Ood\BlogpostBundle\Entity\Post;
+use Ood\BlogBundle\Entity\Post;
 use Ood\PictureBundle\Form\ImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Class PostType
  *
- * @package Ood\BlogpostBundle\Form
+ * @package Ood\BlogBundle\Form
  */
 class PostType extends AbstractType
 {
@@ -35,7 +35,7 @@ class PostType extends AbstractType
             ->add(
                 'category', EntityType::class,
                 [
-                    'class'        => 'OodBlogpostBundle:Category',
+                    'class'        => 'OodBlogBundle:Category',
                     'choice_label' => 'name',
                     'multiple'     => false,
                     'expanded'     => false,

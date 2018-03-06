@@ -25,7 +25,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             // APPLICATION
             new Ood\AppBundle\OodAppBundle(),
-            new Ood\BlogpostBundle\OodBlogpostBundle(),
+            new Ood\BlogBundle\OodBlogBundle(),
             new Ood\CommentBundle\OodCommentBundle(),
             new Ood\UserBundle\OodUserBundle(),
             new Ood\PictureBundle\OodPictureBundle(),

@@ -6,17 +6,17 @@
  * @since 2018/01
  */
 
-namespace Ood\BlogpostBundle\Entity;
+namespace Ood\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Body
  *
- * @package Ood\BlogpostBundle\Entity
+ * @package Ood\BlogBundle\Entity
  *
  * @ORM\Table(name="blogpost_body")
- * @ORM\Entity(repositoryClass="Ood\BlogpostBundle\Repository\BodyRepository")
+ * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\BodyRepository")
  */
 class Body
 {

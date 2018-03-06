@@ -6,12 +6,12 @@
  * @since 2018/01
  */
 
-namespace Ood\BlogpostBundle\Repository;
+namespace Ood\BlogBundle\Repository;
 
 /**
  * Class BodyRepository
  *
- * @package Ood\BlogpostBundle\Repository
+ * @package Ood\BlogBundle\Repository
  */
 class BodyRepository extends \Doctrine\ORM\EntityRepository
 {

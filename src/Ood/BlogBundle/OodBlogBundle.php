@@ -6,15 +6,15 @@
  * @since 2018/02
  */
 
-namespace Ood\BlogpostBundle;
+namespace Ood\BlogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class OodBlogpostBundle
+ * Class OodBlogBundle
  *
- * @package Ood\BlogpostBundle
+ * @package Ood\BlogBundle
  */
-class OodBlogpostBundle extends Bundle
+class OodBlogBundle extends Bundle
 {
 }

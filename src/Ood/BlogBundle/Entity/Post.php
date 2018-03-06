@@ -6,7 +6,7 @@
  * @since 2018/01
  */
 
-namespace Ood\BlogpostBundle\Entity;
+namespace Ood\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,10 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Post
  *
- * @package Ood\BlogpostBundle\Entity
+ * @package Ood\BlogBundle\Entity
  *
  * @ORM\Table(name="blogpost_post")
- * @ORM\Entity(repositoryClass="Ood\BlogpostBundle\Repository\PostRepository")
+ * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\PostRepository")
  */
 class Post
 {
@@ -91,7 +91,7 @@ class Post
      * @var Header
      *
      * @ORM\OneToOne (
-     *     targetEntity="Ood\BlogpostBundle\Entity\Header",
+     *     targetEntity="Ood\BlogBundle\Entity\Header",
      *     cascade={"persist", "remove"}
      * )
      *
@@ -108,7 +108,7 @@ class Post
      * @var Body
      *
      * @ORM\OneToOne (
-     *     targetEntity="Ood\BlogpostBundle\Entity\Body",
+     *     targetEntity="Ood\BlogBundle\Entity\Body",
      *     cascade={"persist", "remove"}
      * )
      *
@@ -139,7 +139,7 @@ class Post
      * @var Category
      *
      * @ORM\ManyToOne(
-     *     targetEntity="Ood\BlogpostBundle\Entity\Category",
+     *     targetEntity="Ood\BlogBundle\Entity\Category",
      *     cascade={"persist"}
      * )
      *

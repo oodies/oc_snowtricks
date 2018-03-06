@@ -12,7 +12,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
-use Ood\BlogpostBundle\Entity\Post;
+use Ood\BlogBundle\Entity\Post;
 
 /**
  * Class BlogpostPostFixtures
@@ -59,13 +59,13 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
         $i = 26;
         foreach ($data as $index => $category) {
             $post = new Post();
-            /** @var \Ood\BlogpostBundle\Entity\Category $category */
+            /** @var \Ood\BlogBundle\Entity\Category $category */
             $category = $this->getReference($category);
             /** @var \Ood\UserBundle\Entity\User $blogger */
             $blogger = $this->getReference('user_' . (string)rand(1, 5));
-            /** @var \Ood\BlogpostBundle\Entity\Header $header */
+            /** @var \Ood\BlogBundle\Entity\Header $header */
             $header = $this->getReference('header_' . $index);
-            /** @var \Ood\BlogpostBundle\Entity\Body $body */
+            /** @var \Ood\BlogBundle\Entity\Body $body */
             $body = $this->getReference('body_' . $index);
             /** @var \Ood\PictureBundle\Entity\Image $image1 */
             $image1 = $this->getReference('image_' . (string)$i);

@@ -21,9 +21,9 @@
                 <a class="nav-link" href="{{ path('ood_app_homepage') }}">{{ 'menu.homepage'|trans }}<span
                             class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item {% if ('ood_blogpost_getBlogposts_getBlogposts' == myRoute)
+            <li class="nav-item {% if ('ood_blog_post_getBlogposts' == myRoute)
                 or (myRoute is null) %}active{% endif %}">
-                <a class="nav-link" href="{{ path('ood_blogpost_getBlogposts_getBlogposts') }}">{{ 'menu.tricks'|trans }}</a>
+                <a class="nav-link" href="{{ path('ood_blog_post_list') }}">{{ 'menu.tricks'|trans }}</a>
             </li>
             <li class="nav-item">
                 {% if (app.user) %} {# user is logged in #}

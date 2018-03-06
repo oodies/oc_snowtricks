@@ -6,20 +6,20 @@
  * @since 2018/03
  */
 
-namespace Ood\BlogpostBundle\Form;
+namespace Ood\BlogBundle\Form;
 
-use Ood\BlogpostBundle\Entity\Header;
+use Ood\BlogBundle\Entity\Body;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class HeaderType
+ * Class BodyType
  *
- * @package Ood\BlogpostBundle\Form
+ * @package Ood\BlogBundle\Form
  */
-class HeaderType extends AbstractType
+class BodyType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -29,13 +29,7 @@ class HeaderType extends AbstractType
     {
         $builder
             ->add(
-                'title', TextType::class,
-                [
-                    'required' => true,
-                ]
-            )
-            ->add(
-                'brief', TextType::class,
+                'content', TextareaType::class,
                 [
                     'required' => true,
                 ]
@@ -51,7 +45,7 @@ class HeaderType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => Header::class,
+                'data_class'         => Body::class,
                 'translation_domain' => 'application',
             ]
         );
