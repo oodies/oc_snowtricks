@@ -23,7 +23,9 @@
     <main>
         {% block main %}{% endblock main %}
     </main>
-    <footer></footer>
+    <footer>
+        {{ include('layout.footer.html.twig') }}
+    </footer>
 </body>
 <script src="{{ asset('build/global.js') }}"></script>
 </html>
