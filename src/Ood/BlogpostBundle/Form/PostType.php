@@ -9,8 +9,10 @@
 namespace Ood\BlogpostBundle\Form;
 
 use Ood\BlogpostBundle\Entity\Post;
+use Ood\PictureBundle\Form\ImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,12 +32,23 @@ class PostType extends AbstractType
         $builder
             ->add('header', HeaderType::class)
             ->add('body', BodyType::class)
-            ->add('category', EntityType::class,
+            ->add(
+                'category', EntityType::class,
                 [
                     'class'        => 'OodBlogpostBundle:Category',
                     'choice_label' => 'name',
                     'multiple'     => false,
                     'expanded'     => false,
+                ]
+            )
+            ->add(
+                'images',
+                CollectionType::class,
+                [
+                    'entry_type' => ImageType::class,
+                    'entry_options' => ['label' => false],
+                    'allow_add' => true,
+                    'allow_delete' => true,
                 ]
             );
     }
