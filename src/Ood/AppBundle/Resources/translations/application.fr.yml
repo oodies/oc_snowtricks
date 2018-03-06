@@ -9,6 +9,9 @@
 ## *    MENU
 ## ************************************
 menu:
+  brand: "Snowtrick"
+  homepage: "Accueil"
+  tricks: "Figures"
   login: "Connexion"
   logout: "Déconnexion"
   register: "Inscription"

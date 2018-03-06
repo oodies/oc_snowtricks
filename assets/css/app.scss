@@ -1,0 +1,25 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-rows: 4em 1fr 4em;
+  grid-template-areas: "header" "main" "footer";
+}
+
+header {
+  grid-area: header;
+}
+
+main {
+  grid-area: main;
+}
+
+footer {
+  grid-area: footer;
+}

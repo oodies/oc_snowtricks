@@ -4,6 +4,7 @@
  # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
  # @since 2018/02
  #}
+{% trans_default_domain 'application' %}
 <!DOCTYPE html>
 <html lang="{{ app.request.locale|split('_')[0] }}">
 <head>
@@ -15,10 +16,11 @@
     <meta name="robots" content="none, nofollow"/>
     <link rel="stylesheet" href="{{ asset('build/global.css') }}">
 </head>
-<body id="page-{% block page %}{% endblock page %}">
-    <header></header>
-    <main>
+<body id="page-{% block page %}{% endblock page %}" class="grid-layout">
+    <header>
         {{ include('menu.html.twig') }}
+    </header>
+    <main>
         {% block main %}{% endblock main %}
     </main>
     <footer></footer>

@@ -7,31 +7,39 @@
  #  */
  #}
 {% trans_default_domain 'application' %}
-
 {% set myRoute = app.request.get('_route') %}
-<div class="right menu">
-    {% if app.user %} {# user is logged in #}
-        <a href="{{ path('ood_user_security_logout') }}"
-           class="item">
-            <i class="sign out icon" aria-hidden="true"></i>
-            {{ 'menu.logout'|trans }}
-        </a>
-    {% else %} {# user is not logged in #}
-        {# link: Login #}
-        {% if not ('ood_user_security_login' == myRoute) %}
-            <a href="{{ path('ood_user_security_login') }}"
-               class="item">
-                <i class="sign in icon" aria-hidden="true"></i>
-                {{ 'menu.login'|trans }}
-            </a>
-        {% endif %}
-        {# link: registration #}
-        {% if not ('ood_user_registration_register' == myRoute) %}
-            <a href="{{ path('ood_user_registration_register') }}"
-               class="item">
-                <i class="add user icon" aria-hidden="true"></i>
-                {{ 'menu.register'|trans }}
-            </a>
-        {% endif %}
-    {% endif %}
-</div>
+<nav class="navbar fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ path('ood_app_homepage') }}">{{ 'menu.brand'|trans|upper }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if ('ood_app_homepage' == myRoute)
+                or (myRoute is null) %}active{% endif %}">
+                <a class="nav-link" href="{{ path('ood_app_homepage') }}">{{ 'menu.homepage'|trans }}<span
+                            class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item {% if ('ood_blogpost_getBlogposts_getBlogposts' == myRoute)
+                or (myRoute is null) %}active{% endif %}">
+                <a class="nav-link" href="{{ path('ood_blogpost_getBlogposts_getBlogposts') }}">{{ 'menu.tricks'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                {% if (app.user) %} {# user is logged in #}
+                    <a class="nav-link" href="{{ path('ood_user_security_logout') }}">{{ 'menu.logout'|trans }}</a>
+                {% else %} {# user is not logged in #}
+                    {# link login #}
+                    {% if not ('ood_user_security_login' == myRoute) %}
+                        <a class="nav-link" href="{{ path('ood_user_security_login') }}">{{ 'menu.login'|trans }}</a>
+                    {% endif %}
+                {% endif %}
+                {# link registration #}
+                {% if not ('ood_user_registration_register' == myRoute) %}
+                    <a class="nav-link"
+                       href="{{ path('ood_user_registration_register') }}">{{ 'menu.register'|trans }}</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>
