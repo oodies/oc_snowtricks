@@ -5,16 +5,20 @@
 # * @since 2018/02
 # */
 
-ood_comment_getComments_getComments:
+## Frontend
+##
+ood_comment_threadComment_thread:
     path: /comments/{threadId}
-    defaults: { _controller: OodCommentBundle:GetComments:getComments}
+    defaults: { _controller: OodCommentBundle:ThreadComment:thread}
     methods: ["GET"]
 
-ood_comment_postComments_postComments:
+ood_comment_threadComment_newComment:
     path: /newComment/{threadId}
-    defaults: { _controller: OodCommentBundle:PostComments:postComments}
+    defaults: { _controller: OodCommentBundle:ThreadComment:newComment}
     methods: ["GET","POST"]
 
+## Backend
+##
 ood_comment_management_list:
     path: /admin/comments
     defaults: { _controller: OodCommentBundle:Management:list}

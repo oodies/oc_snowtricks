@@ -45,7 +45,7 @@
         <div class="mr-4">{{ post.updateAt|date }}</div>
     </div>
     <hr class="divider">
-    {{ render(controller('OodCommentBundle:PostComments:postComments', {threadId : post.idPost})) }}
+    {{ render(controller('OodCommentBundle:ThreadComment:newComment', {threadId : post.idPost} )) }}
     <hr class="divider">
-    {{ render(controller('OodCommentBundle:GetComments:getComments', {threadId : post.idPost})) }}
+    {{ render(controller('OodCommentBundle:ThreadComment:thread', {threadId : post.idPost} )) }}
 {% endblock main %}
