@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class ThreadCommentController
@@ -55,12 +56,13 @@ class ThreadCommentController extends Controller
     /**
      * Add a new comment
      *
-     * @param Request $request
+     * @param Request       $request
+     * @param UserInterface $user
      *
      * @return \Symfony\Component\HttpFoundation\Response | \Symfony\Component\HttpFoundation\JsonResponse;
      * @throws \LogicException
      */
-    public function newCommentAction(Request $request)
+    public function newCommentAction(Request $request, UserInterface $user)
     {
         $threadId = $request->get('threadId');
 
@@ -88,7 +90,7 @@ class ThreadCommentController extends Controller
                 $em->persist($thread);
             }
             $comment->setThread($thread)
-                    ->setAuthor($this->getUser());
+                    ->setAuthor($user);
             $em->persist($comment);
             $em->flush();
 

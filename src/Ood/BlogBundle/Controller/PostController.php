@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class PostController
@@ -27,12 +28,13 @@ class PostController extends Controller
     /**
      * Create a post
      *
-     * @param Request $request
+     * @param Request       $request
+     * @param UserInterface $user
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \LogicException
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, UserInterface $user)
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -40,7 +42,7 @@ class PostController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($post->setBlogger($this->getUser()));
+            $em->persist($post->setBlogger($user));
             $em->flush();
 
             return $this->redirect(
