@@ -1,53 +1,56 @@
+{#
+ # /**
+ #  * This file is part of oc_snowtricks project
+ #  *
+ #  * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ #  * @since 2018/02
+ #  */
+ #}
 {% extends "layout.html.twig" %}
 
 {% trans_default_domain 'application' %}
 {% block main %}
-{#
- #/**
- # * This file is part login_content.html.twif the website http://oodie.fr
- # *
- # * @copyright  Copyright (c) 2017  The OODIE Team
- # * @author Sébastien CHOMY <sebastien.chomy@gmail.com>
- # * @filesource Ood\UserBundle\Resources\views\Security\login_content.html.twig
- # * @since 2017/6
- # */
- #}
 
-<div class="container">
-<div class="form-user text-center">
-    <div class="form-user-title">
-        <h1>{{ 'login.title'|trans }}</h1>
-        <h4>{{ 'login.title-desc'|trans }}</h4>
+<div class="v-container">
+    <div class="container">
+        <div class="form-user">
+            <div class="form-user-title text-center">
+                <h3>{{ 'login.title'|trans }}</h3>
+            </div>
+            <div class="form-user-form">
+                <form action="{{ path('ood_user_security_login') }}" method="post" novalidate="novalidate"
+                      class="form-signin {% if error %} error{% endif %}">
+                    <div class="form-label-group">
+                        <input type="email" id="username" name="_username" value="{{ last_username }}"
+                               class="form-control"
+                               placeholder="{{ 'login.username.label'|trans }}" tabindex="1" autofocus required>
+                        <label for="username">{{ 'login.username.label'|trans }}</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input type="password" id="password" name="_password"
+                               class="form-control"
+                               placeholder="{{ 'login.password.label'|trans }}" tabindex="2" required>
+                        <label for="password">{{ 'login.password.label'|trans }}</label>
+                    </div>
+                    {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            <div>{{ 'login.error'|trans|nl2br }}</div>
+                        </div>
+                    {% endif %}
+                    <div class="my-2">
+                        <a href="#" id="resetting-request" tabindex="4">{{ 'login.form-resetting.label'|trans }}</a>
+                    </div>
+                    <input type="hidden" name="_crsf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    <input type="submit" id="_submit" name="_submit" value="{{ 'login.submit.label'|trans|upper }}"
+                           class="btn btn-lg btn-primary btn-block" tabindex="3">
+
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="form-user-form">
-        <form action="{{ path('ood_user_security_login') }}" method="post" novalidate="novalidate"
-              class="ui large form{% if error %} error{% endif %}">
-            <div class="ui left icon input fluid">
-                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"
-                       placeholder="{{ 'login.username.label'|trans }}" tabindex="1" autofocus>
-                <i class="user outline icon" aria-hidden="true"></i>
-            </div>
-            <div class="ui left icon input field fluid">
-                <input type="password" id="password" name="_password" required="required"
-                       placeholder="{{ 'login.password.label'|trans }}" tabindex="2">
-                <i class="lock icon" aria-hidden="true"></i>
-            </div>
-            <div class="ui error message">
-                {% if error %}
-                    <div>{{ 'login.error'|trans|nl2br }}</div>
-                {% endif %}
-            </div>
-            <div class="ui field">
-                <a href="#" id="resetting-request" tabindex="4">{{ 'login.form-resetting.label'|trans }}</a>
-            </div>
-            <input type="hidden" name="_crsf_token"
-                   value="{{ csrf_token('authenticate') }}"
-            >
-            <input type="submit" id="_submit" name="_submit" value="{{ 'login.submit.label'|trans|upper }}"
-                   class="ui large button fluid login" tabindex="3">
-        </form>
-    </div>
-</div>
 </div>
 {% endblock main %}
 

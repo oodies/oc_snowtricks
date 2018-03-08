@@ -5,8 +5,13 @@
 # * @since 2018/02
 # */
 
-# Login page
+# Security:: Login
 ood_user_security_login:
   path: /login
   defaults: { _controller: OodUserBundle:Security:login }
   methods: ["GET","POST"]
+
+# Security:: Logout
+ood_user_security_logout:
+  path: /logout
+  methods: ["GET"]
