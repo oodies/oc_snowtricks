@@ -1,12 +1,12 @@
-/**
+/*!
  * This file is part of oc_snowtricks project
  *
  * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
  * @since 2018/02
+  * global.scss
  */
-//@import "~bootstrap-sass/assets/stylesheets/bootstrap";
-
 @import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~font-awesome/css/font-awesome.min.css";
-@import "app.scss";
-
+// TODO Bug Cannot load fonts
+//@import "~font-awesome/css/font-awesome.min.css";
+@import "./app.scss";
+@import "./login.scss";

@@ -27,7 +27,7 @@ class SecurityController extends Controller
     public function loginAction()
     {
         if (!is_null($this->getUser())) {
-            return $this->redirectToRoute('app_homepage');
+            return $this->redirectToRoute('ood_app_homepage');
         }
 
         /** @var \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authUtils */

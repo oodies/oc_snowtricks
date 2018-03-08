@@ -9,5 +9,5 @@ require('../css/global.scss');
 // loads the jquery package from node_modules
 var $ = require('jquery');
 
-importScripts ("~bootstrap/dist/js/bootstrap.min.js");
+require("../../node_modules/bootstrap/dist/js/bootstrap.min.js");
 require('../js/app.js');
