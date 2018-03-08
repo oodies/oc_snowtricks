@@ -6,10 +6,10 @@
 # */
 
 ## ************************************
-## Title        : View all comments by blogpost
+## Title        : View of a comments thread
 ## page         : Article
 ## Description  :
-## URL          : /getComments/article/{postId}
+## URL          : /comments/{threadId}
 ## Type         : subview
 comments:
   title: "[0,0]Aucun commentaire|[1,1]Comment|[2,+Inf]Comments"

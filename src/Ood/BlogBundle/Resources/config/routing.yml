@@ -1,0 +1,33 @@
+#/**
+# * This file is part of oc_snowtricks project
+# *
+# * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# * @since 2018/02
+# */
+
+ood_blog_post_list:
+    path:     /articles
+    defaults: { _controller: OodBlogBundle:Post:list }
+    methods: ['GET']
+
+ood_blog_post_new:
+    path:     /newArticle
+    defaults: { _controller: OodBlogBundle:Post:new }
+    methods: ['GET','POST']
+
+ood_blog_post_show:
+    path:     /article/{postId}
+    defaults: { _controller: OodBlogBundle:Post:show }
+    methods: ['GET']
+
+ood_blog_post_edit:
+    path:     /article/{postId}/change
+    defaults: { _controller: OodBlogBundle:Post:edit }
+    methods: ['GET','POST']
+
+ood_blog_post_remove:
+    path:     /article/{postId}/remove
+    defaults: { _controller: OodBlogBundle:Post:remove }
+    methods: ['GET']
+
+

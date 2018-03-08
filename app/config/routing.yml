@@ -18,7 +18,7 @@ ood_app:
     prefix:   /
 
 ood_blogpost:
-    resource: "@OodBlogpostBundle/Resources/config/routing.yml"
+    resource: "@OodBlogBundle/Resources/config/routing.yml"
     prefix:   /
 
 ood_comment:

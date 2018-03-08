@@ -9,7 +9,6 @@
 namespace Ood\CommentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Ood\BlogpostBundle\Entity\Post;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

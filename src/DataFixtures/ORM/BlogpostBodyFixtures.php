@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider\Lorem as FakerLorem;
-use Ood\BlogpostBundle\Entity\Body;
+use Ood\BlogBundle\Entity\Body;
 
 /**
  * Class BlogpostBodyFixtures

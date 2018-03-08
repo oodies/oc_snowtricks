@@ -9,7 +9,7 @@
 namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Ood\BlogpostBundle\Entity\Category;
+use Ood\BlogBundle\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**

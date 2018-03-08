@@ -11,8 +11,7 @@
 ## Type         : Page
 
 login:
-    title: "Authentification"
-    title-desc: "Qu'allez-vous faire aujourd'hui !"
+    title: "SNOWTRICK"
     # Input label, username
     username:
         label: "Email"
