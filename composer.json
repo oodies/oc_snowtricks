@@ -16,7 +16,10 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "autoload-dev": {
-        "psr-4": { "Tests\\": "tests/" },
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Ood\\UserBundle\\Tests\\": "src/Ood/UserBundle/Tests"
+        },
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
@@ -30,6 +33,7 @@
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^2.6.4",
         "symfony/symfony": "3.4.*",
+        "symfony/webpack-encore-pack": "^1.0",
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {

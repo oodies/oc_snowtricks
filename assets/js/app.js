@@ -1,4 +1,10 @@
-
+/*!
+ * This file is part of oc_snowtricks project
+ *
+ * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ * @since 2018/02
+ * application.js
+ */
 // setup an "add a tag" link
 var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
