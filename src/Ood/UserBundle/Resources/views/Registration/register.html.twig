@@ -1,0 +1,50 @@
+{#
+ # /**
+ #  * This file is part of oc_snowtricks project
+ #  *
+ #  * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ #  * @since 2018/02
+ #  */
+ #}
+{% extends "layout.html.twig" %}
+{% trans_default_domain 'application' %}
+
+{% block main %}
+    <div class="v-container">
+        <div class="container">
+            <div class="form-registration">
+                <div class="form-registration-title text-center">
+                    <h3>{{ 'registration.title'|trans }}</h3>
+                </div>
+                <div class="form-registration-form">
+                    {{ form_start(form, {'attr' : {'class':'form-signin was-validated', 'novalidate':'novalidate'}} ) }}
+                    <div class="form-label-group">
+                        {{ form_widget(form.email)}}
+                        {{ form_label(form.email)}}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div class="form-label-group">
+                        {{ form_widget(form.username) }}
+                        {{ form_label(form.username) }}
+                        {{ form_errors(form.username) }}
+                    </div>
+                    <div class="form-label-group">
+                        {{ form_widget(form.plainPassword.first) }}
+                        {{ form_label(form.plainPassword.first) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                    </div>
+                    <div class="form-label-group">
+                        {{ form_widget(form.plainPassword.second) }}
+                        {{ form_label(form.plainPassword.second) }}
+                        {{ form_errors(form.plainPassword.second) }}
+                    </div>
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}
+
+{% block title %}{{ 'registration.page_title'|trans }}{% endblock title %}
+{% block page %}registration{% endblock page %}

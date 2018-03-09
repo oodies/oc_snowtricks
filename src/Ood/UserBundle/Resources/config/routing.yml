@@ -15,3 +15,9 @@ ood_user_security_login:
 ood_user_security_logout:
   path: /logout
   methods: ["GET"]
+
+# Registration:: Register
+ood_user_registration_register:
+  path: /inscription
+  defaults: { _controller: OodUserBundle:Registration:register }
+  methods: ["GET","POST"]
