@@ -164,6 +164,9 @@ class PostController extends Controller
     }
 
     /**
+     * Remove a post + Thread of comments + Images + videos
+     *
+     * @param Request $request
      * @param Post $post
      *
      * @ParamConverter("post", options={"id"="postId"})
@@ -172,7 +175,7 @@ class PostController extends Controller
      *
      * @return Response
      */
-    public function removeAction(Post $post)
+    public function removeAction(Request $request, Post $post)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -190,14 +193,21 @@ class PostController extends Controller
                 }
                 $em->remove($thread);
             }
-
             $em->remove($post);
             $em->flush();
+
+            // TODO Supprimer les images en dur sur le serveur
         }
 
-        $response = new Response();
-        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+        if ($request->isXmlHttpRequest()) {
+            // From blogpost list
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_OK);
 
-        return $response;
+            return $response;
+        } else {
+            // From blogpost himself
+            return $this->redirect($this->generateUrl('ood_blog_post_list'));
+        }
     }
 }

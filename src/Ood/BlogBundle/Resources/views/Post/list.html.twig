@@ -60,6 +60,9 @@
     </div>
 </section>
 <script>
+  //
+  // namespace infinite_scroll
+  //
   var infinite_scroll = infinite_scroll || {};
   (function (publics) {
     'use strict'
@@ -134,8 +137,61 @@
     }
   }(infinite_scroll));
 
+
+  //
+  // namespace post_remove
+  //
+  var post_remove = post_remove || {};
+  (function (publics) {
+      'use strict'
+
+      /** @type {string} */
+      var _linkRemovePostSelector = null;
+
+      // -----------------
+      // Privates functions
+      //
+      var privates = {};
+
+      /**
+       * Init var
+       */
+      privates.initVar = function () {
+        _linkRemovePostSelector = '.js-remove-post';
+      }
+
+      /**
+       * LinkRemovePost onClick Event
+       */
+      privates.onClick_linkRemovePost = function () {
+        $(document).on('click', _linkRemovePostSelector , function (e) {
+          e.preventDefault();
+
+          var oConfirm = confirm("voulez-vous supprimer cette article ?");
+
+          if (oConfirm === true) {
+              var scope = $(this);
+              var url = scope.attr('href');
+              var jqXHR = $.get(url);
+
+              jqXHR.done(function (response) {
+                scope.parents('.st_card').remove();
+              });
+          }
+          return false;
+        });
+      }
+
+      publics.init = function() {
+        privates.initVar();
+        privates.onClick_linkRemovePost();
+      }
+    }(post_remove)
+  );
+
   $(document).ready(function() {
         infinite_scroll.init();
+        post_remove.init();
   });
 </script>
 {% endblock main %}
