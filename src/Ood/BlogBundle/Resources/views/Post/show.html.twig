@@ -10,42 +10,68 @@
 
 {% trans_default_domain 'application' %}
 {% block main %}
-    {% if post.images is not empty %}
-        {% set image = post.images[0] %}
-        <img class="img-fluid" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
-    {% else %}
-        <img class="img-fluid" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
-    {% endif %}
-    <h1>{{ post.header.title }}</h1>
-    <h4>{{ post.header.brief }}</h4>
+    <section id="head">
+        <div class="action">
+            {% if is_granted('ROLE_BLOGGER') %}
+                <a class="btn btn-sm btn-light m-1" role="button"
+                   href="{{ path('ood_blog_post_edit', {"postId" : post.idPost} ) }}">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-sm btn-light m-1" role="button"
+                   href="{{ path('ood_blog_post_remove', { "postId": post.idPost } ) }} ">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+        </div>
 
-    <div class="d-flex">
-        <!-- images -->
-        {% for image in post.images %}
-            <div class="mr-2 border" style="width: 18rem;">
-                <img  id="image_{{ image.idImage }}" class="img-fluid" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
-            </div>
-        {% endfor %}
-        <!-- videos -->
-        {% for video in post.videos %}
-            <div class="mr-2 border" style="width: 18rem;">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" width="560" height="315" src="{{ video.identifier }}"
-                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        {% if post.images is not empty %}
+            {% set image = post.images[0] %}
+            <img class="" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
+        {% else %}
+            <img class="" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
+        {% endif %}
+    </section>
+    <h1 style="display: none;">{{ post.header.title }}</h1>
+    <h4 style="display: none;">{{ post.header.brief }}</h4>
+
+    <section id="medias" class="d-none d-sm-block">
+        <div class="cards d-flex flex-wrap justify-content-center">
+            <!-- images -->
+            {% for image in post.images %}
+                <div class="st_card">
+                    <img id="image_{{ image.idImage }}" class="img-fluid" src="{{ asset(image.webpath) }}"
+                         alt="{{ image.alt }}">
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-    <!-- Text content -->
-    <p>{{ post.body.content }}</p>
-    <!-- Extra information -->
-    <div class="d-flex">
-        <div class="mr-4">{{ post.createAt|date() }}</div>
-        <div class="mr-4">{{ post.category.name }}</div>
-        <div class="mr-4">{{ post.updateAt|date }}</div>
-    </div>
-    <hr class="divider">
-    {{ render(controller('OodCommentBundle:ThreadComment:newComment', {threadId : post.idPost} )) }}
-    <hr class="divider">
-    {{ render(controller('OodCommentBundle:ThreadComment:thread', {threadId : post.idPost} )) }}
+            {% endfor %}
+            <!-- videos -->
+            {% for video in post.videos %}
+                <div class="st_card">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" width="560" height="315" src="{{ video.identifier }}"
+                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section id="content" class="container">
+        <!-- Text content -->
+        <p class="p-4">{{ post.body.content }}</p>
+        <!-- Extra information -->
+        <div class="d-flex justify-content-center flex-column flex-sm-row">
+            <div class="p-2 m-1 border border-info rounded">{{ post.createAt|date() }}</div>
+            <div class="p-2 m-1 border border-dark">{{ post.category.name }}</div>
+            <div class="p-2 m-1 border border-info rounded">{{ post.updateAt|date }}</div>
+        </div>
+        <hr/>
+    </section>
+    <section id="comments" class="container">
+        {{ render(controller('OodCommentBundle:ThreadComment:newComment', {threadId : post.idPost} )) }}
+        <hr class="divider">
+        {{ render(controller('OodCommentBundle:ThreadComment:thread', {threadId : post.idPost} )) }}
+    </section>
 {% endblock main %}
+
+
+{% block title %}Figure - {{ post.header.title }}{% endblock title %}
+{% block page %}figure{% endblock page %}
