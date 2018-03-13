@@ -1,10 +1,26 @@
 {% extends 'layout.html.twig' %}
+
+{% trans_default_domain 'application' %}
 {% block main %}
-{{ form_start(form, {attr : {novalidate: 'novalidate'}} ) }}
-{{ form_errors(form) }}
-<ul class="images"  data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
-</ul>
-{{ form_rest(form) }}
-<button type="submit">Validate</button>
-{{ form_end(form) }}
+    <h4 class="container">{{ 'post_new.page_title'|trans }}</h4>
+    <hr class="container"/>
+    {{ form_start(form, {attr : {novalidate: 'novalidate', 'class':'was-validated'}} ) }}
+
+    <section id="form" class="container">
+        {% include "@OodBlog/Post/form_post.hml.twig" %}
+    </section>
+
+    <section id="medias" class="container">
+        <div class="cards d-flex flex-wrap justify-content-center justify-content-md-start"
+             data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+        </div>
+        <div id="images-new" class="m-4"></div>
+        <button type="submit" class="btn btn-lg btn-primary">Validate</button>
+    </section>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
 {% endblock main %}
+
+{% block title %}{{ 'post_new.page_title'|trans }}{% endblock title %}
+{% block page %}post-new{% endblock page %}

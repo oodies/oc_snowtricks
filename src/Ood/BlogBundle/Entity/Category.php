@@ -55,6 +55,10 @@ class Category
      *     options={"comment"="Contains the name of the category"}
      * )
      *
+     * @Assert\NotNull(
+     *     message="category.name.not_null"
+     * )
+     *
      * @Assert\Length(
      *     max=40,
      *     maxMessage="category.name.max_length"

@@ -1,0 +1,24 @@
+<div id="form_post">
+    <div class="form_post-form">
+        <div class="form-group">
+            {{ form_widget(form.header.title) }}
+            {{ form_label(form.header.title) }}
+            {{ form_errors(form.header.title) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.header.brief) }}
+            {{ form_label(form.header.brief) }}
+            {{ form_errors(form.header.brief) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.body.content) }}
+            {{ form_label(form.body.content) }}
+            {{ form_errors(form.body.content) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.category) }}
+            {{ form_errors(form.category) }}
+            {{ form_errors(form.body.content) }}
+        </div>
+    </div>
+</div>

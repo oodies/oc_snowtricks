@@ -32,12 +32,20 @@ class HeaderType extends AbstractType
                 'title', TextType::class,
                 [
                     'required' => true,
+                    'label'    => 'posts_form.title.label',
+                    'attr'     => [
+                        'placeholder' => 'posts_form.title.placeholder'
+                    ]
                 ]
             )
             ->add(
                 'brief', TextType::class,
                 [
                     'required' => true,
+                    'label'    => 'posts_form.brief.label',
+                    'attr'     => [
+                        'placeholder' => 'posts_form.brief.placeholder'
+                    ]
                 ]
             );
     }

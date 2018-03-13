@@ -21,3 +21,6 @@ posts_form:
         placeholder: "Ecrivez votre article"
     category:
         label: "Catégorie"
+
+post_new:
+    page_title : "Nouvelle figure"
