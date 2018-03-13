@@ -1,0 +1,23 @@
+#/**
+# * This file is part of oc_snowtricks project
+# *
+# * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# * @since 2018/03
+# */
+
+posts_list:
+    page_title: "Figures"
+    infinitescroll: "Voir les %number_item_next% suivants"
+
+posts_form:
+    title:
+        label: "Titre"
+        placeholder: "Nom de la figure"
+    brief:
+        label: "Résumé"
+        placeholder: "Bref résumé de l'article"
+    content:
+        label: "Texte"
+        placeholder: "Ecrivez votre article"
+    category:
+        label: "Catégorie"

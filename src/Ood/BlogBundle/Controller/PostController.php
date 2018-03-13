@@ -13,6 +13,7 @@ use Ood\BlogBundle\Form\PostType;
 use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Entity\Thread;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,11 +26,24 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class PostController extends Controller
 {
+    /* ********************************
+     *  CONSTANTS
+     */
+
+    /** Maximum number of results from index */
+    const ITEMS_PER_PAGE = 3;
+
+    /* ********************************
+     *  METHODS
+     */
+
     /**
      * Create a post
      *
      * @param Request       $request
      * @param UserInterface $user
+     *
+     * @Security("has_role('ROLE_BLOGGER')")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \LogicException
@@ -74,17 +88,53 @@ class PostController extends Controller
     }
 
     /**
+     * Display posts list
+     *
+     * QueryParam (name="page", requirement="\d+", default="0", description="number page")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \LogicException
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        return $this->render(
-            '@OodBlog/Post/list.html.twig',
-            [
-                'posts' => $this->getDoctrine()->getManager()->getRepository(Post::class)->findAll()
-            ]
-        );
+        if ($request->getMethod() === 'POST') {
+            $page = $request->get('page');
+        } else {
+            $page = 0;
+        }
+
+        // Get param request
+        $params = [];
+        $params['page'] = $page;
+        $params['limit'] = $request->get('limit', self::ITEMS_PER_PAGE);
+        $params['offset'] = ((int)$page) * ((int)$params['limit']);
+
+        $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
+        $posts = $repository->findResources($params);
+        $totalPosts = $repository->getNbItems();
+
+        /** @var integer $restOfPosts Number of posts remaining to be displayed */
+        $restOfPosts = $totalPosts - ($page + 1) * self::ITEMS_PER_PAGE;
+        /** @var integer $numberItemNext Next number of post to display */
+        $numberItemNext = ($restOfPosts > self::ITEMS_PER_PAGE) ? self::ITEMS_PER_PAGE : $restOfPosts;
+
+        $assign = [
+            'posts'          => $posts,
+            'page'           => $page,
+            'totalPosts'     => $totalPosts,
+            'restOfPosts'    => $restOfPosts,
+            'vURL'           => 'ood_blog_post_list',
+            'numberItemNext' => $numberItemNext,
+            'itemsPerPage'   => self::ITEMS_PER_PAGE
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            $template = 'OodBlogBundle:Post:list_content.html.twig';
+        } else {
+            $template = 'OodBlogBundle:Post:list.html.twig';
+        }
+
+        return $this->render($template, $assign);
     }
 
     /**
@@ -92,6 +142,8 @@ class PostController extends Controller
      * @param Post    $post
      *
      * @ParamConverter("post", options={"id"="postId"})
+     *
+     * @Security("has_role('ROLE_BLOGGER')")
      *
      * @throws \LogicException
      *
@@ -108,18 +160,15 @@ class PostController extends Controller
             // TODO FlashBag
         }
 
-        return $this->render(
-            '@OodBlog/Post/edit.html.twig',
-            [
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('@OodBlog/Post/edit.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * @param Post $post
      *
      * @ParamConverter("post", options={"id"="postId"})
+     *
+     * @Security("has_role('ROLE_BLOGGER')")
      *
      * @return Response
      */
@@ -151,5 +200,4 @@ class PostController extends Controller
 
         return $response;
     }
-
 }
