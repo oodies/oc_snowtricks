@@ -1,0 +1,31 @@
+#   This file is part of oc_snowtricks project
+#
+#   @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+#   @since 2018/03
+#
+#   Error translate
+
+outing:
+    homepage: "Take Me Home"
+    contact_us: "Contact Support"
+
+error:
+    title: "Oops !"
+    subtitle: "Error"
+    desc: "Sorry, an error has occurred."
+
+error403:
+    title: "Oops !"
+    subtitle: "403 forbidden"
+    desc: "Sorry, an error has occurred, requested page not have the necessary credentials!"
+
+error404:
+    title: "Oops !"
+    subtitle: "404 not found"
+    desc: "Sorry, an error has occurred, Requested page not found!"
+
+## Template
+#errorXXX:
+#    title: ""
+#    subtitle: ""
+#    desc: ""

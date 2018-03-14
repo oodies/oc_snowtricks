@@ -1,0 +1,31 @@
+#   This file is part of oc_snowtricks project
+#
+#   @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+#   @since 2018/03
+#
+#   Error translate
+
+outing:
+    homepage: "Page d'accueil"
+    contact_us: "Contactez-nous"
+
+error:
+    title: "Oops !"
+    subtitle: "Erreur"
+    desc: "Désolé, une erreur s'est produite"
+
+error403:
+    title: "Oops !"
+    subtitle: "403 Interdiction"
+    desc: "Désolé, une erreur s'est produite, la page demandée n'a pas les identifiants nécessaires!"
+
+error404:
+    title: "Oops !"
+    subtitle: "404 Page non trouvé"
+    desc: "Désolé, une erreur s'est produite, Page demandée introuvable !"
+
+## Template
+#errorXXX:
+#    title: ""
+#    subtitle: ""
+#    desc: ""

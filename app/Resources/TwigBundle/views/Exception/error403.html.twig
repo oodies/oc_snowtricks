@@ -1,0 +1,19 @@
+{#
+    This file is part of oc_snowtricks project
+
+    @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+    @since 2018/03
+
+    The custom page error 404 resource not found
+    Override \vendor\..\TwigBundle\Resources\views\Exception\error403.html.twig
+#}
+{% trans_default_domain 'error' %}
+
+{% extends "@Twig/Exception/base_error.html.twig" %}
+{% block error %}
+    <h1>{{ 'error403.title'|trans }}</h1>
+    <h2>{{ 'error403.subtitle'|trans }}</h2>
+    <div class="p-4">
+        {{ 'error403.desc'|trans }}
+    </div>
+{% endblock error %}
