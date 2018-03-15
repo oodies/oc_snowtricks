@@ -46,50 +46,38 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $data = [
-            'm2e'    => 'Gra',
-            's1d'    => 'Gra',
-            'i2y'    => 'Gra',
-            'rot180' => 'Rot',
-            'rot360' => 'Rot',
-            'f9s'    => 'Fli',
-            'b9s'    => 'Fli',
-        ];
-
-        $i = 26;
-        foreach ($data as $index => $category) {
+        $saut = 1;
+        for ($i = 1; $i <= 50; $i++) {
             $post = new Post();
             /** @var \Ood\BlogBundle\Entity\Category $category */
-            $category = $this->getReference($category);
+            $category = $this->getReference('category_' . (string)rand(1, 10));
             /** @var \Ood\UserBundle\Entity\User $blogger */
-            $blogger = $this->getReference('user_' . (string)rand(1, 5));
+            $blogger = $this->getReference('user_blogger');
             /** @var \Ood\BlogBundle\Entity\Header $header */
-            $header = $this->getReference('header_' . $index);
+            $header = $this->getReference('header_' . $i);
             /** @var \Ood\BlogBundle\Entity\Body $body */
-            $body = $this->getReference('body_' . $index);
-            /** @var \Ood\PictureBundle\Entity\Image $image1 */
-            $image1 = $this->getReference('image_' . (string)$i);
-            /** @var \Ood\PictureBundle\Entity\Image $image2 */
-            $image2 = $this->getReference('image_' . (string)($i + 1));
-            /** @var \Ood\PictureBundle\Entity\Video $video1 */
-            $video1 = $this->getReference('video_' . (string)$i);
-            /** @var \Ood\PictureBundle\Entity\Video $video2 */
-            $video2 = $this->getReference('video_' . (string)($i + 1));
+            $body = $this->getReference('body_' . $i);
 
             $post
                 ->setCategory($category)
                 ->setBlogger($blogger)
                 ->setHeader($header)
-                ->setBody($body)
-                ->addImage($image1)
-                ->addImage($image2)
-                ->addVideo($video1)
-                ->addVideo($video2);
+                ->setBody($body);
+
+            for ($v = 0; $v <= 4; $v++) {
+                /** @var \Ood\PictureBundle\Entity\Image $image */
+                $image = $this->getReference('image_' . (string)($saut+$v));
+                /** @var \Ood\PictureBundle\Entity\Video $video */
+                $video = $this->getReference('video_' . (string)($saut+$v));
+
+                $post->addImage($image)
+                     ->addVideo($video);
+            }
 
             $manager->persist($post);
-            $this->addReference('post_' . $index, $post);
+            $this->addReference('post_' . (string)$i, $post);
 
-            $i = $i + 2;
+            $saut = $saut + 5;
         }
         $manager->flush();
     }

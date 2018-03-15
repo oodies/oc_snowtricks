@@ -43,25 +43,17 @@ class CommentCommentFixtures extends Fixture implements DependentFixtureInterfac
      */
     public function load(ObjectManager $manager)
     {
-        $data = [
-            'm2e',
-            's1d',
-            'i2y',
-            'f9s',
-            'b9s',
-        ];
-
         $faker = new FakerGenerator();
         $faker->addProvider(new FakerLorem($faker));
 
-        foreach ($data as $index) {
+        for ($i=1; $i <= 50; $i++) {
             /** @var \Ood\CommentBundle\Entity\Thread $thread */
-            $thread = $this->getReference('thread_' . $index);
+            $thread = $this->getReference('thread_' . $i);
             // 5 comments by thread
-            for ($i=1; $i<=5; $i++) {
+            for ($j=1; $j<=40; $j++) {
                 $comment = new Comment();
                 /** @var \Ood\UserBundle\Entity\User $author */
-                $author = $this->getReference('user_' . (string)rand(6, 25));
+                $author = $this->getReference('user_author');
                 $comment
                     ->setThread($thread)
                     ->setBody($faker->paragraph(1))

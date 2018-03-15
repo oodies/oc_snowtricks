@@ -28,25 +28,15 @@ class BlogpostBodyFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $data = [
-            'm2e',
-            's1d',
-            'i2y',
-            'rot180',
-            'rot360',
-            'f9s',
-            'b9s',
-        ];
-
         $faker = new FakerGenerator();
         $faker->addProvider(new FakerLorem($faker));
-        foreach ($data as $index) {
+        for ($i=1 ; $i <= 50; $i++) {
             $body = new Body();
             $body->setContent($faker->paragraph(5));
 
             $manager->persist($body);
 
-            $this->addReference('body_' . $index, $body);
+            $this->addReference('body_' . (string)$i, $body);
         }
         $manager->flush();
     }

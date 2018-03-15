@@ -26,17 +26,10 @@ class BlogpostCategoryFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $names = [
-            'Gra' => 'Grabs',
-            'Rot' => 'Rotations',
-            'Fli' => 'Flips',
-            'Sli' => 'Slides',
-            'Old' => 'Old School',
-        ];
-
-        foreach ($names as $index => $name) {
+        for ($i = 1; $i <= 10; $i++) {
             $category = new Category();
-            $category->setName($name);
+            $index = 'category_' . (string)$i;
+            $category->setName($index);
 
             $manager->persist($category);
 
