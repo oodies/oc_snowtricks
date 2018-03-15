@@ -41,7 +41,7 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
      */
     function getDependencies()
     {
-        return [ PictureImageFixtures::class ];
+        return [PictureImageFixtures::class];
     }
 
 
@@ -60,17 +60,21 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
 
         for ($i = 1; $i <= 25; $i++) {
             $user = new User();
-            $user->setLastname($faker->lastName)
-                 ->setFirstname($faker->firstName)
-                 ->setUsername($faker->lastName)
+            $email = $faker->email;
+            $firstName = $faker->firstName;
+            $lastName = $faker->lastName;
+
+            $user->setLastname($lastName)
+                 ->setFirstname($firstName)
+                 ->setUsername( mb_strtolower(substr($firstName,0,1) . $lastName))
                  ->setNickname($faker->firstName)
-                 ->setEmail($faker->email)
+                 ->setEmail($email)
                  ->setRoles(['ROLE_USER']);
 
-            $hashPassword = $this->encoder->encodePassword($user, '12345pass');
+            $hashPassword = $this->encoder->encodePassword($user, '12345');
             $user->setPassword($hashPassword);
             /** @var \Ood\PictureBundle\Entity\Image $image */
-            $image = $this->getReference('image_'.(string)$i);
+            $image = $this->getReference('image_' . (string)$i);
             $user->setPhoto($image);
 
             $manager->persist($user);
@@ -78,13 +82,14 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
             $this->addReference('user_' . (string)$i, $user);
         }
 
-        $manager->persist($this->createJDoeUser());
+        $this->createSpecificUser($manager);
 
         $manager->flush();
     }
 
     /**
      * @param ContainerInterface|null $container
+     *
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
      */
@@ -95,23 +100,34 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
     }
 
     /**
-     * @return User
+     *
      * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
      */
-    protected function createJDoeUser(): User
+    protected function createSpecificUser($manager)
     {
-        $user = new User();
-        $user->setLastname('doe')
-             ->setFirstname('joe')
-             ->setUsername('jdoe')
-             ->setEmail('john.doe@email.com')
-             ->setRoles(['ROLE_USER']);
 
-        $hashPassword = $this->encoder->encodePassword($user, '12345pass');
-        $user->setPassword($hashPassword);
+        $users = [
+            'user_jdoe' => ['joe', 'doe', 'ROLE_USER'],
+            'user_author' => ['smith', 'author', 'ROLE_AUTHOR'],
+            'user_blogger' => ['smith', 'blogger', 'ROLE_BLOGGER'],
+            'user_admin' => ['smith', 'admin', 'ROLE_ADMIN']
+        ];    
 
-        $this->addReference('user_jdoe', $user);
+        foreach ($users as list($firstName, $lastName, $role)) {
+            $user = new User();
+            $user->setLastname($lastName)
+                 ->setFirstname($firstName)
+                 ->setUsername($lastName)
+                 ->setNickname($lastName)
+                 ->setEmail($firstName.'.'.$lastName.'@email.com')
+                 ->setRoles([$role]);
+    
+            $hashPassword = $this->encoder->encodePassword($user, '12345');
+            $user->setPassword($hashPassword);
+    
+            $this->addReference('user_'.$lastName, $user);
 
-        return $user;
+            $manager->persist($user);
+        }
     }
 }

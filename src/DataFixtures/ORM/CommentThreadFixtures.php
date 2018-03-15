@@ -40,24 +40,16 @@ class CommentThreadFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $data = [
-            'm2e',
-            's1d',
-            'i2y',
-            'f9s',
-            'b9s',
-        ];
-
-        foreach ($data as $index) {
+        for ($i = 1; $i <= 50; $i++) {
             $thread = new Thread();
             /** @var \Ood\BlogBundle\Entity\Post $post */
-            $post = $this->getReference('post_' . $index);
+            $post = $this->getReference('post_' . $i);
             $thread->setIdThread($post->getIdPost())
                    ->setNumberOfComment(rand(1, 5));
 
             $manager->persist($thread);
 
-            $this->addReference('thread_' . $index, $thread);
+            $this->addReference('thread_' . (string)$i, $thread);
         }
         $manager->flush();
     }

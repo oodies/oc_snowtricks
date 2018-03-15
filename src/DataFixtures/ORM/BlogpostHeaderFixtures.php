@@ -10,6 +10,8 @@ namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Faker\Generator as FakerGenerator;
+use Faker\Provider\Lorem as FakerLorem;
 use Ood\BlogBundle\Entity\Header;
 
 /**
@@ -26,28 +28,18 @@ class BlogpostHeaderFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $data = [
-            'm2e' => ['mute', 'Saisie de la carre frontside de la planche entre les deux pieds avec la main avant'],
-            's1d' => ['sad', 'saisie de la carre backside de la planche, entre les deux pieds, avec la main avant'],
-            'i2y' => [
-                'indy',
-                'saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière'
-            ],
-            'rot180' => ['180', 'un 180 désigne un demi-tour, soit 180 degrés d\'angle'],
-            'rot360' => ['360', '360, trois six pour un tour complet'],
-            'f9s' => ['front flips', 'Rotation en avant'],
-            'b9s' => ['backs flips', 'Rotation en arrière'],
-        ];
+        $faker = new FakerGenerator();
+        $faker->addProvider(new FakerLorem($faker));
 
-        foreach ($data as $index => [$title, $brief]) {
+        for ($i = 1; $i <= 50; $i++) {
             $header = new Header();
             $header
-                ->setTitle($title)
-                ->setBrief($brief);
+                ->setTitle('figure_' . $i)
+                ->setBrief($faker->paragraph(1));
 
             $manager->persist($header);
 
-            $this->addReference('header_' . $index, $header);
+            $this->addReference('header_' . (string)$i, $header);
         }
         $manager->flush();
     }

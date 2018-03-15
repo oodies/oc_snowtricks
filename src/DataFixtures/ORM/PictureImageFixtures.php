@@ -30,19 +30,15 @@ class PictureImageFixtures extends Fixture
     {
         $extension = ['jpg', 'png'];
 
-        for ($i = 1; $i <= 60; $i++) {
+        for ($i = 1; $i <= 250; $i++) {
             $image = new Image();
             $image->setExtension($extension[array_rand($extension, 1)]);
-            if ($i <= 25) {
-                $suffix = 'profile_';
-            } else {
-                $suffix = 'image_';
-            }
-            $image->setAlt($suffix . (string)$i);
+            $refName = 'image_' . (string)$i;
+            $image->setAlt($refName);
 
             $manager->persist($image);
 
-            $this->addReference('image_' . (string)$i, $image);
+            $this->addReference($refName, $image);
         }
         $manager->flush();
     }
