@@ -21,10 +21,16 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *
  * @UniqueEntity(
  *     fields={
- *          "username",
- *          "email"
+ *          "username"
  *     },
  *     message="user.username.unique_entity"
+ * )
+ *
+ * @UniqueEntity(
+ *     fields={
+ *          "email"
+ *     },
+ *     message="user.email.unique_entity"
  * )
  */
 class User implements AdvancedUserInterface, \Serializable
@@ -121,8 +127,9 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(
      *     name="username",
      *     type="string",
-     *     length=20,
+     *     length=60,
      *     nullable=false,
+     *     unique=true,
      *     options={"comment"="Contains the username (alias) of the person"}
      * )
      *
@@ -131,7 +138,7 @@ class User implements AdvancedUserInterface, \Serializable
      * )
      *
      * @Assert\Length(
-     *     max=20,
+     *     max=60,
      *     maxMessage="user.username.max_length"
      * )
      */
@@ -148,11 +155,16 @@ class User implements AdvancedUserInterface, \Serializable
      *     type="string",
      *     length=60,
      *     nullable=false,
+     *     unique=true,
      *     options={"comment":"Contains the email address of the person"}
      * )
      *
      * @Assert\NotBlank(
-     *     message="user.email.no_blank"
+     *     message="user.email.not_blank"
+     * )
+     *
+     * @Assert\Email(
+     *     message="user.email.not_valid"
      * )
      *
      * @Assert\Length(
@@ -200,7 +212,7 @@ class User implements AdvancedUserInterface, \Serializable
      *     maxMessage="user.password.max_length"
      * )
      */
-    protected $plainPassword = "";
+    protected $plainPassword;
 
     /**
      * Date of registration
@@ -454,19 +466,19 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
     /**
-     * @param string $plainPassword
+     * @param null|string $plainPassword
      *
      * @return User
      */
-    public function setPlainPassword(string $plainPassword): User
+    public function setPlainPassword(?string $plainPassword): User
     {
         $this->plainPassword = $plainPassword;
         return $this;

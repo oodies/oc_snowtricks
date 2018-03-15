@@ -1,0 +1,24 @@
+##
+## This file is part of oc_snowtricks project
+##
+## @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+## @since 2018/03
+##
+
+## ************************************
+## Title        : Registration
+## Description  :
+## URL          : /registration
+## Type         : Validator
+user:
+    email:
+        not_blank: "Saisir une adresse mail"
+        max_length: "{{ limit }} caractères au maximum"
+        not_valid: "Email non conforme"
+        unique_entity: "Email déjà utilisé"
+    username:
+        not_blank: "Saisir un identifiant ou mail"
+        max_length: "{{ limit }} caractères au maximum"
+        unique_entity: "Identifiant déjà utilisé"
+    plainPassword:
+        max_length: "{{ limit }} caractères au maximum"

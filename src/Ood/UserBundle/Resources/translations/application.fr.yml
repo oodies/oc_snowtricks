@@ -1,8 +1,9 @@
-#
-# @author    s
-# @date      01/06/2017
-#
-
+##
+## This file is part of oc_snowtricks project
+##
+## @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+## @since 2018/03
+##
 
 ## ************************************
 ## Title        : login page
@@ -11,6 +12,7 @@
 ## Type         : Page
 
 login:
+    page_title: "Connexion"
     title: "SNOWTRICK"
     # Input label, username
     username:
@@ -26,3 +28,27 @@ login:
         label: "Connexion"
     # Error
     error: "Identifiant invalide !"
+
+## ************************************
+## Title        : registration->register page
+## Description  :
+## URL          : /inscription
+## Type         : Page
+
+registration:
+    page_title: "Inscription"
+    title: "Rejoins-nous !"
+    title-desc: ""
+    # Input email
+    email:
+        label: "Votre Email"
+    # Input username
+    username:
+        label: "Identifiant"
+    # Input mot de passe
+    plain_password:
+        label: "Mot de passe"
+    plain_password_repeat:
+        label: "Saisir à nouveau"
+    submit:
+        label: "Créer un compte"
