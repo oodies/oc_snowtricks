@@ -11,6 +11,7 @@ namespace Ood\CommentBundle\Controller;
 use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Entity\Thread;
 use Ood\CommentBundle\Form\CommentType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +55,8 @@ class ThreadCommentController extends Controller
     }
 
     /**
+     * TODO il faut séparer la vue du formulaire de l'action de validation du formulaire
+     *
      * Add a new comment
      *
      * @param Request       $request
@@ -62,9 +65,11 @@ class ThreadCommentController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response | \Symfony\Component\HttpFoundation\JsonResponse;
      * @throws \LogicException
      */
-    public function newCommentAction(Request $request, UserInterface $user)
+    public function newCommentAction(Request $request)
     {
         $threadId = $request->get('threadId');
+
+        $user = $this->getUser();
 
         $comment = new Comment();
         $form = $this->createForm(

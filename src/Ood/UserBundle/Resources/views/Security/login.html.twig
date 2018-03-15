@@ -20,13 +20,13 @@
             <div class="form-user-form">
                 <form action="{{ path('ood_user_security_login') }}" method="post" novalidate="novalidate"
                       class="form-signin {% if error %} error{% endif %}">
-                    <div class="form-label-group">
+                    <div class="form-group">
                         <input type="email" id="username" name="_username" value="{{ last_username }}"
                                class="form-control"
                                placeholder="{{ 'login.username.label'|trans }}" tabindex="1" autofocus required>
                         <label for="username">{{ 'login.username.label'|trans }}</label>
                     </div>
-                    <div class="form-label-group">
+                    <div class="form-group">
                         <input type="password" id="password" name="_password"
                                class="form-control"
                                placeholder="{{ 'login.password.label'|trans }}" tabindex="2" required>
@@ -54,5 +54,5 @@
 </div>
 {% endblock main %}
 
-{% block title %}{{ 'login.title'|trans }}{% endblock title %}
+{% block title %}{{ 'login.page_title'|trans }}{% endblock title %}
 {% block page %}login{% endblock page %}

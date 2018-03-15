@@ -6,8 +6,6 @@
  */
 require('../css/global.scss');
 
-// loads the jquery package from node_modules
-var $ = require('jquery');
-
 require("../../node_modules/bootstrap/dist/js/bootstrap.min.js");
-require('../js/app.js');
+require('../js/cards.js');
+
