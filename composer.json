@@ -17,8 +17,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "Ood\\UserBundle\\Tests\\": "src/Ood/UserBundle/Tests"
+            "Tests\\": "tests/"
         },
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
@@ -31,6 +30,7 @@
         "sensio/framework-extra-bundle": "^5.0.0",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
+        "symfony/security": "^4.0",
         "symfony/swiftmailer-bundle": "^2.6.4",
         "symfony/symfony": "3.4.*",
         "symfony/webpack-encore-pack": "^1.0",
@@ -40,7 +40,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",
         "fzaninotto/faker": "^1.7",
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^4.0"
     },
     "scripts": {
         "symfony-scripts": [
