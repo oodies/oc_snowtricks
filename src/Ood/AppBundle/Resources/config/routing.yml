@@ -7,5 +7,5 @@
 
 # Homepage
 ood_app_homepage:
-    path:     /
+    path:     /home
     defaults: { _controller: OodAppBundle:Default:homepage }

@@ -10,36 +10,191 @@
 
 {% trans_default_domain 'application' %}
 {% block main %}
-    <div class="d-flex">
-        {% for post in posts %}
-            <div class="mr-2 border" style="width: 18rem;">
-                {% if post.images is not empty %}
-                    {% set image = post.images[0] %}
-                    <img class="img-fluid" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
-                {% elseif post.videos is not empty %}
-                    {% set video = post.videos[0] %}
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" width="560" height="315" src="{{ video.identifier }}"
-                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    </div>
-                {% else %}
-                    <img class="img-fluid" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
-                {% endif %}
-                <div class="">
-                    <div class="d-flex">
-                        <div class="card-title mr-auto m-1"><a
-                                    href="{{ path('ood_blog_post_show', {"postId" : post.idPost} ) }}">{{ post.header.title }}</a>
-                        </div>
-                        <a class="btn btn-sm btn-primary m-1" role="button" href="{{ path('ood_blog_post_edit', {"postId" : post.idPost} ) }}">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </a>
-                        <a class="btn btn-sm btn-primary m-1" role="button"
-                           href="{{ path('ood_blog_post_remove', { "postId": post.idPost } ) }} ">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+
+<section id="head">
+    <div class="content">
     </div>
+    <div class="gutter">
+        <a href="#figures">
+            <i class="fa fa-angle-down fa-4x"></i>
+        </a>
+    </div>
+</section>
+
+<section id="figures" class="medias">
+    <div class="content">
+        {% if posts == false %}
+        {# View with nothing posts #}
+        <div id="msgNoResult">Aucun résultat</div>
+        {% else %}
+        {# View with posts list #}
+        <div class="postsListContainer p-2">
+            <form id="searchPostsForm" action="{{ path(vURL) }}">
+                <input type="hidden" value="{{ page }}" name="page" id="searchPostsForm_page">
+            </form>
+            <div class="cards postsList d-flex flex-wrap justify-content-center justify-content-md-start">
+                {% include "OodBlogBundle:Post:list_content.html.twig" %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="gutter">
+        {# view Button + Arrow infinite scroll #}
+        <div id="infiniteScroll" class="d-flex justify-content-around w-100">
+            <a href="#head">
+                <i class="fa fa-4x fa-angle-up"></i>
+            </a>
+            {% if restOfPosts > 0 %}
+                <a class="js-infiniteScroll" href="{{ path(vURL) }}"
+                   data-restof="{{ restOfPosts }}"
+                   data-total="{{ totalPosts }}"
+                   data-item-by-page="{{ itemsPerPage }}">
+                    {##}
+                    {#{{ 'posts_list.infinitescroll'|trans({#}
+                    {#'%number_item_next%': '<span id=\"numberItemNext\">' ~ numberItemNext ~ '</span>'#}
+                    {#}, 'application')|raw }} <br/>#}
+                    <i class="fa fa-4x fa-angle-down"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<script>
+  //
+  // namespace infinite_scroll
+  //
+  var infinite_scroll = infinite_scroll || {};
+  (function (publics) {
+    'use strict'
+
+    // ----------------------
+    // PRIVATE MEMBERS
+    // ----------------------
+
+    /** @type (null|jQuery|HTMLElement) */
+    var _infiniteScrollBtn = null
+    /** @type {string} */
+    var _postsListSelector = null
+    /** @type {null|jQuery|HTMLElement} */
+    var _page = null
+    /** @type (null|jQuery|HTMLElement} */
+    var _searchPostsForm = null
+
+    // -----------------
+    // Privates functions
+    //
+    var privates = {}
+
+    privates.initVar = function () {
+      _infiniteScrollBtn = $('.js-infiniteScroll')
+      _postsListSelector = '.postsList'
+
+      _searchPostsForm = $('#searchPostsForm')
+    }
+
+    /**
+     * Handler pagination
+     *
+     * @private
+     */
+    privates.infiniteScroll = function () {
+
+      /** @var Number _totalPosts Number total of posts to display*/
+      var totalPosts = parseInt(_infiniteScrollBtn.data('total'))
+      /** @var Number _itemByPage Maximum number of results from index */
+      var itemPerPage = parseInt(_infiniteScrollBtn.data('itemByPage'))
+
+      var restOfPosts = totalPosts - (parseInt(_page.val()) + 1) * itemPerPage
+      var nextItems = (restOfPosts > itemPerPage) ? itemPerPage : restOfPosts
+
+      if (restOfPosts <= 0) {
+        _infiniteScrollBtn.hide()
+      } else {
+        _infiniteScrollBtn.attr('data-restof', restOfPosts)
+        $('#numberItemNext').text(nextItems)
+      }
+    }
+
+    privates.onClick = function () {
+      _infiniteScrollBtn.click(function (event) {
+        _page = $('#searchPostsForm_page')
+        // increment number page
+        _page.val(parseInt(_page.val()) + 1)
+        var vUrl = jQuery(this).attr('href')
+        var data = _searchPostsForm.serialize()
+        var jqXHR =$.post(vUrl, data)
+        jqXHR.done(function (response) {
+          privates.infiniteScroll()
+          $(response).appendTo(_postsListSelector)
+        }, 'html')
+        event.preventDefault()
+      })
+    }
+
+    publics.init = function () {
+      privates.initVar()
+      privates.onClick()
+    }
+  }(infinite_scroll));
+
+
+  //
+  // namespace post_remove
+  //
+  var post_remove = post_remove || {};
+  (function (publics) {
+      'use strict'
+
+      /** @type {string} */
+      var _linkRemovePostSelector = null;
+
+      // -----------------
+      // Privates functions
+      //
+      var privates = {};
+
+      /**
+       * Init var
+       */
+      privates.initVar = function () {
+        _linkRemovePostSelector = '.js-remove-post';
+      }
+
+      /**
+       * LinkRemovePost onClick Event
+       */
+      privates.onClick_linkRemovePost = function () {
+        $(document).on('click', _linkRemovePostSelector , function (e) {
+          e.preventDefault();
+
+          var oConfirm = confirm("voulez-vous supprimer cette article ?");
+
+          if (oConfirm === true) {
+              var scope = $(this);
+              var url = scope.attr('href');
+              var jqXHR = $.get(url);
+
+              jqXHR.done(function (response) {
+                scope.parents('.st_card').remove();
+              });
+          }
+          return false;
+        });
+      }
+
+      publics.init = function() {
+        privates.initVar();
+        privates.onClick_linkRemovePost();
+      }
+    }(post_remove)
+  );
+
+  $(document).ready(function() {
+        infinite_scroll.init();
+        post_remove.init();
+  });
+</script>
 {% endblock main %}
+
+{% block title %}{{ 'posts_list.page_title'|trans }}{% endblock title %}
+{% block page %}figures{% endblock page %}

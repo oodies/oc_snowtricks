@@ -29,24 +29,27 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('file', FileType::class,
+            ->add(
+                'file', FileType::class,
                 [
                     'required'    => false,
                     'attr'        => [
                         'accept' => 'image/*;capture=camcorder',
-                        'class'  => 'input_file',
+                        'class'  => 'input_file'
                     ],
-                    'label'       => 'Documents...',
+                    'label'       => 'Image...',
                     'label_attr'  => [
-                        'class'    => 'input_file-trigger',
-                        'tabindex' => 0
+                        'class' => 'input_file-trigger',
                     ],
                     'constraints' => [
-                        new ValidatorImage([
-                            'maxSize'          => '1M',
-                        ])
+                        new ValidatorImage(
+                            [
+                                'maxSize' => '1M',
+                            ]
+                        )
                     ]
-                ]);
+                ]
+            );
     }
 
     /**

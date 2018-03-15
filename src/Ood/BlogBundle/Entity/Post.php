@@ -149,7 +149,7 @@ class Post
      * )
      *
      * @Assert\NotNull(
-     *     message="body.category.not_null"
+     *     message="post.category.not_null"
      *     )
      */
     protected $category = null;
@@ -290,11 +290,11 @@ class Post
     }
 
     /**
-     * @param Category $category
+     * @param null|Category $category
      *
      * @return Post
      */
-    public function setCategory(Category $category): Post
+    public function setCategory(?Category $category): Post
     {
         $this->category = $category;
         return $this;

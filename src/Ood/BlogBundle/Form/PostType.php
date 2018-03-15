@@ -37,6 +37,8 @@ class PostType extends AbstractType
                 [
                     'class'        => 'OodBlogBundle:Category',
                     'choice_label' => 'name',
+                    'label'        => 'posts_form.category.label',
+                    'required'     => false,
                     'multiple'     => false,
                     'expanded'     => false,
                 ]
@@ -45,11 +47,11 @@ class PostType extends AbstractType
                 'images',
                 CollectionType::class,
                 [
-                    'entry_type' => ImageType::class,
+                    'entry_type'    => ImageType::class,
                     'entry_options' => ['label' => false],
-                    'by_reference' => false,
-                    'allow_add' => true,
-                    'allow_delete' => true,
+                    'by_reference'  => false,
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
                 ]
             );
     }
@@ -64,7 +66,7 @@ class PostType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class'         => Post::class,
-                'translation_domain' => 'application',
+                'translation_domain' => 'application'
             ]
         );
     }
@@ -76,6 +78,6 @@ class PostType extends AbstractType
     {
         parent::getBlockPrefix();
 
-        return 'form_post_new';
+        return 'form_post';
     }
 }

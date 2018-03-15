@@ -6,9 +6,9 @@
 # */
 
 ood_blog_post_list:
-    path:     /articles
+    path:     /
     defaults: { _controller: OodBlogBundle:Post:list }
-    methods: ['GET']
+    methods: ['GET','POST']
 
 ood_blog_post_new:
     path:     /newArticle

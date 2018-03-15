@@ -14,19 +14,28 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="robots" content="none, nofollow"/>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    {# TODO Utiliser Webpack => Problème de chargement avec Webpack #}
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    {# TODO Utiliser Webpack => Problème de chargement des fonts avec Webpack #}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('build/global.css') }}">
+    <script src="{{ asset('build/global.js') }}"></script>
 </head>
-<body id="page-{% block page %}{% endblock page %}" class="grid-layout">
-    <header>
-        {{ include('menu.html.twig') }}
-    </header>
-    <main>
-        {% block main %}{% endblock main %}
-    </main>
-    <footer>
-        {{ include('layout.footer.html.twig') }}
-    </footer>
+<body id="page-{% block page %}{% endblock page %}">
+<header>
+    {{ include('menu.html.twig') }}
+</header>
+<main>
+    {% block main %}{% endblock main %}
+</main>
+<footer>
+<div class="i-container">
+{{ include('layout.footer.html.twig') }}
+</div>
+</footer>
 </body>
-<script src="{{ asset('build/global.js') }}"></script>
 </html>

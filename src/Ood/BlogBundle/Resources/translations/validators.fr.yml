@@ -1,0 +1,28 @@
+##
+## This file is part of oc_snowtricks project
+##
+## @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+## @since 2018/03
+##
+
+## ************************************
+## Title        : Post form
+## Description  :
+## URL          : /
+## Type         : Validator
+header:
+    title:
+        not_null: "Saisir un titre"
+        max_length: "{{ limit }} caractères au maximum"
+    brief:
+        not_null: "Saisir un résumé"
+        max_length: "{{ limit }} caractères au maximum"
+post:
+    category:
+        not_null: "Choisissez une catégorie de figure"
+
+category:
+    name:
+        not_null: "Saisir un nom de catégorie"
+        unique_entity: "Catégorie déjà existante"
+        max_length: "{{ limit }} caractères au maximum"
