@@ -1,0 +1,25 @@
+{#
+ #
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/03
+ #
+ #}
+{% extends 'layout.admin.html.twig' %}
+
+{% trans_default_domain 'application' %}
+{% block content %}
+    <div class="container">
+        <h1>{{ 'user_edit.title'|trans }}</h1>
+        <a href="{{ path('ood_user_management_list') }}" class="my-2 btn btn-outline-dark">
+            <i class="fa fa-arrow-circle-left"></i>
+            {{ 'users_list.title'|trans }}
+        </a>
+        <hr/>
+        {% include('@OodUser/Management/edit_content.html.twig') %}
+    </div>
+{% endblock %}
+
+{% block title %}{{ 'user_edit.page_title'|trans }}{% endblock title %}
+{% block page %}admin_users_edit{% endblock page %}

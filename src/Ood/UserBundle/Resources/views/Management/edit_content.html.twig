@@ -1,0 +1,22 @@
+{#
+ #
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/03
+ #
+ #}
+
+{{ form_start(form, {attr : {novalidate: 'novalidate', 'class':'was-validated'}} ) }}
+<div class="form-group">
+    {{ form_widget(form.username) }}
+    {{ form_label(form.username) }}
+    {{ form_errors(form.username) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.roles) }}
+    {{ form_widget(form.roles) }}
+    {{ form_errors(form.roles) }}
+</div>
+{{ form_rest(form) }}
+{{ form_end(form) }}

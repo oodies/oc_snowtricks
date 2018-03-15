@@ -359,38 +359,38 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
     /**
-     * @param string $firstname
+     * @param null|string $firstname
      *
      * @return User
      */
-    public function setFirstname(string $firstname): User
+    public function setFirstname(?string $firstname): User
     {
         $this->firstname = $firstname;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLastname(): string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
     /**
-     * @param string $lastname
+     * @param null|string $lastname
      *
      * @return User
      */
-    public function setLastname(string $lastname): User
+    public function setLastname(?string $lastname): User
     {
         $this->lastname = $lastname;
         return $this;
@@ -405,11 +405,11 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @param string $username
+     * @param null|string $username
      *
      * @return User
      */
-    public function setUsername(string $username): User
+    public function setUsername(?string $username): User
     {
         $this->username = $username;
         return $this;
@@ -454,9 +454,9 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }

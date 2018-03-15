@@ -1,8 +1,9 @@
 #
-# @author    s
-# @date      01/06/2017
+# This file is part of oc_snowtricks project
 #
-
+# @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# @since 2018/03
+#
 
 ## ************************************
 ## Title        : login page
@@ -26,3 +27,48 @@ login:
         label: "Connexion"
     # Error
     error: "Identifiant invalide !"
+
+
+## ************************************
+## Title        : Show all users
+## page         : Users
+## Description  :
+## URL          : /admin/users
+## Type         : Page
+users_list:
+    page_title: "Admin users"
+    title: "Utilisateurs"
+    table_header:
+        username: "Utilisateur"
+        lastname: "Nom"
+        firstname: "Prénom"
+        email: "Email"
+        roles: "Roles"
+        actions: "Actions"
+    btn_unlock: "Déverrouiller"
+    btn_lock: "Verouiller"
+    btn_edit: "Modifier"
+
+## ************************************
+## Title        : Edit an user
+## page         : User edit
+## Description  :
+## URL          : /admin/users/{id}/edit
+## Type         : Page
+user_edit:
+    page_title: "Edit user"
+    title: "Modifier utilisateur"
+
+
+## ************************************
+## Title        : Form user (admin)
+## page         :
+## Description  : Form
+## URL          : /admin/users/{id}/edit
+## Type         : Widget
+user_form:
+    username:
+        label: "Identifiant"
+    roles:
+        label: "Roles"
+    submit: "Valider"
