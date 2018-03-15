@@ -1,0 +1,30 @@
+#
+# This file is part of oc_snowtricks project
+#
+# @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# @since 2018/03
+#
+
+# User:admin:list
+ood_user_management_list:
+  path: /admin/users
+  defaults: { _controller: OodUserBundle:Management:list }
+  methods: ["GET"]
+
+# User:admin:edit
+ood_user_management_edit:
+  path: /admin/users/{id}/edit
+  defaults: { _controller: OodUserBundle:Management:edit }
+  methods: ["GET","POST"]
+
+# User:admin:lock
+ood_user_management_lock:
+  path: /admin/users/{id}/lock
+  defaults: { _controller: OodUserBundle:Management:lock }
+  methods: ["GET"]
+
+# User:admin:unlock
+ood_user_management_unlock:
+  path: /admin/users/{id}/unlock
+  defaults: { _controller: OodUserBundle:Management:unlock }
+  methods: ["GET"]

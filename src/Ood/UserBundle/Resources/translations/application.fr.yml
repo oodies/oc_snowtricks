@@ -28,7 +28,7 @@ login:
         label: "Connexion"
     # Error
     error: "Identifiant invalide !"
-
+    
 ## ************************************
 ## Title        : registration->register page
 ## Description  :
@@ -51,4 +51,48 @@ registration:
     plain_password_repeat:
         label: "Saisir à nouveau"
     submit:
-        label: "Créer un compte"
+        label: "Créer un compte"    
+
+## ************************************
+## Title        : Show all users
+## page         : Users
+## Description  :
+## URL          : /admin/users
+## Type         : Page
+users_list:
+    page_title: "Admin users"
+    title: "Utilisateurs"
+    table_header:
+        username: "Utilisateur"
+        lastname: "Nom"
+        firstname: "Prénom"
+        email: "Email"
+        roles: "Roles"
+        actions: "Actions"
+    btn_unlock: "Déverrouiller"
+    btn_lock: "Verouiller"
+    btn_edit: "Modifier"
+
+## ************************************
+## Title        : Edit an user
+## page         : User edit
+## Description  :
+## URL          : /admin/users/{id}/edit
+## Type         : Page
+user_edit:
+    page_title: "Edit user"
+    title: "Modifier utilisateur"
+
+
+## ************************************
+## Title        : Form user (admin)
+## page         :
+## Description  : Form
+## URL          : /admin/users/{id}/edit
+## Type         : Widget
+user_form:
+    username:
+        label: "Identifiant"
+    roles:
+        label: "Roles"
+    submit: "Valider"
