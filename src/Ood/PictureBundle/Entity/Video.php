@@ -18,9 +18,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="picture_video")
  * @ORM\Entity(repositoryClass="Ood\PictureBundle\Repository\VideoRepository")
+ *
+ * @ORM\HasLifecycleCallbacks()
  */
 class Video
 {
+
+    /** *******************************
+     *  CONSTANT
+     */
+    // Platforms
+    const DAILYMOTION = "dailymotion";
+    const VIMEO = "vimeo";
+    const YOUTUBE = "youtube";
+
     /** *******************************
      *  PROPERTIES ORM
      */
@@ -50,22 +61,14 @@ class Video
      * @var string
      *
      * @ORM\Column(
-     *      name="type",
+     *      name="platform",
      *      type="string",
      *      length=255,
      *      options={"comment"="The video host name."}
      * )
      *
-     * @Assert\NotBlank(
-     *     message="video.platform.not_blank"
-     *     )
-     *
-     * @Assert\Length(
-     *     max="255",
-     *     maxMessage="video.platform.max_length"
-     * )
      */
-    protected $platform = "";
+    protected $platform;
 
     /**
      * The ID of the video resource for this platform
@@ -73,22 +76,62 @@ class Video
      * @var string
      *
      * @ORM\Column(
-     *      name="src",
+     *      name="identifier",
      *      type="string",
      *      length=255,
      *      options={"comment"="The ID of the video resource for this platform"}
      * )
      *
-     * @Assert\NotBlank(
-     *     message="video.identifier.not_blank"
+     */
+    protected $identifier;
+
+    /**
+     * The tiny URL of the video
+     *
+     * @var null|string
+     *
+     * @ORM\Column(
+     *     name="url",
+     *     type="string",
+     *     length=255,
+     *     nullable=false,
+     *     options={"comment"=""}
+     * )
+     *
+     * @Assert\NotNull(
+     *     message="video.url.not_null"
      *     )
      *
      * @Assert\Length(
      *     max="255",
-     *     maxMessage="video.identifier.max_length"
+     *     maxMessage="video.url.max_length"
      * )
+     *
+     * *
+     * @Assert\Regex(
+     *     pattern="#^(http|https):\/\/(youtu.be|dai.ly|vimeo.com)\/#",
+     *     match=true,
+     *     message="video.url.regex"
+     * )
+     *
      */
-    protected $identifier = "";
+    protected $url;
+
+    /** *******************************
+     *      PROPERTIES
+     */
+
+    protected $embed;
+
+
+    /**
+     * Video constructor.
+     */
+    public function __construct()
+    {
+        // Extract Identifier and Platform value from Url for new object
+        $this->extractIdentifier();
+    }
 
     /** *******************************
      *      GETTER / SETTER
@@ -138,5 +181,106 @@ class Video
     {
         $this->identifier = $identifier;
         return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param null|string $url
+     *
+     * @return $this
+     */
+    public function setUrl(?string $url): Video
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    /**
+     * Return embed element used by view
+     *
+     * @return string
+     */
+    public function getEmbed(): string
+    {
+        if ($this->embed === null) {
+            $this->setEmbed();
+        }
+        return $this->embed;
+    }
+
+    /**
+     * Set embed property on Doctrine events PosLoad
+     *
+     * @ORM\PostLoad()
+     *
+     * @return Video
+     */
+    public function setEmbed(): Video
+    {
+        $this->embed = '<iframe width="100%" height="100%" src="' . $this->getUrlVideo(
+            ) . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+
+        return $this;
+    }
+
+    /**
+     * Extract Identifier and Platform value from Url
+     * on Doctrine events PrePersist and PreUpdate
+     *
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function extractIdentifier()
+    {
+        if (preg_match('#^(https|http)://youtu\.be/(.*)#', $this->url, $matches)) {
+            $this->identifier = $matches[2];
+            $this->platform = self::YOUTUBE;
+        } elseif (
+        preg_match('#^(https|http)://vimeo.com/(.*)#', $this->url, $matches)) {
+            $this->identifier = $matches[2];
+            $this->platform = self::VIMEO;
+        } elseif (
+        preg_match('#^(https|http)://dai.ly/(.*)#', $this->url, $matches)) {
+            $this->identifier = $matches[2];
+            $this->platform = self::DAILYMOTION;
+        }
+
+        // to force its value to be updated
+        $this->embed = null;
+
+        return $this;
+    }
+
+    /**
+     * URL to th value "src" attribute of the <iframe> element
+     * according to platform
+     *
+     * @return string
+     */
+    protected function getUrlVideo(): string
+    {
+        switch ($this->getPlatform()) {
+            case self::YOUTUBE:
+                $url = 'https://www.youtube.com/embed/' . $this->getIdentifier();
+                break;
+            case self::DAILYMOTION:
+                $url = 'https://www.dailymotion.com/embed/video/' . $this->getIdentifier();
+                break;
+            case self::VIMEO:
+                $url = 'https://player.vimeo.com/video/' . $this->getIdentifier();
+                break;
+            default:
+                $url = '';
+                break;
+        }
+
+        return $url;
     }
 }

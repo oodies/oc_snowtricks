@@ -8,26 +8,32 @@
  * source : https://symfony.com/doc/current/form/form_collections.html
  *
  */
-// setup an "add a tag" link
-var $addImageLink = $('<a href="#" class="btn btn-warning">Add a image</a>');
+var $addImageLink = $('<a href="#" class="btn btn-outline-dark"><span class="badge"><i class="fa fa-picture-o fa-2x" aria-hidden="true"></i> Add an image</span></a>');
+var $addVideoLink = $('<a href="#" class="btn btn-outline-dark"><span class="badge"><i class="fa fa-file-video-o fa-2x" aria-hidden="true"></i> Add a video</span></a>');
 
 $(document).ready(function() {
-  // Get the that holds the collection of images
-  var $collectionHolder = $('.cards');
-  // count the current form inputs we have (e.g. 2), use that as the new
-  // index when inserting a new item (e.g. 2)
-  $collectionHolder.data('index', $collectionHolder.find('input[type="file"]').length+1);
 
-  // add the "add a image" anchor
-  $("#images-new").append($addImageLink);
-
+  // add the "add an image" anchor
+  $("#actions").append($addImageLink);
+  // Source image prototype form
+  var $imagePrototype = $("#image_prototype");
   $addImageLink.on('click', function(e) {
     e.preventDefault();
     // add a new tag form (see code block below)
-    addImageForm($collectionHolder, $addImageLink);
+    addImageForm($imagePrototype);
   });
 
-  // Remove image to the collection
+  // add the "add a video" anchor
+  $("#actions").append($addVideoLink);
+  // Source video prototype form
+  var $videoPrototype = $("#video_prototype");
+  $addVideoLink.on('click', function(e) {
+    e.preventDefault();
+    // add a new tag form (see code block below)
+    addVideoForm($videoPrototype);
+  });
+
+  // Remove image or video to the collection
   $(document).on('click', '.remove-card', function (e) {
     e.preventDefault();
     $(this).parents('.st_card').remove();
@@ -35,30 +41,35 @@ $(document).ready(function() {
   });
 });
 
-function addImageForm($collectionHolder, $addImageLink) {
-  // Get the data-prototype explained earlier
-  var prototype = $collectionHolder.data('prototype');
-
-  // get the new index
-  var index = $collectionHolder.data('index');
-
-  // Replace '$$name$$' in the prototype's HTML to
-  // instead be a number based on how many items we have
+function addImageForm($imagePrototype) {
+  var prototype = $imagePrototype.data('prototype');
+  var index = $imagePrototype.data('index');
   var newForm = prototype.replace(/__name__/g, index);
-
-  // increase the index with one for the next item
-  $collectionHolder.data('index', index + 1);
-
+  $imagePrototype.data('index', index + 1);
+  // Create view form
+  var $newFormImage = $('<div class="st_card image"><img src="/web/img/image-not-found.png" alt="image-not-found" class="ing-fluid" /><a class="trash btn btn-sm btn-light" role="button" href="#"><i class="remove-card fa fa-trash-o" aria-hidden="true"></i></a><div class="input_file-container">'+ newForm + '</div></div>');
   // Display the form in the page
-  var $newFormImage = $('<div class="st_card"><img src="/web/img/image-not-found.png" alt="image-not-found" class="ing-fluid" /><a class="trash btn btn-sm btn-light" role="button" href="#"><i class="remove-card fa fa-trash-o" aria-hidden="true"></i></a><div class="input_file-container">'+ newForm + '</div></div>');
-
-  $collectionHolder.append($newFormImage);
+  $(".cards").append($newFormImage);
 }
 
-
-
-
-
-
-
-
+function addVideoForm($videoPrototype) {
+  var prototype = $videoPrototype.data('prototype');
+  var index = $videoPrototype.data('index');
+  var newForm = prototype.replace(/__name__/g, index);
+  $videoPrototype.data('index', index + 1);
+  // Create view form
+  var $newFormVideo = $('<div class="st_card video">' +
+    '<div class="embed-responsive embed-responsive-16by9 w-100"></div>' +
+    '<a class="trash btn btn-sm btn-light" role="button" href="#">' +
+    '<i class="remove-card fa fa-trash-o" aria-hidden="true"></i>' +
+    '</a>' +
+    '<div>' +
+    '<div class="input-group">' +
+    '<div class="input-group-prepend">' +
+    '<div class="input-group-text"><i class="fa fa-external-link-square" aria-hidden="true"></i>' +
+    '</div>' +
+    '</div>'+ newForm +
+    '</div>');
+  // Display the form in the page
+  $(".cards").append($newFormVideo);
+}

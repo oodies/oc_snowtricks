@@ -1,0 +1,17 @@
+##
+## This file is part of oc_snowtricks project
+##
+## @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+## @since 2018/03
+##
+
+## ************************************
+## Title        : video form
+## Description  :
+## URL          : /
+## Type         : Validator
+video:
+    url:
+        not_null: "Valeur requise"
+        length: "{ limit } caractères maximum"
+        regex: "L'url doit correspondre à l'url d'une vidéo Youtube, DailyMotion ou Vimeo"

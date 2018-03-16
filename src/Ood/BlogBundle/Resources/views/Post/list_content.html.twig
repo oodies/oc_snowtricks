@@ -7,16 +7,13 @@
 {% for post in posts %}
     <div class="st_card">
         {% if post.images is not empty %}
-            {% set image = post.images[0] %}
+            {% set image = post.images|first %}
             <img class="img-fluid" src="{{ asset(image.webpath) }}"
                  alt="{{ image.alt }}">
         {% elseif post.videos is not empty %}
-            {% set video = post.videos[0] %}
+            {% set video = post.videos|first %}
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" width="560" height="315"
-                        src="{{ video.identifier }}"
-                        frameborder="0" allow="autoplay; encrypted-media"
-                        allowfullscreen></iframe>
+                {{ video.embed|raw }}
             </div>
         {% else %}
             <img class="img-fluid" src="{{ asset('img/image-not-found.png') }}"

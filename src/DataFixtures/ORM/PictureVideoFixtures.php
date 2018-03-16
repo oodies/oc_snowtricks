@@ -30,8 +30,25 @@ class PictureVideoFixtures extends Fixture
 
         for ($i = 1; $i <= 250; $i++) {
             $video = new Video();
-            $video->setPlatform($platforms[array_rand($platforms, 1)]);
-            $video->setIdentifier($this->tinyUrl($i));
+            $platform = $platforms[array_rand($platforms, 1)];
+
+            switch ($platform) {
+                case 'youtube':
+                    $identifier = 'mH8-x5U7XsA';
+                    $url = 'https://youtu.be/'.$identifier;
+                    break;
+                case 'dailymotion':
+                    $identifier = 'x3rqaoa';
+                    $url = 'https://dai.ly/'.$identifier;
+                    break;
+                case 'vimeo':
+                    $identifier = '19314230';
+                    $url = 'https://vimeo.com/'.$identifier;
+                    break;
+            }
+            $video->setPlatform($platform)
+                  ->setIdentifier($identifier)
+                  ->setUrl($url);
 
             $manager->persist($video);
 

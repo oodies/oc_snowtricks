@@ -5,18 +5,26 @@
     {{ form_start(form, {attr : {novalidate: 'novalidate', 'class':'was-validated'}} ) }}
     <section id="head">
         {% if form.images is not empty %}
-            {% set image = form.images[0] %}
+            {% set image = form.images|first %}
             <img class="" src="{{ asset(image.vars.value.webpath) }}" alt="{{ image.vars.value.alt }}">
+        {% elseif form.videos is not empty %}
+            {% set video = form.videos|first %}
+            <div class="embed-responsive embed-responsive-16by9">
+                {{ video.vars.value.embed|raw }}
+            </div>
         {% else %}
             <img class="" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
         {% endif %}
     </section>
-    <section id="medias" class="container">
-        <div class="cards d-flex flex-wrap justify-content-center justify-content-md-start"
-             data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
-            <!-- images -->
+    <section id="medias" class="container-fluid">
+        <!-- New Image or Video -->
+        <div id="image_prototype" data-index="{{ form.images|length }}"
+             data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}"></div>
+        <div id="video_prototype" data-index="{{ form.videos|length }}"
+             data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"></div>
+        <div class="cards d-flex flex-wrap justify-content-center">
             {% for image in form.images %}
-                <div class="st_card">
+                <div class="st_card image">
                     <img id="image_{{ image.vars.value.idImage }}" src="{{ asset(image.vars.value.webpath) }}"
                          alt="{{ image.vars.value.alt }}" class="img-fluid">
                     <a class="trash btn btn-sm btn-light" role="button"
@@ -25,11 +33,39 @@
                     </a>
                     <div class="input_file-container">
                         {{ form_widget(image) }}
+                        {{ form_label(image) }}
+                        {{ form_errors(image) }}
+                    </div>
+                </div>
+            {% endfor %}
+            {% for video in form.videos %}
+                <div class="st_card video">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        {{ video.vars.value.embed|raw }}
+                    </div>
+                    <a class="trash btn btn-sm btn-light" role="button"
+                       href="#">
+                        <i class="remove-card fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-external-link-square"
+                                                                 aria-hidden="true"></i></div>
+                            </div>
+                            {{ form_widget(video) }}
+                        </div>
+                        {{ form_label(video) }}
+                        {{ form_errors(video) }}
                     </div>
                 </div>
             {% endfor %}
         </div>
-        <div id="images-new" class="m-4"></div>
+        <div class="container">
+            <div id="actions" class="btn-group my-4">
+            </div>
+        </div>
+        <div id="videos-new" class="m-4"></div>
     </section>
     <section id="form" class="container">
         {% include "@OodBlog/Post/form_post.hml.twig" %}
@@ -38,8 +74,6 @@
     {{ form_rest(form) }}
     {{ form_end(form) }}
 {% endblock %}
-
-
 
 {% block title %}Modifier{% endblock title %}
 {% block page %}figure-edit{% endblock page %}

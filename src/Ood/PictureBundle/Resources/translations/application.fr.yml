@@ -1,0 +1,16 @@
+#/**
+# * This file is part of oc_snowtricks project
+# *
+# * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# * @since 2018/03
+# */
+
+## ************************************
+## Title        :
+## page         :
+## Description  :
+## URL          :
+## Type         : Form
+image_form:
+    file:
+        label: "Image..."

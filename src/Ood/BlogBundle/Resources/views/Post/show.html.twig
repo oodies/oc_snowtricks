@@ -23,10 +23,14 @@
                 </a>
             {% endif %}
         </div>
-
         {% if post.images is not empty %}
-            {% set image = post.images[0] %}
+            {% set image = post.images|first %}
             <img class="" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
+        {% elseif post.videos is not empty %}
+            {% set video = post.videos|first %}
+            <div class="embed-responsive embed-responsive-16by9">
+                {{ video.embed|raw }}
+            </div>
         {% else %}
             <img class="" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
         {% endif %}
@@ -47,8 +51,7 @@
             {% for video in post.videos %}
                 <div class="st_card">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" width="560" height="315" src="{{ video.identifier }}"
-                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        {{ video.embed|raw }}
                     </div>
                 </div>
             {% endfor %}

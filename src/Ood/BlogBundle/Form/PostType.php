@@ -10,6 +10,7 @@ namespace Ood\BlogBundle\Form;
 
 use Ood\BlogBundle\Entity\Post;
 use Ood\PictureBundle\Form\ImageType;
+use Ood\PictureBundle\Form\VideoType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -53,7 +54,19 @@ class PostType extends AbstractType
                     'allow_add'     => true,
                     'allow_delete'  => true,
                 ]
-            );
+            )
+            ->add(
+                'videos',
+                CollectionType::class,
+                [
+                    'entry_type'    => VideoType::class,
+                    'entry_options' => ['label' => false],
+                    'by_reference'  => false,
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                ]
+            )
+        ;
     }
 
     /**

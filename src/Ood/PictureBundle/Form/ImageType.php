@@ -37,14 +37,15 @@ class ImageType extends AbstractType
                         'accept' => 'image/*;capture=camcorder',
                         'class'  => 'input_file'
                     ],
-                    'label'       => 'Image...',
+                    'label'       => 'image_form.file.label',
                     'label_attr'  => [
                         'class' => 'input_file-trigger',
                     ],
                     'constraints' => [
                         new ValidatorImage(
                             [
-                                'maxSize' => '1M',
+                                'maxSize'        => '1M',
+                                'maxSizeMessage' => 'Maximum 1M file size'
                             ]
                         )
                     ]

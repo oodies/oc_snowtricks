@@ -100,9 +100,9 @@ class Image
     /**
      * Get extension
      *
-     * @return string
+     * @return null|string
      */
-    public function getExtension(): string
+    public function getExtension(): ?string
     {
         return $this->extension;
     }
@@ -124,9 +124,9 @@ class Image
     /**
      * Get alt
      *
-     * @return string
+     * @return null|string
      */
-    public function getAlt(): string
+    public function getAlt(): ?string
     {
         return $this->alt;
     }
