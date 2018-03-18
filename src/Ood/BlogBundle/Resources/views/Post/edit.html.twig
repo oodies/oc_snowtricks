@@ -2,6 +2,9 @@
 
 {% trans_default_domain 'application' %}
 {% block main %}
+    <style>
+        fieldset {display:none;}
+    </style>
     {{ form_start(form, {attr : {novalidate: 'novalidate', 'class':'was-validated'}} ) }}
     <section id="head">
         {% if form.images is not empty %}
@@ -65,7 +68,6 @@
             <div id="actions" class="btn-group my-4">
             </div>
         </div>
-        <div id="videos-new" class="m-4"></div>
     </section>
     <section id="form" class="container">
         {% include "@OodBlog/Post/form_post.hml.twig" %}

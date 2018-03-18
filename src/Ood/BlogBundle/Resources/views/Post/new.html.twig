@@ -1,7 +1,11 @@
 {% extends 'layout.html.twig' %}
 
+
 {% trans_default_domain 'application' %}
 {% block main %}
+    <style>
+        fieldset {display:none;}
+    </style>
     <h4 class="container">{{ 'post_new.page_title'|trans }}</h4>
     <hr class="container"/>
     {{ form_start(form, {attr : {novalidate: 'novalidate', 'class':'was-validated'}} ) }}
@@ -10,14 +14,22 @@
         {% include "@OodBlog/Post/form_post.hml.twig" %}
     </section>
 
-    <section id="medias" class="container">
-        <div class="cards d-flex flex-wrap justify-content-center justify-content-md-start"
-             data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+    <section id="medias" class="container-fluid">
+        <!-- New Image or Video -->
+        <div id="image_prototype" data-index="1"
+             data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}"></div>
+        <div id="video_prototype" data-index="1"
+             data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"></div>
+        <div class="cards d-flex flex-wrap justify-content-center">
         </div>
-        <div id="images-new" class="m-4"></div>
-        <button type="submit" class="btn btn-lg btn-primary">Validate</button>
+        <div class="container">
+            <div id="actions" class="btn-group my-4">
+            </div>
+        </div>
     </section>
-
+    <div class="container">
+        <button type="submit" class="btn btn-lg btn-primary">Validate</button>
+    </div>
     {{ form_rest(form) }}
     {{ form_end(form) }}
 {% endblock main %}
