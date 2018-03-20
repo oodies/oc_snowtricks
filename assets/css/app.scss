@@ -81,10 +81,6 @@ footer {
   }
 }
 
-.form-group > label > .invalid-feedback {
-  display: none !important;
-}
-
 /** *********************
  *  Login / Register page
  */
@@ -121,7 +117,7 @@ section#head {
     position: absolute;
     top: 1vw;
     right: 1vw;
-    z-index:1000;
+    z-index: 1000;
   }
 }
 
@@ -227,6 +223,19 @@ section#form {
 }
 
 /** ***********************************
+ *   infinite scroll
+ */
+#infiniteScroll {
+  > a {
+    display: inline-block;
+    > span {
+      display: block;
+      text-align:center;
+    }
+  }
+}
+
+/** ***********************************
  *   PAGE FIGURES posts list
  */
 #page-figures {
@@ -257,12 +266,6 @@ section#form {
     background-origin: border-box;
     background-position: center center;
     background-size: cover;
-  }
-
-  #infiniteScroll {
-    > a {
-      display: inline-block;
-    }
   }
 
   // Override

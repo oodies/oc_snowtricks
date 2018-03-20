@@ -33,6 +33,7 @@ class CommentType extends AbstractType
                 'body', TextareaType::class,
                 [
                     'label'    => 'comment_edit.body',
+                    'attr'     => ['placeholder' => 'comment_edit.placeholder'],
                     'required' => true
                 ]
             )
@@ -55,6 +56,7 @@ class CommentType extends AbstractType
             [
                 'data_class'         => Comment::class,
                 'translation_domain' => 'application',
+                'attr' => ['id' => 'form_comment']
             ]
         );
     }

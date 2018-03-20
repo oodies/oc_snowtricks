@@ -90,12 +90,22 @@ class Comment
      *
      * @ORM\Column(
      *     name="body",
-     *     type="text",
-     *     nullable=true,
+     *     type="string",
+     *     length=5000,
+     *     nullable=false,
      *     options={"comment"="Contains the body of the comment"}
      * )
+     *
+     * @Assert\NotBlank(
+     *     message="comment.body.not_blank"
+     * )
+     *
+     * @Assert\Length(
+     *     max=5000,
+     *     maxMessage="comment.body.max_length"
+     * )
      */
-    protected $body = '';
+    protected $body;
 
     /**
      * Says whether or not the how is active
@@ -206,19 +216,19 @@ class Comment
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getBody(): string
+    public function getBody(): ?string
     {
         return $this->body;
     }
 
     /**
-     * @param string $body
+     * @param null|string $body
      *
      * @return Comment
      */
-    public function setBody(string $body): Comment
+    public function setBody(?string $body): Comment
     {
         $this->body = $body;
         return $this;
