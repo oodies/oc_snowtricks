@@ -26,6 +26,12 @@ ood_user_registration_register:
   defaults: { _controller: OodUserBundle:Registration:register }
   methods: ["GET","POST"]
 
+# Profile edit
+ood_user_profile_edit:
+  path: /profile
+  defaults: { _controller: OodUserBundle:Profile:edit }
+  methods: ["GET","POST"]
+
 ## **************************
 ## Backend
 ##

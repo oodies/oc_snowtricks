@@ -240,23 +240,23 @@ section#form {
  */
 .comment {
   margin-bottom: 1.5rem;
-  >.content {
+  > .content {
     display: block;
   }
-  >.avatar {
+  > .avatar {
     display: block;
     width: 2.5rem;
     height: auto;
     float: left;
     margin: .2rem 0 0 0;
-    border-radius:0.25rem;
+    border-radius: 0.25rem;
     img, img.avatar {
-      display:block;
+      display: block;
       margin: 0 auto 0 auto;
       width: 100%;
       height: 100%;
     }
-    &~.content {
+    & ~ .content {
       margin-left: 3.5rem;
     }
   }
@@ -303,4 +303,20 @@ section#form {
   }
 }
 
-
+/** ***********************************
+ *   PAGE Profile edit
+ */
+#profile {
+  .photo {
+    position: relative;
+    // TODO verru
+    .input_file-container {
+      left: 1.25rem;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      .form-group {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

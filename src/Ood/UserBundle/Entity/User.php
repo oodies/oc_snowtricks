@@ -436,11 +436,11 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @param string $email
+     * @param null|string $email
      *
      * @return User
      */
-    public function setEmail(string $email): User
+    public function setEmail(?string $email): User
     {
         $this->email = $email;
         return $this;
@@ -593,9 +593,9 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return \Ood\PictureBundle\Entity\Image
+     * @return null|\Ood\PictureBundle\Entity\Image
      */
-    public function getPhoto(): \Ood\PictureBundle\Entity\Image
+    public function getPhoto(): ?\Ood\PictureBundle\Entity\Image
     {
         return $this->photo;
     }

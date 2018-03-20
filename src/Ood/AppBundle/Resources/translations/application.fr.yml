@@ -15,6 +15,7 @@ menu:
   login: "Connexion"
   logout: "Déconnexion"
   register: "Inscription"
+  profile: "Mon Compte"
 
 ## ************************************
 ## Title        : name of the application
