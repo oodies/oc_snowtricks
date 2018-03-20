@@ -54,6 +54,38 @@ registration:
         label: "Créer un compte"    
 
 ## ************************************
+## Title        : Profile user
+## page         :
+## Description  :
+## URL          : mon-compte
+## Type         : Page
+profile:
+    page_title: "Mon compte"
+    title: "Mon compte"
+    # Input firstname
+    firstname:
+        label: "Prénom"
+        placeholder: "Un prénom"
+    # Input lastname
+    lastname:
+        label: "Nom"
+        placeholder: "Votre nom"
+    # Input username
+    username:
+        label: "Identifiant"
+        placeholder: "Identifiant"
+    # Input email
+    email:
+        label: "Email"
+        placeholder: "Email"
+    # btn submit
+    submit:
+        label: "Enregistrer"
+    # message
+    msg:
+        saved_done: "Vos données ont été sauvegardées"
+
+## ************************************
 ## Title        : Show all users
 ## page         : Users
 ## Description  :

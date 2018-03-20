@@ -27,6 +27,8 @@
                    aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item"
+                       href="{{ path('ood_user_profile_edit') }}">{{ 'menu.profile'|trans }}</a>
+                    <a class="dropdown-item"
                        href="{{ path('ood_user_security_logout') }}">{{ 'menu.logout'|trans }}</a>
                 </div>
             </li>
