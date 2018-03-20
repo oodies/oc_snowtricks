@@ -69,7 +69,7 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
                  ->setUsername( mb_strtolower(substr($firstName,0,1) . $lastName))
                  ->setNickname($faker->firstName)
                  ->setEmail($email)
-                 ->setRoles(['ROLE_USER']);
+                 ->setRoles(['ROLE_AUTHOR']);
 
             $hashPassword = $this->encoder->encodePassword($user, '12345');
             $user->setPassword($hashPassword);
