@@ -15,7 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -137,15 +136,10 @@ class ThreadCommentController extends Controller
             $em->flush();
 
             if ($request->isXmlHttpRequest()) {
-                $response = [
-                    'comment' => [
-                        'idComment' => $comment->getIdComment(),
-                        'body'      => $comment->getBody(),
-                        'updateAt'  => $comment->getUpdateAt()->format('d/m/Y h:i'),
-                        'username'  => $comment->getAuthor()->getUsername()
-                    ]
-                ];
-                return new JsonResponse($response, Response::HTTP_CREATED);
+                return $this->render(
+                    '@OodComment/ThreadComment/comment.html.twig',
+                    ['comment' => $comment]
+                );
             } else {
                 return $this->redirect($request->getRequestUri());
             }

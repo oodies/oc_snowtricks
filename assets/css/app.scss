@@ -230,7 +230,34 @@ section#form {
     display: inline-block;
     > span {
       display: block;
-      text-align:center;
+      text-align: center;
+    }
+  }
+}
+
+/** ***********************************
+ *   Comment
+ */
+.comment {
+  margin-bottom: 1.5rem;
+  >.content {
+    display: block;
+  }
+  >.avatar {
+    display: block;
+    width: 2.5rem;
+    height: auto;
+    float: left;
+    margin: .2rem 0 0 0;
+    border-radius:0.25rem;
+    img, img.avatar {
+      display:block;
+      margin: 0 auto 0 auto;
+      width: 100%;
+      height: 100%;
+    }
+    &~.content {
+      margin-left: 3.5rem;
     }
   }
 }

@@ -64,7 +64,7 @@
     var _commentsListSelector = null
     /** @type {null|jQuery|HTMLElement} */
     var _page = null
-    /** @type (null|jQuery|HTMLElement} */
+    /** @type {null|jQuery|HTMLElement} */
     var _searchCommentsForm = null
 
     // -----------------
@@ -185,16 +185,7 @@
         if (response.hasError) {
           _form.replaceWith(response.form);
         } else {
-          var _template = $('<div id="comment_' + response.comment.idComment + '" class="comment mb-4">' +
-            '<div class="d-flex w-100">' +
-            '<h6 class="mr-2">' + response.comment.username + '</h6>' +
-            '<small class="text-muted">' + response.comment.updateAt + '</small>' +
-            '</div>' +
-            '<p id="comment_body_' + response.comment.idComment + '" class="my-0">' +
-            response.comment.body +
-            '</p></div>');
-
-          _commentsList.prepend(_template);
+          _commentsList.prepend(response);
           _commentBody.val('').empty();
         }
       });
