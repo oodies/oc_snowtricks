@@ -12,6 +12,7 @@ menu:
   brand: "Snowtricks"
   homepage: "Accueil"
   tricks: "Figures"
+  add_trick: "Article"
   login: "Connexion"
   logout: "Déconnexion"
   register: "Inscription"

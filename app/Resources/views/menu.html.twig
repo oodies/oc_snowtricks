@@ -16,11 +16,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item {% if ('ood_blog_post_list' == myRoute)
-                or (myRoute is null) %}active{% endif %}">
+            <li class="nav-item {% if ('ood_blog_post_list' == myRoute) %}active{% endif %}">
                 <a class="nav-link" href="{{ path('ood_blog_post_list') }}">{{ 'menu.tricks'|trans }}<span
                             class="sr-only">(current)</span></a>
             </li>
+            {% if is_granted('ROLE_BLOGGER') %}
+            <li class="nav-item {% if ('ood_blog_post_new' == myRoute) %}active{% endif %}">
+                <a class="nav-link" href="{{ path('ood_blog_post_new') }}">{{ 'menu.add_trick'|trans }}<span
+                            class="sr-only">(current)</span></a>
+            </li>
+            {% endif %}
             {% if (app.user) %} {# user is logged in #}
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
