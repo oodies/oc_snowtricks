@@ -37,3 +37,9 @@ services:
     DataFixtures\ORM\:
         resource: '%kernel.project_dir%/src/DataFixtures/ORM'
         tags: [doctrine.fixture.orm]
+
+    # Activation de l'extension Twig intl
+    twig.extension.intl:
+      class: Twig_Extensions_Extension_Intl
+      tags:
+        - { name: twig.extension }

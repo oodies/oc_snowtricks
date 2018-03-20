@@ -18,7 +18,7 @@
     <div class="content">
         <div class="d-flex w-100">
             <h6 class="mr-2">{{ comment.author.username }}</h6>
-            <small class="text-muted">{{ comment.updateAt|date }}</small>
+            <small class="text-muted">{{ comment.updateAt|localizeddate('full', 'short', null, null, "EEE dd MMM yyyy  H:mm" ) }}</small>
         </div>
         <p id="comment_body_{{ comment.idComment }}" class="my-0">
             {{ comment.body }}
