@@ -39,4 +39,5 @@ comments_list:
 ## Type         : Page
 comment_edit:
     body: "Votre commentaire"
+    placeholder: "Votre commentaire"
     submit: "Poster"

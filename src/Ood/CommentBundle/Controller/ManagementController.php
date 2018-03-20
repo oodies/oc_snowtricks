@@ -12,6 +12,7 @@ use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,6 +24,8 @@ class ManagementController extends Controller
 {
     /**
      * Show all comments
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -41,6 +44,8 @@ class ManagementController extends Controller
      *
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -65,6 +70,8 @@ class ManagementController extends Controller
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
      *
+     * @Security("has_role('ROLE_ADMIN')")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function disapproveAction(Comment $comment)
@@ -88,6 +95,8 @@ class ManagementController extends Controller
      *
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

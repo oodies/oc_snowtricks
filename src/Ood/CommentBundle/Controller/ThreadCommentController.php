@@ -25,6 +25,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class ThreadCommentController extends Controller
 {
+    /* ********************************
+     *  CONSTANTS
+     */
+
+    /** Maximum number of results from index */
+    const ITEMS_PER_PAGE = 10;
+
     /**
      * View of a comments thread
      *
@@ -35,32 +42,62 @@ class ThreadCommentController extends Controller
      */
     public function threadAction(Request $request)
     {
+        if ($request->getMethod() === 'POST') {
+            $page = $request->get('page');
+        } else {
+            $page = 0;
+        }
+
+        // Get param request
+        $params = [];
+        $params['page'] = $page;
+        $params['limit'] = $request->get('limit', self::ITEMS_PER_PAGE);
+        $params['offset'] = ((int)$page) * ((int)$params['limit']);
+
         $idThread = $request->get('threadId');
         $em = $this->getDoctrine()->getManager();
 
         $repositoryThread = $em->getRepository('OodCommentBundle:Thread');
+        /** @var \Ood\CommentBundle\Entity\Thread $thread */
         $thread = $repositoryThread->find($idThread);
 
-        $comments = $em->getRepository('OodCommentBundle:Comment')->findBy(
-            ['thread' => $thread]
-        );
+        /** @var \Ood\CommentBundle\Repository\CommentRepository $repository */
+        $repository = $em->getRepository(Comment::Class);
+        $comments = $repository->findByThread($thread, $params);
+        $totalComments = $repository->getNbCommentsByThread($thread);
 
-        return $this->render(
-            '@OodComment/ThreadComment/thread.html.twig',
-            [
-                'thread'   => $thread,
-                'comments' => $comments
-            ]
-        );
+        /** @var integer $restOfComments Number of comments remaining to be displayed */
+        $restOfComments = $totalComments - ($page + 1) * self::ITEMS_PER_PAGE;
+        /** @var integer $numberItemNext Next number of post to display */
+        $numberItemNext = ($restOfComments > self::ITEMS_PER_PAGE) ? self::ITEMS_PER_PAGE : $restOfComments;
+
+        $assign = [
+            'thread'         => $thread,
+            'comments'       => $comments,
+            'page'           => $page,
+            'totalComments'  => $totalComments,
+            'restOfComments' => $restOfComments,
+            'vURL'           => $this->generateUrl('ood_comment_threadComment_thread', ['threadId' => $idThread]),
+            'numberItemNext' => $numberItemNext,
+            'itemsPerPage'   => self::ITEMS_PER_PAGE
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            $template = 'OodCommentBundle:ThreadComment:list_content.html.twig';
+        } else {
+            $template = 'OodCommentBundle:ThreadComment:list.html.twig';
+        }
+
+        return $this->render($template, $assign);
     }
 
     /**
-     * TODO il faut séparer la vue du formulaire de l'action de validation du formulaire
-     *
      * Add a new comment
      *
      * @param Request       $request
      * @param UserInterface $user
+     *
+     * @Security("has_role('ROLE_AUTHOR')")
      *
      * @return \Symfony\Component\HttpFoundation\Response | \Symfony\Component\HttpFoundation\JsonResponse;
      * @throws \LogicException
@@ -102,22 +139,34 @@ class ThreadCommentController extends Controller
             if ($request->isXmlHttpRequest()) {
                 $response = [
                     'comment' => [
-                        'body'     => $comment->getBody(),
-                        'updateAt' => $comment->getUpdateAt(),
-                        'username' => $comment->getAuthor()->getUsername()
+                        'idComment' => $comment->getIdComment(),
+                        'body'      => $comment->getBody(),
+                        'updateAt'  => $comment->getUpdateAt()->format('d/m/Y h:i'),
+                        'username'  => $comment->getAuthor()->getUsername()
                     ]
                 ];
                 return new JsonResponse($response, Response::HTTP_CREATED);
             } else {
-                $this->redirect($request->getRequestUri());
+                return $this->redirect($request->getRequestUri());
             }
         }
 
-        return $this->render(
-            '@OodComment/ThreadComment/form.html.twig',
-            [
-                'form' => $form->createView()
-            ]
-        );
+        if ($request->isXmlHttpRequest()) {
+            $Twig = $this->container->get('twig');
+            return new JsonResponse(
+                [
+                    'hasError' => (bool)count($form->getErrors(true)),
+                    'form'     => $Twig->render(
+                        '@OodComment/ThreadComment/form.html.twig',
+                        ['form' => $form->createView()]
+                    )
+                ]
+            );
+        } else {
+            return $this->render(
+                '@OodComment/ThreadComment/form.html.twig',
+                ['form' => $form->createView()]
+            );
+        }
     }
 }

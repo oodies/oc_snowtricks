@@ -1,0 +1,16 @@
+##
+## This file is part of oc_snowtricks project
+##
+## @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+## @since 2018/03
+##
+
+## ************************************
+## Title        : Comment form
+## Description  :
+## URL          : /
+## Type         : Validator
+comment:
+    body:
+        not_blank: "Valeur requise"
+        max_length: "{{ limit }} caractères au maximum"

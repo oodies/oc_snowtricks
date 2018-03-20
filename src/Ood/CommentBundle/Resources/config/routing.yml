@@ -10,7 +10,7 @@
 ood_comment_threadComment_thread:
     path: /comments/{threadId}
     defaults: { _controller: OodCommentBundle:ThreadComment:thread}
-    methods: ["GET"]
+    methods: ["GET","POST"]
 
 ood_comment_threadComment_newComment:
     path: /newComment/{threadId}

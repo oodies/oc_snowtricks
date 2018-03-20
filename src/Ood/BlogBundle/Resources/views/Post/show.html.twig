@@ -69,8 +69,10 @@
         <hr/>
     </section>
     <section id="comments" class="container">
+        {% if is_granted('ROLE_AUTHOR') %}
         {{ render(controller('OodCommentBundle:ThreadComment:newComment', {threadId : post.idPost} )) }}
         <hr class="divider">
+        {% endif %}
         {{ render(controller('OodCommentBundle:ThreadComment:thread', {threadId : post.idPost} )) }}
     </section>
 {% endblock main %}
