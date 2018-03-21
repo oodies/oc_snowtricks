@@ -51,17 +51,9 @@ class ManagementController extends Controller
      */
     public function approveAction(Comment $comment)
     {
-        $comment
-            ->setEnabled(true)
-            ->setUpdateAt(new \DateTime());
-
-        $thread = $comment->getThread();
-        $thread->commentCounter();
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($comment);
-        $em->persist($thread);
-        $em->flush();
+        /** @var \Ood\CommentBundle\Handler\CommentHandler $handler */
+        $handler = $this->container->get('Ood\CommentBundle\Handler\CommentHandler');
+        $handler->approve($comment);
 
         return $this->redirectToRoute('ood_comment_management_list');
     }
@@ -80,17 +72,9 @@ class ManagementController extends Controller
      */
     public function disapproveAction(Comment $comment)
     {
-        $comment
-            ->setEnabled(false)
-            ->setUpdateAt(new \DateTime());
-
-        $thread = $comment->getThread();
-        $thread->commentCounter(-1);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($comment);
-        $em->persist($thread);
-        $em->flush();
+        /** @var \Ood\CommentBundle\Handler\CommentHandler $handler */
+        $handler = $this->container->get('Ood\CommentBundle\Handler\CommentHandler');
+        $handler->disapprove($comment);
 
         return $this->redirectToRoute('ood_comment_management_list');
     }
@@ -122,15 +106,9 @@ class ManagementController extends Controller
             ]
         );
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setUpdateAt(new \DateTime());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
-
+        /** @var \Ood\CommentBundle\Handler\CommentHandler $handler */
+        $handler = $this->container->get('Ood\CommentBundle\Handler\CommentHandler');
+        if ($handler->change($request, $form, $comment)) {
             return $this->redirectToRoute('ood_comment_management_list');
         }
 
