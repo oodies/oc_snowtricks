@@ -6,4 +6,18 @@
  #  * @since 2018/02
  #  */
  #}
-{{ form(form) }}
+{% extends 'layout.admin.html.twig' %}
+
+{% trans_default_domain 'application' %}
+{% block content %}
+<!-- Main Content -->
+<div class="container">
+    {{ form_start(form,  {attr : {novalidate: 'novalidate', 'class':'was-validated'}} ) }}
+    <div class="form-group">
+    {{ form_widget(form.body, {attr: {'placeholder' : 'comment_edit.placeholder' }} ) }}
+    {{ form_label(form.body) }}
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock content %}
