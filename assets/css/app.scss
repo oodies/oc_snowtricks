@@ -104,8 +104,9 @@ footer {
  */
 section#head {
   position: relative;
-  height: 30vw;
-  background-color: #47e970;
+  height: 40vw;
+  background-color: #afafaf;
+  // Image
   > img {
     background-origin: border-box;
     background-position: center center;
@@ -113,11 +114,26 @@ section#head {
     height: 100%;
     width: 100%;
   }
-  > .action {
+  // block actions
+  > div.actions {
     position: absolute;
     top: 1vw;
     right: 1vw;
     z-index: 1000;
+  }
+  // Block titles
+  > div.titles {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    > h3 {
+      background-color: rgba(255,255,255,0.5);
+      padding: 0.8rem 1.2rem;
+      border-radius:8px;
+    }
   }
 }
 

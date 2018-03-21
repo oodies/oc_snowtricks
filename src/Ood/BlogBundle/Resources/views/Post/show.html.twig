@@ -11,18 +11,7 @@
 {% trans_default_domain 'application' %}
 {% block main %}
     <section id="head">
-        <div class="action">
-            {% if is_granted('ROLE_BLOGGER') %}
-                <a class="btn btn-sm btn-light m-1" role="button"
-                   href="{{ path('ood_blog_post_edit', {"postId" : post.idPost} ) }}">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </a>
-                <a class="btn btn-sm btn-light m-1" role="button"
-                   href="{{ path('ood_blog_post_remove', { "postId": post.idPost } ) }} ">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </a>
-            {% endif %}
-        </div>
+        {# Image #}
         {% if post.images is not empty %}
             {% set image = post.images|first %}
             <img class="" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
@@ -34,10 +23,23 @@
         {% else %}
             <img class="" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
         {% endif %}
+        <div class="actions">
+            {% if is_granted('ROLE_BLOGGER') %}
+                <a class="btn btn-sm btn-light m-1" role="button"
+                   href="{{ path('ood_blog_post_edit', {"postId" : post.idPost} ) }}">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-sm btn-light m-1" role="button"
+                   href="{{ path('ood_blog_post_remove', { "postId": post.idPost } ) }} ">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+        </div>
+        <div class="titles d-flex flex-column justify-content-center align-items-center">
+            <h3>{{ post.header.title }}</h3>
+            <h4 class="mt-4 d-none d-md-block">{{ post.header.brief }}</h4>
+        </div>
     </section>
-    <h1 style="display: none;">{{ post.header.title }}</h1>
-    <h4 style="display: none;">{{ post.header.brief }}</h4>
-
     <section id="medias" class="d-none d-sm-block">
         <div class="cards d-flex flex-wrap justify-content-center">
             <!-- images -->
