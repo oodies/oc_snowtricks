@@ -8,6 +8,8 @@
 ## ************************************
 ## *    MENU
 ## ************************************
+## Frontend
+#
 menu:
   brand: "Snowtricks"
   homepage: "Accueil"
@@ -17,12 +19,30 @@ menu:
   logout: "Déconnexion"
   register: "Inscription"
   profile: "Mon Compte"
+  admin: "Administration"
+## Backend
+#
+menu_admin:
+  brand: "Snowtricks Admin"
+  site: "Site"
+  users: "Utilisateurs"
+  comments: "Commentaires"
+
 
 ## ************************************
-## Title        : name of the application
+## Title        : Snowtricks
 ## page         : homepage
 ## Description  :
 ## URL          : /
 ## Type         : Page
 homepage:
   title : "Snowtricks"
+
+## ************************************
+## Title        : Snowtricks admin
+## page         : dashboard
+## Description  :
+## URL          : /admin
+## Type         : Page
+dashboard:
+  title : "Snowtricks Admin"

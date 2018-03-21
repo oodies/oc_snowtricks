@@ -1,11 +1,16 @@
-#/**
-# * This file is part of oc_snowtricks project
-# *
-# * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
-# * @since 2018/02
-# */
+#
+# This file is part of oc_snowtricks project
+#
+# @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+# @since 2018/02
+#
 
 # Homepage
 ood_app_homepage:
-    path:     /home
+    path: /home
     defaults: { _controller: OodAppBundle:Default:homepage }
+
+# Dashboard
+ood_app_dashboard:
+    path: /admin
+    defaults: { _controller: OodAppBundle:Default:dashboard }
