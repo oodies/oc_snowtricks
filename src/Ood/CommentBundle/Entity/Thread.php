@@ -97,10 +97,12 @@ class Thread
 
     /** *******************************
      *  CONSTRUCT
+     *
+     * @throws \Exception
      */
     public function __construct()
     {
-        $this->numberOfComment = 0;
+        $this->commentCounter(0);
 
         $this->createAt = $this->updateAt = new \DateTime();
     }
@@ -167,9 +169,9 @@ class Thread
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getNumberOfComment(): int
+    public function getNumberOfComment(): ?int
     {
         return $this->numberOfComment;
     }
@@ -183,5 +185,36 @@ class Thread
     {
         $this->numberOfComment = $numberOfComment;
         return $this;
+    }
+
+    /** *******************************
+     *  BEHAVIOR OF THE OBJECT MODEL
+     */
+
+
+    /**
+     * Update the number of approved comments counter
+     *
+     * @param int|null $value (null = +1 or only accept -1)
+     *
+     * @throws \Exception
+     */
+    public function commentCounter(int $value = null)
+    {
+        if ($value === null) {
+            $value = 1;
+        }
+
+        if ($value < -1) {
+            throw new \Exception("Value must be equal to -1 at positive integer");
+        }
+
+        $this->numberOfComment = (int)$this->getNumberOfComment() + $value;
+
+        if ($this->numberOfComment < 0) {
+            $this->numberOfComment = 0;
+        }
+
+        $this->setUpdateAt(new \DateTime());
     }
 }

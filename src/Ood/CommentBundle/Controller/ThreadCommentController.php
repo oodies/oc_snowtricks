@@ -41,48 +41,52 @@ class ThreadCommentController extends Controller
      */
     public function threadAction(Request $request)
     {
+        $idThread = $request->get('threadId');
+
         if ($request->getMethod() === 'POST') {
             $page = $request->get('page');
         } else {
             $page = 0;
         }
 
-        // Get param request
+        // Params for paginator
         $params = [];
         $params['page'] = $page;
         $params['limit'] = $request->get('limit', self::ITEMS_PER_PAGE);
         $params['offset'] = ((int)$page) * ((int)$params['limit']);
 
-        $idThread = $request->get('threadId');
+        // default assignment
+        $assign = [];
+        $assign['thread'] = null;
+        $assign['page'] = $page;
+        $assign['vURL'] = $this->generateUrl('ood_comment_threadComment_thread', ['threadId' => $idThread]);
+        $assign['comments'] = [];
+        $assign['totalComments'] = 0;
+        $assign['restOfComments'] = 0;
+        $assign['numberItemNext'] = 0;
+        $assign['itemsPerPage'] = self::ITEMS_PER_PAGE;
+
+        // Get manager
         $em = $this->getDoctrine()->getManager();
 
-        $repositoryThread = $em->getRepository('OodCommentBundle:Thread');
         /** @var \Ood\CommentBundle\Entity\Thread $thread */
-        $thread = $repositoryThread->find($idThread);
-        $assign = ['thread' => $thread];
+        $thread = $em->getRepository('OodCommentBundle:Thread')->find($idThread);
 
-        // Case : nothing a thread comments
         if ($thread !== null) {
             /** @var \Ood\CommentBundle\Repository\CommentRepository $repository */
             $repository = $em->getRepository(Comment::Class);
             $comments = $repository->findByThread($thread, $params);
             $totalComments = $repository->getNbCommentsByThread($thread);
-
             /** @var integer $restOfComments Number of comments remaining to be displayed */
             $restOfComments = $totalComments - ($page + 1) * self::ITEMS_PER_PAGE;
             /** @var integer $numberItemNext Next number of post to display */
             $numberItemNext = ($restOfComments > self::ITEMS_PER_PAGE) ? self::ITEMS_PER_PAGE : $restOfComments;
 
-            $assign = [
-                'thread'         => $thread,
-                'comments'       => $comments,
-                'page'           => $page,
-                'totalComments'  => $totalComments,
-                'restOfComments' => $restOfComments,
-                'vURL'           => $this->generateUrl('ood_comment_threadComment_thread', ['threadId' => $idThread]),
-                'numberItemNext' => $numberItemNext,
-                'itemsPerPage'   => self::ITEMS_PER_PAGE
-            ];
+            $assign['thread'] = $thread;
+            $assign['comments'] = $comments;
+            $assign['totalComments'] = $totalComments;
+            $assign['restOfComments'] = $restOfComments;
+            $assign['numberItemNext'] = $numberItemNext;
         }
 
         if ($request->isXmlHttpRequest()) {
@@ -132,10 +136,12 @@ class ThreadCommentController extends Controller
             if (is_null($thread)) {
                 $thread = new Thread();
                 $thread->setIdThread($threadId);
-                $em->persist($thread);
             }
+            $thread->commentCounter(); // increment comment counter
             $comment->setThread($thread)
                     ->setAuthor($user);
+
+            $em->persist($thread);
             $em->persist($comment);
             $em->flush();
 

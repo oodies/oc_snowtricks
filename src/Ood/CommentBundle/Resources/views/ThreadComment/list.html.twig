@@ -6,43 +6,42 @@
  #
  #}
 {% trans_default_domain 'application' %}
-
 <!-- Comments -->
-{% if thread %}
-    <div class="container-fluid">
-        <form id="searchCommentsForm" action="{{ vURL }}">
-            <input type="hidden" value="{{ page }}" name="page" id="searchCommentsForm_page">
-        </form>
-        <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
+<div class="container-fluid">
+    <form id="searchCommentsForm" action="{{ vURL }}">
+        <input type="hidden" value="{{ page }}" name="page" id="searchCommentsForm_page">
+    </form>
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {% if comments|length %}
                 <h4>{{ thread.numberOfComment }} {{ 'comments.title'|transchoice(thread.numberOfComment) }}</h4>
-                <hr class="mb-4">
-                <div id="comments_list">
+            {% else %}
+                <h4>{{ 'comments.unknown'|trans }}</h4>
+            {% endif %}
+            <hr class="mb-4">
+            <div id="comments_list">
                 {% include 'OodCommentBundle:ThreadComment:list_content.html.twig' %}
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            {# view Button + Arrow infinite scroll #}
-            <div id="infiniteScroll" class="d-flex justify-content-center w-100">
-                {% if restOfComments > 0 %}
-                    <a class="js-infiniteScroll" href="{{ vURL }}"
-                       data-restof="{{ restOfComments }}"
-                       data-total="{{ totalComments }}"
-                       data-item-by-page="{{ itemsPerPage }}">
-                      <span>
-                        {{ 'posts_list.infinitescroll'|trans({
-                        '%number_item_next%': '<span id=\"numberItemNext\">' ~ numberItemNext ~ '</span>'
-                        }, 'application')|raw }} </span>
-                    </a>
-                {% endif %}
-            </div>
         </div>
     </div>
-{% else %}
-    <h4>{{ 'comments.unknown'|trans }}</h4>
-{% endif %}
-
+    {% if comments|length %}
+    <div class="row">
+        <div id="infiniteScroll" class="d-flex justify-content-center w-100">
+            {% if restOfComments > 0 %}
+                <a class="js-infiniteScroll" href="{{ vURL }}"
+                   data-restof="{{ restOfComments }}"
+                   data-total="{{ totalComments }}"
+                   data-item-by-page="{{ itemsPerPage }}">
+                      <span>
+                        {{ 'posts_list.infinitescroll'|trans({
+                            '%number_item_next%': '<span id=\"numberItemNext\">' ~ numberItemNext ~ '</span>'
+                        }, 'application')|raw }} </span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
 <script>
   //
   // namespace infinite_scroll

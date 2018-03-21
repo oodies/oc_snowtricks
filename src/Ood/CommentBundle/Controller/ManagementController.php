@@ -55,8 +55,12 @@ class ManagementController extends Controller
             ->setEnabled(true)
             ->setUpdateAt(new \DateTime());
 
+        $thread = $comment->getThread();
+        $thread->commentCounter();
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($comment);
+        $em->persist($thread);
         $em->flush();
 
         return $this->redirectToRoute('ood_comment_management_list');
@@ -80,8 +84,12 @@ class ManagementController extends Controller
             ->setEnabled(false)
             ->setUpdateAt(new \DateTime());
 
+        $thread = $comment->getThread();
+        $thread->commentCounter(-1);
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($comment);
+        $em->persist($thread);
         $em->flush();
 
         return $this->redirectToRoute('ood_comment_management_list');
