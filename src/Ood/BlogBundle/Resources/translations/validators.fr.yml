@@ -13,6 +13,7 @@
 header:
     title:
         not_null: "Saisir un titre"
+        unique_entity: "Nom de figure existant"
         max_length: "{{ limit }} caractères au maximum"
     brief:
         not_null: "Saisir un résumé"
