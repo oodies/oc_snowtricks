@@ -59,27 +59,31 @@ class ThreadCommentController extends Controller
         $repositoryThread = $em->getRepository('OodCommentBundle:Thread');
         /** @var \Ood\CommentBundle\Entity\Thread $thread */
         $thread = $repositoryThread->find($idThread);
+        $assign = ['thread' => $thread];
 
-        /** @var \Ood\CommentBundle\Repository\CommentRepository $repository */
-        $repository = $em->getRepository(Comment::Class);
-        $comments = $repository->findByThread($thread, $params);
-        $totalComments = $repository->getNbCommentsByThread($thread);
+        // Case : nothing a thread comments
+        if ($thread !== null) {
+            /** @var \Ood\CommentBundle\Repository\CommentRepository $repository */
+            $repository = $em->getRepository(Comment::Class);
+            $comments = $repository->findByThread($thread, $params);
+            $totalComments = $repository->getNbCommentsByThread($thread);
 
-        /** @var integer $restOfComments Number of comments remaining to be displayed */
-        $restOfComments = $totalComments - ($page + 1) * self::ITEMS_PER_PAGE;
-        /** @var integer $numberItemNext Next number of post to display */
-        $numberItemNext = ($restOfComments > self::ITEMS_PER_PAGE) ? self::ITEMS_PER_PAGE : $restOfComments;
+            /** @var integer $restOfComments Number of comments remaining to be displayed */
+            $restOfComments = $totalComments - ($page + 1) * self::ITEMS_PER_PAGE;
+            /** @var integer $numberItemNext Next number of post to display */
+            $numberItemNext = ($restOfComments > self::ITEMS_PER_PAGE) ? self::ITEMS_PER_PAGE : $restOfComments;
 
-        $assign = [
-            'thread'         => $thread,
-            'comments'       => $comments,
-            'page'           => $page,
-            'totalComments'  => $totalComments,
-            'restOfComments' => $restOfComments,
-            'vURL'           => $this->generateUrl('ood_comment_threadComment_thread', ['threadId' => $idThread]),
-            'numberItemNext' => $numberItemNext,
-            'itemsPerPage'   => self::ITEMS_PER_PAGE
-        ];
+            $assign = [
+                'thread'         => $thread,
+                'comments'       => $comments,
+                'page'           => $page,
+                'totalComments'  => $totalComments,
+                'restOfComments' => $restOfComments,
+                'vURL'           => $this->generateUrl('ood_comment_threadComment_thread', ['threadId' => $idThread]),
+                'numberItemNext' => $numberItemNext,
+                'itemsPerPage'   => self::ITEMS_PER_PAGE
+            ];
+        }
 
         if ($request->isXmlHttpRequest()) {
             $template = 'OodCommentBundle:ThreadComment:list_content.html.twig';
