@@ -9,6 +9,7 @@
 namespace Ood\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,6 +19,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="blogpost_header")
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\HeaderRepository")
+ *
+ * @UniqueEntity("title", message="header.title.unique_entity")
  */
 class Header
 {
@@ -50,6 +53,7 @@ class Header
      *     name="title",
      *     type="string",
      *     nullable=false,
+     *     unique=true,
      *     length=255,
      *     options={
      *      "comment"="Contains the content of the title post"}
