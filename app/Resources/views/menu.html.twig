@@ -17,43 +17,47 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item {% if ('ood_blog_post_list' == myRoute) %}active{% endif %}">
-                <a class="nav-link" href="{{ path('ood_blog_post_list') }}">{{ 'menu.tricks'|trans }}<span
-                            class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ path('ood_blog_post_list') }}">{{ 'menu.tricks'|trans }}</a>
             </li>
             {% if is_granted('ROLE_BLOGGER') %}
-            <li class="nav-item {% if ('ood_blog_post_new' == myRoute) %}active{% endif %}">
-                <a class="nav-link" href="{{ path('ood_blog_post_new') }}">{{ 'menu.add_trick'|trans }}<span
-                            class="sr-only">(current)</span></a>
-            </li>
+                <li class="nav-item {% if ('ood_blog_post_new' == myRoute) %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('ood_blog_post_new') }}">{{ 'menu.add_trick'|trans }}</a>
+                </li>
             {% endif %}
             {% if (app.user) %} {# user is logged in #}
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item"
-                       href="{{ path('ood_user_profile_edit') }}">{{ 'menu.profile'|trans }}</a>
-                    <a class="dropdown-item"
-                       href="{{ path('ood_user_security_logout') }}">{{ 'menu.logout'|trans }}</a>
-                </div>
-            </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item"
+                           href="{{ path('ood_user_profile_edit') }}">{{ 'menu.profile'|trans }}</a>
+                        <a class="dropdown-item"
+                           href="{{ path('ood_user_security_logout') }}">{{ 'menu.logout'|trans }}</a>
+                        {# link dashboard #}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="dropdown-item"
+                               href="{{ path('ood_app_dashboard') }}">{{ 'menu.admin'|trans }}</a>
+                        {% endif %}
+                    </div>
+                </li>
             {% else %} {# user is not logged in #}
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Mon compte</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    {# link login #}
-                    {% if not ('ood_user_security_login' == myRoute) %}
-                        <a class="dropdown-item"
-                           href="{{ path('ood_user_security_login') }}">{{ 'menu.login'|trans }}</a>
-                    {% endif %}
-                    {# link registration #}
-                    {% if not ('ood_user_registration_register' == myRoute) %}
-                        <a class="dropdown-item"
-                           href="{{ path('ood_user_registration_register') }}">{{ 'menu.register'|trans }}</a>
-                    {% endif %}
-                </div>
-                {% endif %}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Mon compte</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {# link login #}
+                        {% if not ('ood_user_security_login' == myRoute) %}
+                            <a class="dropdown-item"
+                               href="{{ path('ood_user_security_login') }}">{{ 'menu.login'|trans }}</a>
+                        {% endif %}
+                        {# link registration #}
+                        {% if not ('ood_user_registration_register' == myRoute) %}
+                            <a class="dropdown-item"
+                               href="{{ path('ood_user_registration_register') }}">{{ 'menu.register'|trans }}</a>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
