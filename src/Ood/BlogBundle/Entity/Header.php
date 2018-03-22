@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="blogpost_header")
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\HeaderRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({"Ood\BlogBundle\EventListener\Entity\HeaderListener"})
  *
  * @UniqueEntity("title", message="header.title.unique_entity")
  */
@@ -54,7 +56,7 @@ class Header
      *     type="string",
      *     nullable=false,
      *     unique=true,
-     *     length=255,
+     *     length=64,
      *     options={
      *      "comment"="Contains the content of the title post"}
      * )
@@ -64,11 +66,26 @@ class Header
      *     )
      *
      * @Assert\Length(
-     *     max=255,
+     *     max=64,
      *     maxMessage="header.title.max_length"
      * )
      */
     protected $title;
+
+    /**
+     * Contains the slug matched title of the header blog
+     *
+     * @var string|null
+     *
+     * @ORM\Column(
+     *     name="slug",
+     *     type="string",
+     *     length=128,
+     *     nullable=true,
+     *     options={"comment"="Contains the slug matched title of the event"}
+     * )
+     */
+    protected $slug;
 
     /**
      * Contains the content of the brief post
@@ -124,6 +141,25 @@ class Header
     public function setTitle(?string $title): Header
     {
         $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param null|string $slug
+     *
+     * @return Header
+     */
+    public function setSlug(?string $slug): Header
+    {
+        $this->slug = $slug;
         return $this;
     }
 

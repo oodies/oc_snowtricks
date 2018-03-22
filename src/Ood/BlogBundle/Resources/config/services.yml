@@ -6,6 +6,17 @@
 # */
 
 services:
-#    ood_blog.example:
-#        class: Ood\BlogBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  ## Services
+    #
+    ood_blog.slugify:
+        class: Ood\BlogBundle\Services\Sluggable
+        public: true
+  ## Listeners
+    #
+    ood_blog.headerListener:
+        arguments:
+            - '@ood_blog.slugify'
+        class: Ood\BlogBundle\EventListener\Entity\HeaderListener
+        tags:
+            - { name: doctrine.orm.entity_listener }
+        public: true
