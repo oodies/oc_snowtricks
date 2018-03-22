@@ -25,6 +25,8 @@ class BlogpostHeaderFixtures extends Fixture
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
+     *
+     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
      */
     public function load(ObjectManager $manager)
     {
@@ -35,7 +37,8 @@ class BlogpostHeaderFixtures extends Fixture
             $header = new Header();
             $header
                 ->setTitle('figure_' . $i)
-                ->setBrief($faker->paragraph(1));
+                ->setBrief($faker->paragraph(1))
+                ->setSlug('figure-' . $i);
 
             $manager->persist($header);
 

@@ -16,9 +16,14 @@ ood_blog_post_new:
     methods: ['GET','POST']
 
 ood_blog_post_show:
-    path:     /article/{postId}
+    path:     /figure/{slug}/{uniqueID}
     defaults: { _controller: OodBlogBundle:Post:show }
     methods: ['GET']
+
+#ood_blog_post_show:
+#    path:     /article/{postId}
+#    defaults: { _controller: OodBlogBundle:Post:show }
+#    methods: ['GET']
 
 ood_blog_post_edit:
     path:     /article/{postId}/change

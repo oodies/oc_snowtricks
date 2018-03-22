@@ -19,6 +19,22 @@ use Doctrine\ORM\QueryBuilder;
  */
 class PostRepository extends EntityRepository
 {
+
+    /**
+     * @param string $uniqueID
+     *
+     * @return mixed
+     */
+    public function getByUniqueID(string $uniqueID) {
+
+        $qb = $this->createQueryBuilder('P');
+        $qb->where('P.uniqueID = :uniqueID');
+
+        $qb->setParameter('uniqueID', $uniqueID);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     /**
      * @
      *  @param array        $params
