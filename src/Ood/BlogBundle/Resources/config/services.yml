@@ -11,9 +11,13 @@ services:
     ood_blog.slugify:
         class: Ood\BlogBundle\Services\Sluggable
         public: true
+    #
+    ood_blog.utils:
+        class: Ood\BlogBundle\Services\Utils
+        public: true
   ## Listeners
     #
-    ood_blog.headerListener:
+    ood_blog.header_listener:
         arguments:
             - '@ood_blog.slugify'
         class: Ood\BlogBundle\EventListener\Entity\HeaderListener
