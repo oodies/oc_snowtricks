@@ -10,6 +10,7 @@ namespace Ood\BlogBundle\Controller;
 
 use Ood\BlogBundle\Entity\Post;
 use Ood\BlogBundle\Form\PostType;
+use Ood\BlogBundle\Repository\PostRepository;
 use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Entity\Thread;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -31,7 +32,7 @@ class PostController extends Controller
      */
 
     /** Maximum number of results from index */
-    const ITEMS_PER_PAGE = 3;
+    const ITEMS_PER_PAGE = 15;
 
     /* ********************************
      *  METHODS
@@ -59,31 +60,34 @@ class PostController extends Controller
             $em->persist($post->setBlogger($user));
             $em->flush();
 
+            /** @var \Ood\BlogBundle\Services\Utils $utils */
+            $utils = $this->container->get('ood_blog.utils');
+            $post->setUniqueID($utils->tinyUrl($post->getIdPost()));
+            $em->persist($post);
+            $em->flush();
+
             return $this->redirect(
                 $this->generateUrl('ood_blog_post_list', ['postId' => $post->getIdPost()])
             );
         }
 
-        return $this->render(
-            '@OodBlog/Post/new.html.twig',
-            [
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('@OodBlog/Post/new.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * Display a blog
      *
-     * @param Post $post
-     *
-     * @ParamConverter("post", options={"id"="postId"})
+     * @param string $uniqueID
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \LogicException
      */
-    public function showAction(Post $post)
+    public function showAction($uniqueID)
     {
+        /** @var PostRepository $repository */
+        $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
+        $post = $repository->getByUniqueID($uniqueID);
+
         return $this->render('@OodBlog/Post/show.html.twig', ['post' => $post]);
     }
 
@@ -109,6 +113,7 @@ class PostController extends Controller
         $params['limit'] = $request->get('limit', self::ITEMS_PER_PAGE);
         $params['offset'] = ((int)$page) * ((int)$params['limit']);
 
+        /** @var PostRepository $repository */
         $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
         $posts = $repository->findResources($params);
         $totalPosts = $repository->getNbItems();
@@ -167,7 +172,7 @@ class PostController extends Controller
      * Remove a post + Thread of comments + Images + videos
      *
      * @param Request $request
-     * @param Post $post
+     * @param Post    $post
      *
      * @ParamConverter("post", options={"id"="postId"})
      *
@@ -177,7 +182,7 @@ class PostController extends Controller
      */
     public function removeAction(Request $request, Post $post)
     {
-
+        // TODO vérifier que les images et bien les videos se suppriment de la DB
         $em = $this->getDoctrine()->getManager();
 
         if ($post) {

@@ -18,7 +18,7 @@
         {% endif %}
         <div class="actions">
             <a class="btn btn-sm btn-light m-1" role="button"
-               href="{{ path('ood_blog_post_show', {"postId" : form.vars.value.idPost } ) }}">
+               href="{{ path('ood_blog_post_show', {"slug" : form.vars.value.header.slug, "uniqueID" : form.vars.value.uniqueID } ) }}">
                 <i class="fa fa-eye" aria-hidden="true"></i>
             </a>
         </div>
