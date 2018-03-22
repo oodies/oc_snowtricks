@@ -18,7 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package Ood\BlogBundle\Entity
  *
- * @ORM\Table(name="blogpost_post")
+ * @ORM\Table(name="blogpost_post",
+ *            indexes={@ORM\Index(name="IDX_uniqueID", columns={"unique_id"} ) } )
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\PostRepository")
  */
 class Post
@@ -46,6 +47,22 @@ class Post
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $idPost;
+
+
+    /**
+     * Contains the unique ID of the blogpost represented by a unique character string
+     *
+     * @var string|null
+     * @ORM\Column(
+     *     name="unique_id",
+     *     type="string",
+     *     length=255,
+     *     nullable=true,
+     *     unique=true,
+     *     options={"comment"="Contains the unique ID of the blogpost represented by a unique character string"}
+     * )
+     */
+    protected $uniqueID;
 
     /**
      * Contains the date of creation of the post
@@ -222,6 +239,25 @@ class Post
     public function getIdPost(): int
     {
         return $this->idPost;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUniqueID(): ?string
+    {
+        return $this->uniqueID;
+    }
+
+    /**
+     * @param null|string $uniqueID
+     *
+     * @return Post
+     */
+    public function setUniqueID(?string $uniqueID): Post
+    {
+        $this->uniqueID = $uniqueID;
+        return $this;
     }
 
     /**
