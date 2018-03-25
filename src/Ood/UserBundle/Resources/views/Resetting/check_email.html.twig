@@ -1,0 +1,17 @@
+{#
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/03
+ #
+ #}
+{% extends "OodUserBundle:Resetting:layout_step_by_step.html.twig" %}
+{% trans_default_domain 'application' %}
+{% block layout_step_by_step %}
+    <div class="segment">
+        <h1>Messagerie</h1>
+        <p>Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de
+            passe.
+            Si vous ne recevez pas un email, vérifiez votre dossier spam ou essayez à nouveau.</p>
+    </div>
+{% endblock layout_step_by_step %}

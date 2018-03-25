@@ -53,6 +53,43 @@ registration:
     submit:
         label: "Créer un compte"    
 
+
+
+uc_resetting:
+    step1_action: "Renseigner son identifiant"
+    step1_title: "Identifiant"
+    step2_action: "Consulter sa messagerie"
+    step2_title: "Messagerie"
+    step3_action: "Renseigner son mot de passe"
+    step3_title: "Mot de passe"
+
+## ************************************
+## Title        : Forgot your password !
+## Description  : Resetting request (step 1)
+## URL          : /resetting/request?token=%token%
+## Type         : Page
+resetting_request:
+    page_title: "Reset password"
+    title: "Mot de passe oublié ?"
+    title-desc: "Entrez votre adresse e-mail afin d'obtenir un nouveau mot de passe"
+    #  Input label, username
+    username:
+        label: "Identifiant"
+    # button submit
+    submit:
+        label: "Réinitialiser le mot de passe"
+
+## ************************************
+## Title        : Forgot your password !
+## Description  : Resetting request (step 3)
+## URL          :
+## Type         : Page
+resetting_reset:
+    title: "Mot de passe"
+    submit:
+        label: "Valider"
+
+
 ## ************************************
 ## Title        : Profile user
 ## page         :
@@ -128,3 +165,20 @@ user_form:
     roles:
         label: "Roles"
     submit: "Valider"
+
+
+## ************************************
+## Title :
+## Type : Email
+email:
+    resetting:
+        subject: "Demande de renouvellement de mot de passe"
+        text1: "Bonjour %username%,"
+        text2: "Nous avons reçu une demande pour réinitialiser un mot de passe. Si vous n'avez pas fait une demande,
+                ignorez ce courriel. Sinon, vous pouvez utiliser le lien ci-dessous pour commencer."
+        text3: "Cliquez pour réinitialiser votre mot de passe"
+        text4: "Lien : %urlConfirmation%"
+        text5: |
+          Merci,
+          L'équipe %siteName%
+

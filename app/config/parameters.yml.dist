@@ -13,8 +13,14 @@ parameters:
     mailer_host: 127.0.0.1
     mailer_user: ~
     mailer_password: ~
+    mailer_auth_mode: login
+    sender_email: team@mail.com
+    sender_no_reply: noreply@mail.com
+    sender_name: team
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
     ## I18n
     locale: fr
     locales: fr|en
+    ## Site
+    site_name: snowtricks

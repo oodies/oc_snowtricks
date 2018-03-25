@@ -1,0 +1,30 @@
+{#
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/03
+ #
+ #}
+{% extends "OodUserBundle:Resetting:layout_step_by_step.html.twig" %}
+{% trans_default_domain 'application' %}
+{% block layout_step_by_step %}
+    <div class="segment">
+        <div class="form-resetting-title">
+            <h4>{{ 'uc_resetting.step1_title'|trans }}</h4>
+        </div>
+        <div class="form-resetting-form">
+            <form action="{{ path('ood_user_resetting_send_email') }}" method="POST" class="was-validated"
+                  novalidate="novalidate">
+                <div class="form-group">
+                    <input type="text" id="username" name="username" required="required" class="form-control"
+                           placeholder="{{ 'resetting_request.username.label'|trans }}"/>
+                    <label for="username">{{ 'resetting_request.username.label'|trans }}</label>
+                </div>
+                <div>
+                    <input type="submit" value="{{ 'resetting_request.submit.label'|trans }}"
+                           class="btn btn-primary w-100"/>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock layout_step_by_step %}
