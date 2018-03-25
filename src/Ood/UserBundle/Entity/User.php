@@ -215,6 +215,21 @@ class User implements AdvancedUserInterface, \Serializable
     protected $plainPassword;
 
     /**
+     * Random string sent to the user email address in order to verify it.
+     *
+     * @var null|string
+     *
+     * @ORM\Column(
+     *     name="confirmation_token",
+     *     type="string",
+     *     length=255,
+     *     nullable=true,
+     *     options={"comment"="Contains a random string sent to the user email address in order to verify it."}
+     *     )
+     */
+    protected $confirmationToken;
+
+    /**
      * Date of registration
      *
      * @var \DateTime
@@ -481,6 +496,25 @@ class User implements AdvancedUserInterface, \Serializable
     public function setPlainPassword(?string $plainPassword): User
     {
         $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @param null|string $confirmationToken
+     *
+     * @return User
+     */
+    public function setConfirmationToken(?string $confirmationToken): User
+    {
+        $this->confirmationToken = $confirmationToken;
         return $this;
     }
 

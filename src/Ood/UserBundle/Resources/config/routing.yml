@@ -9,6 +9,8 @@
 ## Frontend
 ##
 
+## Security
+#
 # Security:: Login
 ood_user_security_login:
   path: /login
@@ -20,12 +22,42 @@ ood_user_security_logout:
   path: /logout
   methods: ["GET"]
 
+## Registration
+#
 # Registration:: Register
 ood_user_registration_register:
   path: /inscription
   defaults: { _controller: OodUserBundle:Registration:register }
   methods: ["GET","POST"]
 
+## Resetting
+#
+# Resetting:: Request
+ood_user_resetting_request:
+  path: /mot-de-passe-oublie
+  defaults: { _controller: OodUserBundle:Resetting:request}
+  methods: ["GET"]
+
+# Resetting:: Send email
+ood_user_resetting_send_email:
+  path: /mot-de-passe-oublie/reinitialiser
+  defaults: { _controller: OodUserBundle:Resetting:sendEmail}
+  methods: ["POST"]
+
+# Resetting:: Check Email
+ood_user_resetting_check_email:
+  path: /mot-de-passe-oublier/consulter-messagerie
+  defaults: { _controller: OodUserBundle:Resetting:checkEmail}
+  methods: ["GET"]
+
+# Resetting:: Reset
+ood_user_resetting_reset:
+  path: /mot-de-passe-oublier/renseigner-nouveau/{token}
+  defaults: { _controller: OodUserBundle:Resetting:reset}
+  methods: ["GET","POST"]
+
+## Profile
+#
 # Profile edit
 ood_user_profile_edit:
   path: /profile
@@ -36,6 +68,8 @@ ood_user_profile_edit:
 ## Backend
 ##
 
+## Admin
+#
 # User:admin:list
 ood_user_management_list:
   path: /admin/users

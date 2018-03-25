@@ -39,6 +39,8 @@ twig:
         format: d/m/Y H:i:s
         interval_format: '%%d days'
         timezone: Europe/Paris
+    globals:
+        siteName : '%site_name%'
 
 # Doctrine Configuration
 doctrine:

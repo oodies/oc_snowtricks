@@ -6,6 +6,13 @@
 # */
 
 services:
-#    ood_user.example:
-#        class: Ood\UserBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  ## Services
+    #
+    ood_user.resetting.messaging:
+        class: Ood\UserBundle\Services\Messaging
+        arguments:
+            - '@Swift_Mailer'
+            - '@Twig_Environment'
+            - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
+            - '%sender_no_reply%'
+            - '%sender_name%'

@@ -39,4 +39,19 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                     ->getQuery()
                     ->getOneOrNullResult();
     }
+
+    /**
+     * @param $token
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findByConfirmationToken($token)
+    {
+        return $this->createQueryBuilder('u')
+                    ->where('u.confirmationToken = :token')
+                    ->setParameter('token', $token)
+                    ->getQuery()
+                    ->getOneOrNullResult();
+    }
 }

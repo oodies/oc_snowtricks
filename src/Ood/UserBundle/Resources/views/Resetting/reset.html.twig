@@ -1,0 +1,34 @@
+{#
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/03
+ #
+ #}
+{% extends "OodUserBundle:Resetting:layout_step_by_step.html.twig" %}
+{% trans_default_domain 'application' %}
+{% block layout_step_by_step %}
+    <div class="segment">
+        <div class="form-registration">
+            <div class="form-registration-title text-center">
+                <h3>{{ 'resetting_request.title'|trans }}</h3>
+            </div>
+            <div class="form-registration-form">
+                {{ form_start(form, { 'action': path('ood_user_resetting_reset',{'token': token}),
+                    'attr' : {'class':'was-validated', 'novalidate':'novalidate'}} ) }}
+                <div class="form-group">
+                        {{ form_widget(form.plainPassword.first) }}
+                        {{ form_label(form.plainPassword.first) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                    </div>
+                <div class="form-group">
+                        {{ form_widget(form.plainPassword.second) }}
+                        {{ form_label(form.plainPassword.second) }}
+                        {{ form_errors(form.plainPassword.second) }}
+                    </div>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock layout_step_by_step %}
