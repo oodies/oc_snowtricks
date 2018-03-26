@@ -30,6 +30,22 @@ ood_user_registration_register:
   defaults: { _controller: OodUserBundle:Registration:register }
   methods: ["GET","POST"]
 
+# Registration : Check email
+ood_user_registration_check_email:
+  path: /inscription/consulter-messagerie
+  defaults: { _controller: OodUserBundle:Registration:checkEmail}
+  methods: ["GET"]
+
+# Registration : confirm
+ood_user_registration_confirm:
+  path: /inscription/confirmer/{token}
+  defaults: { _controller: OodUserBundle:Registration:confirm }
+
+# Registration : confirmed
+ood_user_registration_confirmed:
+  path: /inscription/valide
+  defaults: { _controller: OodUserBundle:Registration:confirmed }
+
 ## Resetting
 #
 # Resetting:: Request

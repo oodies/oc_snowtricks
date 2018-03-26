@@ -21,4 +21,5 @@ user:
         max_length: "{{ limit }} caractères au maximum"
         unique_entity: "Identifiant déjà utilisé"
     plainPassword:
+        not_blank: "Saisir un mot de passe"
         max_length: "{{ limit }} caractères au maximum"

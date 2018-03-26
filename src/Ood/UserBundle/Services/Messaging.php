@@ -42,7 +42,7 @@ class Messaging
      * @param Swift_Mailer          $mailer
      * @param Twig_Environment      $twig
      * @param UrlGeneratorInterface $router
-     * @param string                $senderNoreply
+     * @param string                $senderNoReply
      * @param string                $senderName
      */
     public function __construct(
@@ -60,9 +60,55 @@ class Messaging
     }
 
     /**
+     * Send an email to confirm user registration
+     *
+     * @param User $user
+     *
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function confirmationRegistrationRequest(User $user)
+    {
+        $template = $this->twig->load('OodUserBundle:Registration:email.html.twig');
+        $urlConfirmation = $this->router->generate(
+            'ood_user_registration_confirm',
+            ['token' => $user->getConfirmationToken()],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
+        $message = \Swift_Message::newInstance()
+                                 ->setSubject($template->renderBlock('subject', ['username' => $user->getUsername()]))
+                                 ->setContentType('text/html')
+                                 ->setFrom($this->senderNoReply, $this->senderName)
+                                 ->setTo($user->getEmail())
+                                 ->setBody(
+                                     $template->renderBlock(
+                                         'body_html',
+                                         [
+                                             'urlConfirmation' => $urlConfirmation,
+                                             'username'        => $user->getUsername()
+                                         ]
+                                     )
+                                 );
+
+        $this->mailer->send($message);
+    }
+
+
+    /**
      * Send email for password resetting request
      *
      * @param User $user
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function passwordResettingRequest(User $user)
     {

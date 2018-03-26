@@ -18,25 +18,21 @@
                 </div>
                 <div class="form-registration-form">
                     {{ form_start(form, {'attr' : {'class':'form-signin was-validated', 'novalidate':'novalidate'}} ) }}
-                    <div class="form-label-group">
+                    <div class="form-group">
                         {{ form_widget(form.email)}}
                         {{ form_label(form.email)}}
-                        {{ form_errors(form.email) }}
                     </div>
-                    <div class="form-label-group">
+                    <div class="form-group">
                         {{ form_widget(form.username) }}
                         {{ form_label(form.username) }}
-                        {{ form_errors(form.username) }}
                     </div>
-                    <div class="form-label-group">
+                    <div class="form-group">
                         {{ form_widget(form.plainPassword.first) }}
                         {{ form_label(form.plainPassword.first) }}
-                        {{ form_errors(form.plainPassword.first) }}
                     </div>
-                    <div class="form-label-group">
+                    <div class="form-group">
                         {{ form_widget(form.plainPassword.second) }}
                         {{ form_label(form.plainPassword.second) }}
-                        {{ form_errors(form.plainPassword.second) }}
                     </div>
                     {{ form_rest(form) }}
                     {{ form_end(form) }}

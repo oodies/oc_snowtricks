@@ -1,0 +1,34 @@
+{#
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/03
+ #
+ #}
+{% extends "layout.html.twig" %}
+{% trans_default_domain 'application' %}
+{% block main %}
+    <div class="d-flex flex-column-reverse flex-sm-row justify-content-around align-items-center h-100">
+        <div class="steps mt-3 mt-sm-0">
+            <div class="{% if (step == 1) %}{{ 'active' }}
+                                        {% elseif (step > 1) %}{{ 'completed' }}
+                                        {% endif %} step">
+                <span class="ordered d-inline-block">1</span>
+                <div class="content d-inline-block">
+                    <div class="title">{{ 'uc_registration.step1_title'|trans }}</div>
+                </div>
+            </div>
+            <div class="{% if (step < 2) %}{{ 'disabled' }}
+                                        {% elseif (step == 2) %}{{ 'active' }}
+                                        {% elseif (step > 2) %}{{ 'completed' }}
+                                        {% endif %} step">
+                <span class="ordered d-inline-block">2</span>
+                <div class="content d-inline-block">
+                    <div class="title">{{ 'uc_registration.step2_title'|trans }}</div>
+                </div>
+            </div>
+        </div>
+        {% block layout_step_by_step %}
+        {% endblock layout_step_by_step %}
+    </div>
+{% endblock main %}

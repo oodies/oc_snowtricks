@@ -1,0 +1,30 @@
+{#
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/03
+ #
+ #}
+{% trans_default_domain 'application' %}
+{% block subject %}
+    {{ 'email.registration.subject'|trans({'%username%': username}) }}
+{% endblock subject %}
+
+{% block body_html %}
+    <!doctype html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    </head>
+    <body>
+    <p>{{ 'email.registration.text1'|trans({'%username%': username }) }}</p>
+    <p>{{ 'email.registration.text2'|trans }}</p>
+    <a href="{{ urlConfirmation }}">Lien</a>
+    <p>{{ 'email.registration.text3'|trans({'%urlConfirmation%': urlConfirmation } ) }}</p>
+    <p>{{ 'email.registration.text4'|trans({'%siteName%': siteName|upper  } ) }}</p>
+    </body>
+    </html>
+{% endblock body_html %}
