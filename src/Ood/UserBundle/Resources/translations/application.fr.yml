@@ -68,7 +68,7 @@ uc_registration:
 ## Type         : Page
 registration_check_email:
     title: "Consulter sa messagerie"
-    title-desc: "Un e-mail a été envoyé. Il contient un lien d''activation sur lequel il vous faudra cliquer afin d'activer votre compte."
+    title-desc: "Un e-mail a été envoyé. Il contient un lien d'activation sur lequel il vous faudra cliquer afin d'activer votre compte."
 
 ## ************************************
 ## Title        : registration->confirmed (step 2)
@@ -92,7 +92,7 @@ resetting_request:
     title-desc: "Entrez votre adresse e-mail afin d'obtenir un nouveau mot de passe"
     #  Input label, username
     username:
-        label: "Identifiant"
+        label: "Nom utilisateur ou email"
     # button submit
     submit:
         label: "Réinitialiser le mot de passe"

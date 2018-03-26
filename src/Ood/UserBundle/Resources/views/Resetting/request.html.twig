@@ -13,18 +13,17 @@
             <h4>{{ 'uc_resetting.step1_title'|trans }}</h4>
         </div>
         <div class="form-resetting-form">
-            <form action="{{ path('ood_user_resetting_send_email') }}" method="POST" class="was-validated"
-                  novalidate="novalidate">
+            {{ form_start(form, {'attr': {'novalidate':'novalidate', 'class':'was-validated' }} ) }}
                 <div class="form-group">
-                    <input type="text" id="username" name="username" required="required" class="form-control"
-                           placeholder="{{ 'resetting_request.username.label'|trans }}"/>
-                    <label for="username">{{ 'resetting_request.username.label'|trans }}</label>
+                    {{ form_widget(form.username, {'attr' : {'placeholder' : 'resetting_request.username.label' }} ) }}
+                    {{ form_label(form.username) }}
                 </div>
                 <div>
-                    <input type="submit" value="{{ 'resetting_request.submit.label'|trans }}"
-                           class="btn btn-primary w-100"/>
+                    {{ form_widget(form.submit, {'attr' : {'class' : 'btn btn-primary w-100'}} ) }}
+                    {{ form_label(form.submit) }}
                 </div>
-            </form>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock layout_step_by_step %}

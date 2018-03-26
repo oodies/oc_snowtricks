@@ -11,7 +11,7 @@
     <div class="segment">
         <div class="form-registration">
             <div class="form-registration-title text-center">
-                <h3>{{ 'resetting_request.title'|trans }}</h3>
+                <h3>{{ 'resetting_reset.title'|trans }}</h3>
             </div>
             <div class="form-registration-form">
                 {{ form_start(form, { 'action': path('ood_user_resetting_reset',{'token': token}),
@@ -19,12 +19,10 @@
                 <div class="form-group">
                         {{ form_widget(form.plainPassword.first) }}
                         {{ form_label(form.plainPassword.first) }}
-                        {{ form_errors(form.plainPassword.first) }}
                     </div>
                 <div class="form-group">
                         {{ form_widget(form.plainPassword.second) }}
                         {{ form_label(form.plainPassword.second) }}
-                        {{ form_errors(form.plainPassword.second) }}
                     </div>
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
