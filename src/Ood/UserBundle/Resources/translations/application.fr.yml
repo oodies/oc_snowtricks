@@ -28,13 +28,12 @@ login:
         label: "Connexion"
     # Error
     error: "Identifiant invalide !"
-    
+
 ## ************************************
-## Title        : registration->register page
+## Title        : registration->register page (step 0)
 ## Description  :
 ## URL          : /inscription
 ## Type         : Page
-
 registration:
     page_title: "Inscription"
     title: "Rejoins-nous !"
@@ -53,20 +52,39 @@ registration:
     submit:
         label: "Créer un compte"    
 
+## ************************************
+## Title        : Registration
+## Description  : Step by step
+## URL          :
+## Type         : Widget
+uc_registration:
+    step1_title: "Messagerie"
+    step2_title: "Activer son compte"
 
+## ************************************
+## Title        : registration->check email (step 1)
+## Description  :
+## URL          : /inscription/consulter-messagerie
+## Type         : Page
+registration_check_email:
+    title: "Consulter sa messagerie"
+    title-desc: "Un e-mail a été envoyé. Il contient un lien d''activation sur lequel il vous faudra cliquer afin d'activer votre compte."
 
-uc_resetting:
-    step1_action: "Renseigner son identifiant"
-    step1_title: "Identifiant"
-    step2_action: "Consulter sa messagerie"
-    step2_title: "Messagerie"
-    step3_action: "Renseigner son mot de passe"
-    step3_title: "Mot de passe"
+## ************************************
+## Title        : registration->confirmed (step 2)
+## Description  :
+## URL          : /inscription/confirmer/{token}
+## Type         : Page
+registration_confirmed:
+    title: "Votre compte est activé"
+    title-desc: "Félicitations %username%, votre compte est maintenant activé."
+    button: "Découvrez nous !"
+
 
 ## ************************************
 ## Title        : Forgot your password !
 ## Description  : Resetting request (step 1)
-## URL          : /resetting/request?token=%token%
+## URL          : /mot-de-passe-oublie/reinitialiser
 ## Type         : Page
 resetting_request:
     page_title: "Reset password"
@@ -82,13 +100,25 @@ resetting_request:
 ## ************************************
 ## Title        : Forgot your password !
 ## Description  : Resetting request (step 3)
-## URL          :
+## URL          : /mot-de-passe-oublier/renseigner-nouveau/{token}
 ## Type         : Page
 resetting_reset:
     title: "Mot de passe"
     submit:
         label: "Valider"
 
+## ************************************
+## Title        : Forgot your password !
+## Description  : Step by step
+## URL          :
+## Type         : Widget
+uc_resetting:
+    step1_action: "Renseigner son identifiant"
+    step1_title: "Identifiant"
+    step2_action: "Consulter sa messagerie"
+    step2_title: "Messagerie"
+    step3_action: "Renseigner son mot de passe"
+    step3_title: "Mot de passe"
 
 ## ************************************
 ## Title        : Profile user
@@ -182,3 +212,12 @@ email:
           Merci,
           L'équipe %siteName%
 
+    registration:
+        subject: "Bienvenue %username% !"
+        text1: "Bonjour %username%,"
+        text2: "Nous avons reçu une demande pour une inscription sur notre site. Si vous n'avez pas fait une demande,
+              ignorez ce courriel. Sinon, vous pouvez utiliser le lien ci-dessous pour commencer."
+        text3: "Lien : %urlConfirmation%"
+        text4: |
+          Merci,
+          L'équipe %siteName%

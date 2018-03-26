@@ -1,0 +1,15 @@
+{#
+ # This file is part of oc_snowtricks project
+ #
+ # @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
+ # @since 2018/03
+ #
+ #}
+{% extends "OodUserBundle:Registration:layout_step_by_step.html.twig" %}
+{% trans_default_domain 'application' %}
+{% block layout_step_by_step %}
+    <div class="segment">
+        <h1>{{ 'registration_check_email.title'|trans }}</h1>
+        <p>{{ 'registration_check_email.title-desc'|trans }}</p>
+    </div>
+{% endblock layout_step_by_step %}

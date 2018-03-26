@@ -202,14 +202,17 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(
      *     name="plain_password",
      *     type="string",
-     *     length=255,
+     *     length=4096,
      *     nullable=true,
      *     options={"comment"="Plain password. Used for model validation. Must not be persisted."}
      * )
      *
+     * @Assert\NotBlank(
+     *     message="user.plainPassword.not_blank"
+     * )
      * @Assert\Length(
-     *     max=255,
-     *     maxMessage="user.password.max_length"
+     *     max=4096,
+     *     maxMessage="user.plainPassword.max_length"
      * )
      */
     protected $plainPassword;
