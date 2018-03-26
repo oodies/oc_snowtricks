@@ -27,11 +27,15 @@
 </head>
 <body id="page-{% block page %}{% endblock page %}">
 <header>
+    <div class="i-container">
     {{ include('menu.html.twig') }}
+    </div>
 </header>
 <main>
+    <div class="i-container">
     {{ include('layout.message.html.twig') }}
     {% block main %}{% endblock main %}
+    </div>
 </main>
 <footer>
 <div class="i-container">

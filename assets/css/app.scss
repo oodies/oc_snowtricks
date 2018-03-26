@@ -11,22 +11,31 @@ html {
 
 body {
   display: grid;
-  grid-template-rows: 56px 1fr;
-  grid-template-areas: "header" "main";
+  grid-template-rows: 56px 1fr 45px;
+  grid-template-areas: "header" "main" "footer";
   min-height: 100%;
   width: 100%;
 }
 
 header {
-  position: relative;
+  grid-area: header;
 }
 
 main {
-  min-height: 100%;
+  grid-area: main;
+  max-height: 100%;
+  > .i-container {
+    vertical-align: top;
+  }
 }
 
 footer {
-  padding-top: 3rem;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  > .i-container {
+    padding: 15px;
+    vertical-align: bottom;
+  }
 }
 
 :root {
@@ -124,7 +133,7 @@ footer {
  */
 section#head {
   position: relative;
-  height: 40vw;
+  height: 48vw;
   background-color: #afafaf;
   // Image
   > img {
@@ -312,10 +321,6 @@ section#form {
  *   PAGE FIGURES posts list
  */
 #page-figures {
-
-  main {
-    min-height: inherit;
-  }
   section {
     display: grid;
     width: 100%;
