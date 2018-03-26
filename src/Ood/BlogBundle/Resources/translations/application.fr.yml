@@ -24,3 +24,6 @@ posts_form:
 
 post_new:
     page_title : "Nouvelle figure"
+
+post:
+    see_medias : "Voir les médias"

@@ -27,7 +27,11 @@
             <h4 class="mt-4 d-none d-md-block">{{ form.vars.value.header.brief }}</h4>
         </div>
     </section>
-    <section id="medias" class="container-fluid">
+    <div class="container d-flex mx-auto">
+        <button type="button" class="btn btn-info d-block d-lg-none mx-auto my-3" data-target="#medias"
+                data-toggle="collapse">{{ 'post.see_medias'|trans }}</button>
+    </div>
+    <section id="medias" class="collapse d-lg-block">
         <!-- New Image or Video -->
         <div id="image_prototype" data-index="{{ form.images|length }}"
              data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}"></div>
