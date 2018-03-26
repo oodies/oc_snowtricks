@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class ResettingType
@@ -41,6 +42,9 @@ class ResettingType extends AbstractType
                                    'second_options' => [
                                        'label' => 'registration.plain_password_repeat.label',
                                    ],
+                                   'constraints' => new NotBlank(
+                                       ['message' => 'user.plainPassword.not_blank']
+                                   )
                                ]
             )
             ->add(

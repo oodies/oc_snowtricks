@@ -207,9 +207,6 @@ class User implements AdvancedUserInterface, \Serializable
      *     options={"comment"="Plain password. Used for model validation. Must not be persisted."}
      * )
      *
-     * @Assert\NotBlank(
-     *     message="user.plainPassword.not_blank"
-     * )
      * @Assert\Length(
      *     max=4096,
      *     maxMessage="user.plainPassword.max_length"
