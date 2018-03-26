@@ -87,8 +87,19 @@ class RegistrationType extends AbstractType
             [
                 'data_class'         => User::class,
                 'translation_domain' => 'application',
-                'attr'               => ['id' => 'form-register']
+                'attr'               => ['id' => 'form-register'],
+                'validation_groups'  => [$this, 'getValidationGroups']
             ]
         );
+    }
+
+    /**
+     * Obtain validation groups according to data form
+     *
+     * @return array
+     */
+    public function getValidationGroups(): array
+    {
+        return ['registration'];
     }
 }

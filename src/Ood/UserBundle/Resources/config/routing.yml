@@ -52,13 +52,13 @@ ood_user_registration_confirmed:
 ood_user_resetting_request:
   path: /mot-de-passe-oublie
   defaults: { _controller: OodUserBundle:Resetting:request}
-  methods: ["GET"]
+  methods: ["GET", "POST"]
 
 # Resetting:: Send email
 ood_user_resetting_send_email:
   path: /mot-de-passe-oublie/reinitialiser
   defaults: { _controller: OodUserBundle:Resetting:sendEmail}
-  methods: ["POST"]
+  methods: ["GET"]
 
 # Resetting:: Check Email
 ood_user_resetting_check_email:

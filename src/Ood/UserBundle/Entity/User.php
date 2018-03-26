@@ -23,14 +23,16 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *     fields={
  *          "username"
  *     },
- *     message="user.username.unique_entity"
+ *     message="user.username.unique_entity",
+ *     groups={"registration"}
  * )
  *
  * @UniqueEntity(
  *     fields={
  *          "email"
  *     },
- *     message="user.email.unique_entity"
+ *     message="user.email.unique_entity",
+ *     groups={"registration"}
  * )
  */
 class User implements AdvancedUserInterface, \Serializable
@@ -134,12 +136,14 @@ class User implements AdvancedUserInterface, \Serializable
      * )
      *
      * @Assert\NotBlank(
-     *     message="user.username.not_blank"
+     *     message="user.username.not_blank",
+     *     groups={"registration", "resettingRequest"}
      * )
      *
      * @Assert\Length(
      *     max=60,
-     *     maxMessage="user.username.max_length"
+     *     maxMessage="user.username.max_length",
+     *     groups={"registration","login"}
      * )
      */
     protected $username;
@@ -160,11 +164,13 @@ class User implements AdvancedUserInterface, \Serializable
      * )
      *
      * @Assert\NotBlank(
-     *     message="user.email.not_blank"
+     *     message="user.email.not_blank",
+     *     groups={"registration"}
      * )
      *
      * @Assert\Email(
-     *     message="user.email.not_valid"
+     *     message="user.email.not_valid",
+     *     groups={"registration"}
      * )
      *
      * @Assert\Length(
@@ -207,9 +213,14 @@ class User implements AdvancedUserInterface, \Serializable
      *     options={"comment"="Plain password. Used for model validation. Must not be persisted."}
      * )
      *
+     * @Assert\NotBlank(
+     *     groups={"registration", "resettingReset"}
+     * )
+     *
      * @Assert\Length(
      *     max=4096,
-     *     maxMessage="user.plainPassword.max_length"
+     *     maxMessage="user.plainPassword.max_length",
+     *     groups={"registration", "resettingReset"}
      * )
      */
     protected $plainPassword;

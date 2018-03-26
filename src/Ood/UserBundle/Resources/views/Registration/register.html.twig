@@ -12,12 +12,12 @@
 {% block main %}
     <div class="v-container">
         <div class="container">
-            <div class="form-registration">
+            <div class="form-registration segment form-signin">
                 <div class="form-registration-title text-center">
                     <h3>{{ 'registration.title'|trans }}</h3>
                 </div>
                 <div class="form-registration-form">
-                    {{ form_start(form, {'attr' : {'class':'form-signin was-validated', 'novalidate':'novalidate'}} ) }}
+                    {{ form_start(form, {'attr' : {'class':'was-validated', 'novalidate':'novalidate'}} ) }}
                     <div class="form-group">
                         {{ form_widget(form.email)}}
                         {{ form_label(form.email)}}
