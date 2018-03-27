@@ -87,6 +87,9 @@
     </section>
     {{ form_rest(form) }}
     {{ form_end(form) }}
+    <script>
+      $(document).ready( function() {image_handler.init();});
+    </script>
 {% endblock %}
 
 {% block title %}Modifier{% endblock title %}

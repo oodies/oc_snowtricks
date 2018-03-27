@@ -1,79 +1,159 @@
-/*!
- * This file is part of oc_snowtricks project
- *
- * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
- * @since 2018/03
- * application.js
+/* ####################################
+ *  IMAGE AND VIDEO UPLOAD
  */
-var $addImageLink = $('<a href="#" class="btn btn-outline-dark"><span class="badge"><i class="fa fa-picture-o fa-2x" aria-hidden="true"></i> Add an image</span></a>');
-var $addVideoLink = $('<a href="#" class="btn btn-outline-dark"><span class="badge"><i class="fa fa-file-video-o fa-2x" aria-hidden="true"></i> Add a video</span></a>');
+var picture_upload = picture_upload || {};
 
-$(document).ready(function() {
+(function (publics) {
+  'use strict';
 
-  // add the "add an image" anchor
-  $("#actions").append($addImageLink);
-  // Source image prototype form
-  var $imagePrototype = $("#image_prototype");
-  $addImageLink.on('click', function(e) {
-    e.preventDefault();
-    // add a new tag form (see code block below)
-    addImageForm($imagePrototype);
-  });
+  /**
+   * privates attributes
+   */
+  /** @type (null|jQuery) The ID input of the type file */
+  var _inputFileField = null;
+  /** @type (null|jQuery) The ID of the container DIV of the photo  */
+  var _myPhoto = null;
 
-  // add the "add a video" anchor
-  $("#actions").append($addVideoLink);
-  // Source video prototype form
-  var $videoPrototype = $("#video_prototype");
-  $addVideoLink.on('click', function(e) {
-    e.preventDefault();
-    // add a new tag form (see code block below)
-    addVideoForm($videoPrototype);
-  });
+  /**;
+   * privates function
+   */
+  var privates = {};
 
-  // Remove image or video to the collection
-  $(document).on('click', '.remove-card', function (e) {
-    e.preventDefault();
-    $(this).parents('.st_card').remove();
-    return false;
-  });
-});
+  privates.initVar = function () {
+    _inputFileField = $('.input_file');
+  };
 
-function addImageForm($imagePrototype) {
-  var prototype = $imagePrototype.data('prototype');
-  var index = $imagePrototype.data('index');
-  var newForm = prototype.replace(/__name__/g, index);
-  $imagePrototype.data('index', index + 1);
-  // Create view form
-  var $newFormImage = $('<div class="st_card image"><img src="/web/img/image-not-found.png" alt="image-not-found" class="ing-fluid" /><a class="trash btn btn-sm btn-light" role="button" href="#"><i class="remove-card fa fa-trash-o" aria-hidden="true"></i></a><div class="input_file-container">'+ newForm + '</div></div>');
-  // Display the form in the page
-  $(".cards").append($newFormImage);
-}
+  /**
+   *
+   */
+  privates.onChangeInputFile = function () {
+    _inputFileField.change(function (event) {
+      _myPhoto = $(this).parents('.image').find('img');
+      var domInputFile = this;
+      var oFileList = domInputFile.files;
+      var oFile = oFileList[0];
+      var oReader = new FileReader();
+      oReader.onload = function (event) {
+        _myPhoto.attr('src', event.target.result);
+      };
+      oReader.readAsDataURL(oFile);
+      event.preventDefault();
+    });
+  };
+  /**
+   * Initializer
+   */
+  publics.init = function () {
+    privates.initVar();
+    privates.onChangeInputFile();
+  };
 
-function addVideoForm($videoPrototype) {
-  var prototype = $videoPrototype.data('prototype');
-  var index = $videoPrototype.data('index');
-  var newForm = prototype.replace(/__name__/g, index);
-  $videoPrototype.data('index', index + 1);
-  // Create view form
-  var $newFormVideo = $('<div class="st_card video">' +
-    '<div class="embed-responsive embed-responsive-16by9 w-100"></div>' +
-    '<a class="trash btn btn-sm btn-light" role="button" href="#">' +
-    '<i class="remove-card fa fa-trash-o" aria-hidden="true"></i>' +
-    '</a>' +
-    '<div>' +
-    '<div class="input-group">' +
-    '<div class="input-group-prepend">' +
-    '<div class="input-group-text"><i class="fa fa-external-link-square" aria-hidden="true"></i>' +
-    '</div>' +
-    '</div>'+ newForm +
-    '</div>');
-  // Display the form in the page
-  $(".cards").append($newFormVideo);
-}
+}(picture_upload) );
 
-//
-// namespace infinite_scroll form post list
-//
+
+/* ####################################
+ *  IMAGE HANDLER
+ */
+var image_handler = image_handler || {};
+(function (publics) {
+  'use strict'
+
+  var _addImageLink = null
+  var _addVideoLink = null;
+  // -----------------
+  // Privates functions
+  //
+  var privates = {}
+
+  /**
+   *
+   */
+  privates.initVar = function() {
+    _addImageLink = $('<a href="#" class="btn btn-outline-dark"><span class="badge"><i class="fa fa-picture-o fa-2x" aria-hidden="true"></i> Add an image</span></a>');
+    _addVideoLink = $('<a href="#" class="btn btn-outline-dark"><span class="badge"><i class="fa fa-file-video-o fa-2x" aria-hidden="true"></i> Add a video</span></a>');
+  }
+
+  /**
+   *
+   * @param $imagePrototype
+   */
+  privates.addImageForm = function ($imagePrototype) {
+    var prototype = $imagePrototype.data('prototype');
+    var index = $imagePrototype.data('index');
+    var newForm = prototype.replace(/__name__/g, index);
+    $imagePrototype.data('index', index + 1);
+    // Create view form
+    var $newFormImage = $('<div class="st_card image"><img src="/web/img/image-not-found.png" alt="image-not-found" class="ing-fluid" /><a class="trash btn btn-sm btn-light" role="button" href="#"><i class="remove-card fa fa-trash-o" aria-hidden="true"></i></a><div class="input_file-container">'+ newForm + '</div></div>');
+    // Display the form in the page
+    $(".cards").append($newFormImage);
+    picture_upload.init();
+  }
+
+  /**
+   *
+   * @param $videoPrototype
+   */
+  privates.addVideoForm = function($videoPrototype) {
+    var prototype = $videoPrototype.data('prototype');
+    var index = $videoPrototype.data('index');
+    var newForm = prototype.replace(/__name__/g, index);
+    $videoPrototype.data('index', index + 1);
+    // Create view form
+    var $newFormVideo = $('<div class="st_card video">' +
+      '<div class="embed-responsive embed-responsive-16by9 w-100"></div>' +
+      '<a class="trash btn btn-sm btn-light" role="button" href="#">' +
+      '<i class="remove-card fa fa-trash-o" aria-hidden="true"></i>' +
+      '</a>' +
+      '<div>' +
+      '<div class="input-group">' +
+      '<div class="input-group-prepend">' +
+      '<div class="input-group-text"><i class="fa fa-external-link-square" aria-hidden="true"></i>' +
+      '</div>' +
+      '</div>' + newForm +
+      '</div>');
+    // Display the form in the page
+    $(".cards").append($newFormVideo);
+    picture_upload.init();
+  }
+
+  publics.init = function () {
+
+    privates.initVar();
+
+    // add the "add an image" anchor
+    $("#actions").append(_addImageLink);
+    // Source image prototype form
+    var _imagePrototype = $("#image_prototype");
+    _addImageLink.on('click', function(e) {
+      e.preventDefault();
+      // add a new tag form (see code block below)
+      privates.addImageForm(_imagePrototype);
+    });
+
+    // add the "add a video" anchor
+    $("#actions").append(_addVideoLink);
+    // Source video prototype form
+    var _videoPrototype = $("#video_prototype");
+    _addVideoLink.on('click', function(e) {
+      e.preventDefault();
+      // add a new tag form (see code block below)
+      privates.addVideoForm(_videoPrototype);
+    });
+
+    // Remove image or video to the collection
+    $(document).on('click', '.remove-card', function (e) {
+      e.preventDefault();
+      $(this).parents('.st_card').remove();
+      return false;
+    });
+
+    picture_upload.init();
+  }
+} (image_handler));
+
+/* ####################################
+ *  INFINITE SCROLL FOR POSTS LIST
+ */
 var infinite_scroll = infinite_scroll || {};
 (function (publics) {
   'use strict'
@@ -149,9 +229,9 @@ var infinite_scroll = infinite_scroll || {};
 }(infinite_scroll));
 
 
-//
-// namespace post_remove
-//
+/* ####################################
+ *  POST REMOVE
+ */
 var post_remove = post_remove || {};
 (function (publics) {
     'use strict'
@@ -201,9 +281,9 @@ var post_remove = post_remove || {};
 );
 
 
-//
-// namespace infinite_scroll for comments
-//
+/* ####################################
+ *  INFINITE SCROLL FORM COMMENTS
+ */
 var comments_infinite_scroll = comments_infinite_scroll || {};
 (function (publics) {
   'use strict'
@@ -287,9 +367,9 @@ var comments_infinite_scroll = comments_infinite_scroll || {};
 }(comments_infinite_scroll));
 
 
-//
-// namespace addComment
-//
+/* ####################################
+ *  ADD COMMENT
+ */
 var addComment = addComment || {};
 (function (publics) {
   'use strict';
