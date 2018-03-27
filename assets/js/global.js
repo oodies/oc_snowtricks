@@ -6,6 +6,3 @@
  */
 require('../css/global.scss');
 
-require("../../node_modules/bootstrap/dist/js/bootstrap.min.js");
-require('../js/cards.js');
-

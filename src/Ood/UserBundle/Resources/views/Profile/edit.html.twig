@@ -13,7 +13,7 @@
         <h1>{{ 'profile.title'|trans }}</h1>
         {{ form_start(form, {'attr' : { novalidate: 'novalidate', class:'was-validated' }} ) }}
         <div class="row">
-            <div class="photo col-12 col-md-6 py-3 py-sm-0">
+            <div class="image photo col-12 col-md-6 py-3 py-sm-0">
                 {% if ( form.vars.value.photo ) %}
                     <img src="{{ asset(form.vars.value.photo.webPath) }}" alt="{{ form.vars.value.photo.alt }}"
                          class="img-thumbnail rounded mx-auto d-block">
@@ -52,6 +52,9 @@
         {{ form_rest(form) }}
         {{ form_end(form) }}
     </div>
+    <script>
+    $(document).ready( function() {picture_upload.init();});
+    </script>
 {% endblock main %}
 
 {% block title %}{{ 'profile.page_title'|trans }}{% endblock title %}
