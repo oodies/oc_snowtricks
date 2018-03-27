@@ -15,7 +15,6 @@ Encore
 
   // will create web/build/app.js and web/build/app.css
   .addEntry('global', './assets/js/global.js')
-  .addEntry('bootstrap', './assets/js/bootstrap.js')
 
   // allow sass/scss files to be processed
   .enableSassLoader()
