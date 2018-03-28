@@ -5,7 +5,21 @@
 #  * @since 2018/02
 #  */
 
+parameters:
+    # images folder for a browser (relative to the /web folder)
+    web_base: img/picture
+
 services:
-#    ood_picture.example:
-#        class: Ood\PictureBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  ## Service
+    #
+  ## Listeners
+    #
+    ood_picture.image_listener:
+        class: Ood\PictureBundle\EventListener\Entity\ImageListener
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+            $webBase: '%web_base%'
+        tags:
+            - { name: doctrine.orm.entity_listener }
+        public: true
+

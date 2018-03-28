@@ -170,57 +170,10 @@ class Image
         // Reset attributes
         $this->extension = null;
         $this->alt = null;
+
+        return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-        if (null != $this->file) {
-            $this->extension = $this->file->guessExtension();
-            $this->alt = $this->file->getClientOriginalName();
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     *
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
-     */
-    public function upload()
-    {
-        // No file to process
-        if (null == $this->file) {
-            return;
-        }
-
-        $this->file->move(
-            $this->getUploadRootDir(),
-            $this->idImage . '.' . $this->extension
-        );
-    }
-
-    /**
-     * @ORM\PreRemove()
-     */
-    public function preRemoveFile()
-    {
-        // I save the filename that is built from the database information
-        $this->tempFilename = $this->getUploadRootDir() . '/' . $this->idImage . '.' . $this->extension;
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeFile()
-    {
-        if (file_exists($this->tempFilename)) {
-            unlink($this->tempFilename);
-        }
-    }
 
     /**
      * Image url for a browser (relative to the /web folder)
@@ -240,16 +193,5 @@ class Image
     protected function getWebBase()
     {
         return 'img/picture';
-    }
-
-    /**
-     * Images folder for backend code
-     *
-     * @return string
-     */
-    protected function getUploadRootDir()
-    {
-        // TODO I Should use Kernel.project_dir
-        return dirname(dirname(dirname(dirname(__DIR__)))) . '/web/' . $this->getWebBase();
     }
 }
