@@ -12,37 +12,31 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider\Lorem as FakerLorem;
-use Ood\BlogBundle\Entity\Header;
+use Ood\BlogBundle\Entity\Body;
 
 /**
- * Class BlogpostHeaderFixtures
+ * Class BlogBodyFixtures
  *
  * @package DataFixtures\ORM
  */
-class BlogpostHeaderFixtures extends Fixture
+class BlogBodyFixtures extends Fixture
 {
     /**
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
-     *
-     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
      */
     public function load(ObjectManager $manager)
     {
         $faker = new FakerGenerator();
         $faker->addProvider(new FakerLorem($faker));
+        for ($i=1 ; $i <= 50; $i++) {
+            $body = new Body();
+            $body->setContent($faker->paragraph(5));
 
-        for ($i = 1; $i <= 50; $i++) {
-            $header = new Header();
-            $header
-                ->setTitle('figure_' . $i)
-                ->setBrief($faker->paragraph(1))
-                ->setSlug('figure-' . $i);
+            $manager->persist($body);
 
-            $manager->persist($header);
-
-            $this->addReference('header_' . (string)$i, $header);
+            $this->addReference('body_' . (string)$i, $body);
         }
         $manager->flush();
     }

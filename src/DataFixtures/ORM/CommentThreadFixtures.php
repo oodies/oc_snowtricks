@@ -29,7 +29,7 @@ class CommentThreadFixtures extends Fixture implements DependentFixtureInterface
     function getDependencies()
     {
         return [
-            BlogpostPostFixtures::class
+            BlogPostFixtures::class
         ];
     }
 

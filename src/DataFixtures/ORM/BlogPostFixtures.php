@@ -15,11 +15,11 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Ood\BlogBundle\Entity\Post;
 
 /**
- * Class BlogpostPostFixtures
+ * Class BlogPostFixtures
  *
  * @package DataFixtures\ORM
  */
-class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
+class BlogPostFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * This method must return an array of fixtures classes
@@ -30,9 +30,9 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return [
-            BlogpostBodyFixtures::class,
-            BlogpostCategoryFixtures::class,
-            BlogpostHeaderFixtures::class,
+            BlogBodyFixtures::class,
+            BlogCategoryFixtures::class,
+            BlogHeaderFixtures::class,
             PictureImageFixtures::class,
             PictureVideoFixtures::class,
             UserUserFixtures::class

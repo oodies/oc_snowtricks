@@ -13,11 +13,11 @@ use Ood\BlogBundle\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
- * Class BlogpostCategoryFixtures
+ * Class BlogCategoryFixtures
  *
  * @package DataFixtures\ORM
  */
-class BlogpostCategoryFixtures extends Fixture
+class BlogCategoryFixtures extends Fixture
 {
     /**
      * Load data fixtures with the passed EntityManager
