@@ -11,6 +11,9 @@ namespace Ood\BlogBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ood\PictureBundle\Entity\Image;
+use Ood\UserBundle\Entity\User as Blogger;
+use Ood\PictureBundle\Entity\Video;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -115,7 +118,7 @@ class Post
      * @ORM\JoinColumn(
      *     name="header",
      *     referencedColumnName="id_header"
-     *     )
+     * )
      *
      * @Assert\Valid()
      */
@@ -132,7 +135,7 @@ class Post
      * @ORM\JoinColumn(
      *     name="body",
      *     referencedColumnName="id_body"
-     *     )
+     * )
      *
      * @Assert\Valid()
      */
@@ -146,7 +149,10 @@ class Post
      *     cascade={"persist"}
      * )
      *
-     * @ORM\JoinColumn(name="blogger", referencedColumnName="id_user")
+     * @ORM\JoinColumn(
+     *     name="blogger",
+     *     referencedColumnName="id_user"
+     * )
      *
      * @Assert\Valid()
      */
@@ -167,7 +173,7 @@ class Post
      *
      * @Assert\NotNull(
      *     message="post.category.not_null"
-     *     )
+     * )
      */
     protected $category = null;
 
@@ -175,8 +181,10 @@ class Post
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Image",
-     *     cascade={"persist", "remove"}
-     *     )
+     *     cascade={"persist", "remove"},
+     *     orphanRemoval=true
+     * )
+     *
      * @ORM\JoinTable(name="posts_images",
      *      joinColumns={
      *              @ORM\JoinColumn(name="post_id",
@@ -242,7 +250,7 @@ class Post
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getUniqueID(): ?string
     {
@@ -250,7 +258,7 @@ class Post
     }
 
     /**
-     * @param null|string $uniqueID
+     * @param string|null $uniqueID
      *
      * @return Post
      */
@@ -299,19 +307,19 @@ class Post
     }
 
     /**
-     * @return \Ood\UserBundle\Entity\User
+     * @return Blogger
      */
-    public function getBlogger(): \Ood\UserBundle\Entity\User
+    public function getBlogger(): Blogger
     {
         return $this->blogger;
     }
 
     /**
-     * @param \Ood\UserBundle\Entity\User $blogger
+     * @param Blogger $blogger
      *
      * @return Post
      */
-    public function setBlogger(\Ood\UserBundle\Entity\User $blogger): Post
+    public function setBlogger(Blogger $blogger): Post
     {
         $this->blogger = $blogger;
         return $this;
@@ -326,7 +334,7 @@ class Post
     }
 
     /**
-     * @param null|Category $category
+     * @param Category|null $category
      *
      * @return Post
      */
@@ -375,23 +383,22 @@ class Post
     }
 
     /**
-     * @param \Ood\PictureBundle\Entity\Image $image
+     * @param Image $image
      *
      * @return Post
      */
-    public function addImage(\Ood\PictureBundle\Entity\Image $image): Post
+    public function addImage(Image $image): Post
     {
         $this->images[] = $image;
-
         return $this;
     }
 
     /**
-     * @param \Ood\PictureBundle\Entity\Image $image
+     * @param Image $image
      *
      * @return void
      */
-    public function removeImage(\Ood\PictureBundle\Entity\Image $image): void
+    public function removeImage(Image $image): void
     {
         $this->images->removeElement($image);
     }
@@ -405,23 +412,22 @@ class Post
     }
 
     /**
-     * @param \Ood\PictureBundle\Entity\Video $video
+     * @param Video $video
      *
      * @return Post
      */
-    public function addVideo(\Ood\PictureBundle\Entity\Video $video): Post
+    public function addVideo(Video $video): Post
     {
         $this->videos[] = $video;
-
         return $this;
     }
 
     /**
-     * @param \Ood\PictureBundle\Entity\Video $video
+     * @param Video $video
      *
      * @return void
      */
-    public function removeVideo(\Ood\PictureBundle\Entity\Video $video): void
+    public function removeVideo(Video $video): void
     {
         $this->videos->removeElement($video);
     }
