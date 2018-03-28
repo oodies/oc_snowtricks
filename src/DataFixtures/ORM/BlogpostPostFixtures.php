@@ -46,7 +46,7 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $saut = 1;
+        $jump = 26;
         for ($i = 1; $i <= 50; $i++) {
             $post = new Post();
             /** @var \Ood\BlogBundle\Entity\Category $category */
@@ -68,9 +68,9 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
 
             for ($v = 0; $v <= 4; $v++) {
                 /** @var \Ood\PictureBundle\Entity\Image $image */
-                $image = $this->getReference('image_' . (string)($saut+$v));
+                $image = $this->getReference('image_' . (string)($jump+$v));
                 /** @var \Ood\PictureBundle\Entity\Video $video */
-                $video = $this->getReference('video_' . (string)($saut+$v));
+                $video = $this->getReference('video_' . (string)($jump+$v));
 
                 $post->addImage($image)
                      ->addVideo($video);
@@ -79,7 +79,7 @@ class BlogpostPostFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($post);
             $this->addReference('post_' . (string)$i, $post);
 
-            $saut = $saut + 5;
+            $jump = $jump + 5;
         }
         $manager->flush();
     }

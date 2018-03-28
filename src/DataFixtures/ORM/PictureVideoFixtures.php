@@ -28,7 +28,7 @@ class PictureVideoFixtures extends Fixture
     {
         $platforms = ['dailymotion', 'vimeo', 'youtube'];
 
-        for ($i = 1; $i <= 250; $i++) {
+        for ($i = 1; $i <= 300; $i++) {
             $video = new Video();
             $platform = $platforms[array_rand($platforms, 1)];
 
