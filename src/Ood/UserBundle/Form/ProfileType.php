@@ -5,7 +5,6 @@ namespace Ood\UserBundle\Form;
 use Ood\UserBundle\Entity\User;
 use Ood\PictureBundle\Form\ImageType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,40 +28,14 @@ class ProfileType extends AbstractType
                 'lastname', TextType::class,
                 [
                     'label'    => 'profile.lastname.label',
-                    'required' => false,
-                    'attr'     => [
-                        'placeholder' => 'profile.lastname.placeholder'
-                    ]
+                    'required' => false
                 ]
             )
             ->add(
                 'firstname', TextType::class,
                 [
                     'label'    => 'profile.firstname.label',
-                    'required' => false,
-                    'attr'     => [
-                        'placeholder' => 'profile.firstname.placeholder'
-                    ]
-                ]
-            )
-            ->add(
-                'username', TextType::class,
-                [
-                    'label'    => 'profile.username.label',
-                    'required' => true,
-                    'attr'     => [
-                        'placeholder' => 'profile.username.placeholder'
-                    ]
-                ]
-            )
-            ->add(
-                'email', EmailType::class,
-                [
-                    'label'    => 'profile.email.label',
-                    'required' => true,
-                    'attr'     => [
-                        'placeholder' => 'profile.email.placeholder'
-                    ]
+                    'required' => false
                 ]
             )
             ->add(

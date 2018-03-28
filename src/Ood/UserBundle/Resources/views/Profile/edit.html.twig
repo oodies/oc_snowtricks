@@ -29,23 +29,15 @@
             </div>
             <div class="col-12 col-md-6">
                 <div class="form-group">
-                {{ form_widget(form.lastname) }}
+                {{ form_widget(form.lastname, {'attr' : { 'placeholder':'profile.lastname.placeholder' }} ) }}
                 {{ form_label(form.lastname) }}
                 </div>
                 <div class="form-group">
-                {{ form_widget(form.firstname) }}
+                {{ form_widget(form.firstname, {'attr' : { 'placeholder':'profile.firstname.placeholder' }} ) }}
                 {{ form_label(form.firstname) }}
                 </div>
                 <div class="form-group">
-                {{ form_widget(form.username) }}
-                {{ form_label(form.username) }}
-                </div>
-                <div class="form-group">
-                {{ form_widget(form.email) }}
-                {{ form_label(form.email) }}
-                </div>
-                <div class="form-group">
-                {{ form_widget(form.submit, {'attr': {'class':'btn btn-primary w-100'} } ) }}
+                {{ form_widget(form.submit, {'attr': {'class':'btn btn-primary w-100'}} ) }}
                 </div>
             </div>
         </div>
@@ -53,7 +45,7 @@
         {{ form_end(form) }}
     </div>
     <script>
-    $(document).ready( function() {picture_upload.init();});
+      $(document).ready(function () {picture_upload.init()})
     </script>
 {% endblock main %}
 
