@@ -204,7 +204,8 @@ class Post
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Ood\PictureBundle\Entity\Video",
-     *      cascade={"persist", "remove"}
+     *      cascade={"persist", "remove"},
+     *      orphanRemoval=true
      * )
      * @ORM\JoinTable(name="posts_videos",
      *      joinColumns={
