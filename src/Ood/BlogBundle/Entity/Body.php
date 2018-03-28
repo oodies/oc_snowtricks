@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package Ood\BlogBundle\Entity
  *
- * @ORM\Table(name="blogpost_body")
+ * @ORM\Table(name="blog_body")
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\BodyRepository")
  */
 class Body

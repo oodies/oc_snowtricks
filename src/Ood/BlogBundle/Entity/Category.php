@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package Ood\BlogBundle\Entity
  *
- * @ORM\Table(name="blogpost_category")
+ * @ORM\Table(name="blog_category")
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\CategoryRepository")
  *
  * @UniqueEntity("name", message="category.name.unique_entity")

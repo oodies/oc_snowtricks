@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package Ood\BlogBundle\Entity
  *
- * @ORM\Table(name="blogpost_post",
+ * @ORM\Table(name="blog_post",
  *            indexes={@ORM\Index(name="IDX_uniqueID", columns={"unique_id"} ) } )
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\PostRepository")
  */

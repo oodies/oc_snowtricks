@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package Ood\BlogBundle\Entity
  *
- * @ORM\Table(name="blogpost_header")
+ * @ORM\Table(name="blog_header")
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\HeaderRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\EntityListeners({"Ood\BlogBundle\EventListener\Entity\HeaderListener"})
