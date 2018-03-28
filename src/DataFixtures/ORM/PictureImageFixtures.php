@@ -30,7 +30,7 @@ class PictureImageFixtures extends Fixture
     {
         $extension = ['jpg', 'png'];
 
-        for ($i = 1; $i <= 250; $i++) {
+        for ($i = 1; $i <= 300; $i++) {
             $image = new Image();
             $image->setExtension($extension[array_rand($extension, 1)]);
             $refName = 'image_' . (string)$i;
