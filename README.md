@@ -81,11 +81,11 @@ http://localhost:8080/web/app_dev.php
 ### Users
 To access the application's various features
 
-| User                | Identifiant | Password |
-| :-------------------| :---------- | : -------|
-| Author of comments  | author      | 12345    |
-| Blogger             | blogger     | 12345    |
-| Administrator       | admin       | 12345    |
+User | login | Password
+---- | ----- | --------
+Author of comments | author | 12345
+Blogger | blogger | 12345
+Administrator| admin | 12345
 
   
   
