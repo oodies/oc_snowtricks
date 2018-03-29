@@ -82,7 +82,7 @@
         </div>
     </section>
     <section id="form" class="container">
-        {% include "@OodBlog/Post/form_post.hml.twig" %}
+        {{ include ('@OodBlog/Post/form_post.hml.twig') }}
         <button type="submit" class="btn btn-lg btn-primary">Validate</button>
     </section>
     {{ form_rest(form) }}

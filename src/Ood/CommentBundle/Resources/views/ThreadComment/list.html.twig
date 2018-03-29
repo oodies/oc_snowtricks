@@ -20,7 +20,7 @@
             {% endif %}
             <hr class="mb-4">
             <div id="comments_list">
-                {% include 'OodCommentBundle:ThreadComment:list_content.html.twig' %}
+                {{ include ('@OodComment/ThreadComment/list_content.html.twig') }}
                 </div>
         </div>
     </div>

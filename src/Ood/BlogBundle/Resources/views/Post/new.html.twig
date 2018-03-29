@@ -11,7 +11,7 @@
     {{ form_start(form, {attr : {novalidate: 'novalidate', 'class':'was-validated'}} ) }}
 
     <section id="form" class="container">
-        {% include "@OodBlog/Post/form_post.hml.twig" %}
+        {{ include ('@OodBlog/Post/form_post.hml.twig') }}
     </section>
 
     <section id="medias" class="container-fluid">

@@ -33,7 +33,7 @@
                 <input type="hidden" value="{{ page }}" name="page" id="searchPostsForm_page">
             </form>
             <div class="cards postsList d-flex flex-wrap justify-content-center justify-content-md-start">
-                {% include "OodBlogBundle:Post:list_content.html.twig" %}
+                {{ include ('@OodBlog/Post/list_content.html.twig') }}
             </div>
         </div>
         {% endif %}
