@@ -33,9 +33,6 @@ class BodyType extends AbstractType
                 [
                     'required' => true,
                     'label'    => 'posts_form.content.label',
-                    'attr'     => [
-                        'placeholder' => 'posts_form.content.placeholder'
-                    ]
                 ]
             );
     }

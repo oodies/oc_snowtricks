@@ -17,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class RegistrationType
@@ -37,41 +36,32 @@ class RegistrationType extends AbstractType
                 'email', EmailType::class,
                 [
                     'label'    => 'registration.email.label',
-                    'required' => true,
-                    'attr'     => ['placeholder' => 'registration.email.label']
+                    'required' => true
                 ]
             )
             ->add(
                 'username', TextType::class,
                 [
                     'label'    => 'registration.username.label',
-                    'required' => true,
-                    'attr'     => ['placeholder' => 'registration.username.label']
+                    'required' => true
                 ]
             )
             ->add(
                 'plainPassword', RepeatedType::class, [
                                    'type'           => PasswordType::class,
-                                   'options'        => ['attr' => ['class' => 'password-field']],
                                    'required'       => true,
                                    'first_options'  => [
-                                       'label' => 'registration.plain_password.label',
-                                       'attr'  => ['placeholder' => 'registration.plain_password.label']
+                                       'label' => 'registration.plain_password.label'
                                    ],
                                    'second_options' => [
-                                       'label' => 'registration.plain_password_repeat.label',
-                                       'attr'  => ['placeholder' => 'registration.plain_password_repeat.label']
-                                   ],
-                                   'constraints' => new NotBlank(
-                                       ['message' => 'user.plainPassword.not_blank']
-                                   )
+                                       'label' => 'registration.plain_password_repeat.label'
+                                   ]
                                ]
             )
             ->add(
                 'submit', SubmitType::class,
                 [
-                    'label' => 'registration.submit.label',
-                    'attr'  => ['class' => 'btn btn-lg btn-primary btn-block']
+                    'label' => 'registration.submit.label'
                 ]
             );
     }

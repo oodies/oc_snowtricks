@@ -33,9 +33,6 @@ class HeaderType extends AbstractType
                 [
                     'required' => true,
                     'label'    => 'posts_form.title.label',
-                    'attr'     => [
-                        'placeholder' => 'posts_form.title.placeholder'
-                    ]
                 ]
             )
             ->add(
@@ -43,9 +40,6 @@ class HeaderType extends AbstractType
                 [
                     'required' => true,
                     'label'    => 'posts_form.brief.label',
-                    'attr'     => [
-                        'placeholder' => 'posts_form.brief.placeholder'
-                    ]
                 ]
             );
     }
