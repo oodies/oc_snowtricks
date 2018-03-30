@@ -10,7 +10,7 @@ The objective of this project is to create a community site about snow tricks us
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/eba77799d7164300a2954d2d30b40eef)](https://www.codacy.com/app/sebastien.chomy/oc_snowtricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sebastien-chomy/oc_snowtricks&amp;utm_campaign=Badge_Grade)
 ## Demonstration
 
-Preview example : [http://snowtricks.oodie.fr](http://snowtricks_oc.oodie.fr)
+Preview example : [http://snowtricks.oodie.fr](http://snowtricks.oodie.fr)
 ## Installation
 
 ### 1 - Download or clone the repository git
