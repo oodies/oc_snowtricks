@@ -11,7 +11,7 @@ html {
 
 body {
   display: grid;
-  grid-template-rows: 56px 1fr 45px;
+  grid-template-rows: 56px 1fr 60px;
   grid-template-areas: "header" "main" "footer";
   min-height: 100%;
   width: 100%;
@@ -133,7 +133,7 @@ footer {
  */
 section#head {
   position: relative;
-  height: 48vw;
+  height: 30vw;
   background-color: #afafaf;
   // Image
   > img {
@@ -324,7 +324,6 @@ section#form {
   section {
     display: grid;
     width: 100%;
-    min-height: 100%;
     grid-template-rows: 1fr 70px;
     grid-template-areas: 'content' 'gutter';
     > .content {
