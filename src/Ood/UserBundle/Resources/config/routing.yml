@@ -13,13 +13,13 @@
 #
 # Security:: Login
 ood_user_security_login:
-  path: /connexion
+  path: /login
   defaults: { _controller: OodUserBundle:Security:login }
   methods: ["GET","POST"]
 
 # Security:: Logout
 ood_user_security_logout:
-  path: /deconnexion
+  path: /logout
   methods: ["GET"]
 
 ## Registration
