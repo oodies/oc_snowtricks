@@ -11,7 +11,7 @@ ood_blog_post_list:
     methods: ['GET','POST']
 
 ood_blog_post_new:
-    path:     /newArticle
+    path:     /ajouter-figure
     defaults: { _controller: OodBlogBundle:Post:new }
     methods: ['GET','POST']
 
@@ -20,18 +20,13 @@ ood_blog_post_show:
     defaults: { _controller: OodBlogBundle:Post:show }
     methods: ['GET']
 
-#ood_blog_post_show:
-#    path:     /article/{postId}
-#    defaults: { _controller: OodBlogBundle:Post:show }
-#    methods: ['GET']
-
 ood_blog_post_edit:
-    path:     /article/{postId}/change
+    path:     /figure/{postId}/mofifier
     defaults: { _controller: OodBlogBundle:Post:edit }
     methods: ['GET','POST']
 
 ood_blog_post_remove:
-    path:     /article/{postId}/remove
+    path:     /figure/{postId}/supprimer
     defaults: { _controller: OodBlogBundle:Post:remove }
     methods: ['GET']
 

@@ -13,13 +13,13 @@
 #
 # Security:: Login
 ood_user_security_login:
-  path: /login
+  path: /connexion
   defaults: { _controller: OodUserBundle:Security:login }
   methods: ["GET","POST"]
 
 # Security:: Logout
 ood_user_security_logout:
-  path: /logout
+  path: /deconnexion
   methods: ["GET"]
 
 ## Registration
@@ -62,13 +62,13 @@ ood_user_resetting_send_email:
 
 # Resetting:: Check Email
 ood_user_resetting_check_email:
-  path: /mot-de-passe-oublier/consulter-messagerie
+  path: /mot-de-passe-oublie/consulter-messagerie
   defaults: { _controller: OodUserBundle:Resetting:checkEmail}
   methods: ["GET"]
 
 # Resetting:: Reset
 ood_user_resetting_reset:
-  path: /mot-de-passe-oublier/renseigner-nouveau/{token}
+  path: /mot-de-passe-oublie/renseigner-nouveau/{token}
   defaults: { _controller: OodUserBundle:Resetting:reset}
   methods: ["GET","POST"]
 
@@ -76,36 +76,35 @@ ood_user_resetting_reset:
 #
 # Profile edit
 ood_user_profile_edit:
-  path: /profile
+  path: /mon-compte
   defaults: { _controller: OodUserBundle:Profile:edit }
   methods: ["GET","POST"]
 
 ## **************************
-## Backend
-##
+## Backeutilisateur
 
 ## Admin
 #
 # User:admin:list
 ood_user_management_list:
-  path: /admin/users
+  path: /admin/utilisateurs
   defaults: { _controller: OodUserBundle:Management:list }
   methods: ["GET"]
 
 # User:admin:edit
 ood_user_management_edit:
-  path: /admin/users/{id}/edit
+  path: /admin/utilisateur/{id}/modifier
   defaults: { _controller: OodUserBundle:Management:edit }
   methods: ["GET","POST"]
 
 # User:admin:lock
 ood_user_management_lock:
-  path: /admin/users/{id}/lock
+  path: /admin/utilisateur/{id}/verrouiller
   defaults: { _controller: OodUserBundle:Management:lock }
   methods: ["GET"]
 
 # User:admin:unlock
 ood_user_management_unlock:
-  path: /admin/users/{id}/unlock
+  path: /admin/utilisateur/{id}/deverouiller
   defaults: { _controller: OodUserBundle:Management:unlock }
   methods: ["GET"]
