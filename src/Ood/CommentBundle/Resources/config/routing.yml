@@ -8,33 +8,33 @@
 ## Frontend
 ##
 ood_comment_threadComment_thread:
-    path: /comments/{threadId}
+    path: /commentaires/{threadId}
     defaults: { _controller: OodCommentBundle:ThreadComment:thread}
     methods: ["GET","POST"]
 
 ood_comment_threadComment_newComment:
-    path: /newComment/{threadId}
+    path: /ajouter-commentaire/{threadId}
     defaults: { _controller: OodCommentBundle:ThreadComment:newComment}
     methods: ["GET","POST"]
 
 ## Backend
 ##
 ood_comment_management_list:
-    path: /admin/comments
+    path: /admin/commentaires
     defaults: { _controller: OodCommentBundle:Management:list}
     methods: ["GET"]
 
 ood_comment_management_approve:
-    path: /admin/comment/{commentId}/approve
+    path: /admin/commentaire/{commentId}/approuver
     defaults: { _controller: OodCommentBundle:Management:approve}
     methods: ["GET"]
 
 ood_comment_management_disapprove:
-    path: /admin/comment/{commentId}/disapprove
+    path: /admin/commenaire/{commentId}/desapprouver
     defaults: { _controller: OodCommentBundle:Management:disapprove}
     methods: ["GET"]
 
 ood_comment_management_edit:
-    path: /admin/comment/{commentId}/edit
+    path: /admin/commentaire/{commentId}/modifier
     defaults: { _controller: OodCommentBundle:Management:edit}
     methods: ["GET","POST"]

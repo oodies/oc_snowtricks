@@ -7,10 +7,10 @@
 
 # Homepage
 ood_app_homepage:
-    path: /home
+    path: /page-accueil
     defaults: { _controller: OodAppBundle:Default:homepage }
 
 # Dashboard
 ood_app_dashboard:
-    path: /admin
+    path: /tableau-de-bord
     defaults: { _controller: OodAppBundle:Default:dashboard }
