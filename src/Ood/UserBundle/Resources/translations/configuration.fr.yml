@@ -9,5 +9,6 @@
 ## Enumeration
 ##
 role_user: "visiteur"
-role_blogger: "auteur"
+role_author: "utilisateur"
+role_blogger: "blogueur"
 role_admin: "administrateur"
