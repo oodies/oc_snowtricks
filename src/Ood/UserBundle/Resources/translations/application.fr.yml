@@ -16,7 +16,7 @@ login:
     title: "SNOWTRICK"
     # Input label, username
     username:
-        label: "Email"
+        label: "Identifiant ou Email"
     # Input label, password
     password:
         label: "Mot de passe"
@@ -92,7 +92,7 @@ resetting_request:
     title-desc: "Entrez votre adresse e-mail afin d'obtenir un nouveau mot de passe"
     #  Input label, username
     username:
-        label: "Nom utilisateur ou email"
+        label: "Identifiant ou email"
     # button submit
     submit:
         label: "Réinitialiser le mot de passe"
