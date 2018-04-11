@@ -30,7 +30,7 @@
         {# View with posts list #}
         <div class="postsListContainer p-2">
             <form id="searchPostsForm" action="{{ path(vURL) }}">
-                <input type="hidden" value="{{ page }}" name="page" id="searchPostsForm_page">
+                <input type="hidden" value="{{ paginator.current_page }}" name="page" id="searchPostsForm_page">
             </form>
             <div class="cards postsList d-flex flex-wrap justify-content-center justify-content-md-start">
                 {{ include ('@OodBlog/Post/list_content.html.twig') }}
@@ -44,15 +44,11 @@
             <a href="#head">
                 <i class="fa fa-4x fa-angle-up"></i>
             </a>
-            {% if restOfPosts > 0 %}
+            {% if paginator.remaining_results > 0 %}
                 <a class="js-infiniteScroll" href="{{ path(vURL) }}"
-                   data-restof="{{ restOfPosts }}"
-                   data-total="{{ totalPosts }}"
-                   data-item-by-page="{{ itemsPerPage }}">
-                    {##}
-                    {#{{ 'posts_list.infinitescroll'|trans({#}
-                    {#'%number_item_next%': '<span id=\"numberItemNext\">' ~ numberItemNext ~ '</span>'#}
-                    {#}, 'application')|raw }} <br/>#}
+                   data-restof="{{ paginator.remaining_results }}"
+                   data-total="{{ paginator.nb_results }}"
+                   data-item-by-page="{{ paginator.max_per_page }}">
                     <i class="fa fa-4x fa-angle-down"></i>
                 </a>
             {% endif %}
