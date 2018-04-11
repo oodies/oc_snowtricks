@@ -9,7 +9,7 @@
 <!-- Comments -->
 <div class="container-fluid">
     <form id="searchCommentsForm" action="{{ vURL }}">
-        <input type="hidden" value="{{ page }}" name="page" id="searchCommentsForm_page">
+        <input type="hidden" value="{{ paginator.current_page }}" name="page" id="searchCommentsForm_page">
     </form>
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
@@ -27,14 +27,14 @@
     {% if comments|length %}
     <div class="row">
         <div id="infiniteScroll" class="d-flex justify-content-center w-100">
-            {% if restOfComments > 0 %}
+            {% if paginator.remaining_results > 0 %}
                 <a class="js-infiniteScroll" href="{{ vURL }}"
-                   data-restof="{{ restOfComments }}"
-                   data-total="{{ totalComments }}"
-                   data-item-by-page="{{ itemsPerPage }}">
+                   data-restof="{{ paginator.remaining_results }}"
+                   data-total="{{ paginator.nb_results }}"
+                   data-item-by-page="{{ paginator.max_per_page }}">
                       <span>
                         {{ 'posts_list.infinitescroll'|trans({
-                            '%number_item_next%': '<span id=\"numberItemNext\">' ~ numberItemNext ~ '</span>'
+                            '%number_item_next%': '<span id=\"numberItemNext\">' ~ paginator.next_page_results ~ '</span>'
                         }, 'application')|raw }} </span>
                 </a>
             {% endif %}
