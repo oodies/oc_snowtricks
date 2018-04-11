@@ -8,11 +8,13 @@
 
 namespace Ood\CommentBundle\Controller;
 
+use Ood\AppBundle\Services\Paginate\PagerfantaMeta;
 use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Entity\Thread;
 use Ood\CommentBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,42 +31,27 @@ class ThreadCommentController extends Controller
      */
 
     /** Maximum number of results from index */
-    const ITEMS_PER_PAGE = 10;
+    const MAX_PER_PAGE = 10;
 
     /**
      * View of a comments thread
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \LogicException
+     *
+     * @return Response
      */
     public function threadAction(Request $request)
     {
         $idThread = $request->get('threadId');
-
-        if ($request->getMethod() === 'POST') {
-            $page = $request->get('page');
-        } else {
-            $page = 0;
-        }
-
-        // Params for paginator
-        $params = [];
-        $params['page'] = $page;
-        $params['limit'] = $request->get('limit', self::ITEMS_PER_PAGE);
-        $params['offset'] = ((int)$page) * ((int)$params['limit']);
+        $currentPage = $request->get('page', 1);
 
         // default assignment
         $assign = [];
         $assign['thread'] = null;
-        $assign['page'] = $page;
         $assign['vURL'] = $this->generateUrl('ood_comment_threadComment_thread', ['threadId' => $idThread]);
         $assign['comments'] = [];
-        $assign['totalComments'] = 0;
-        $assign['restOfComments'] = 0;
-        $assign['numberItemNext'] = 0;
-        $assign['itemsPerPage'] = self::ITEMS_PER_PAGE;
 
         // Get manager
         $em = $this->getDoctrine()->getManager();
@@ -75,18 +62,12 @@ class ThreadCommentController extends Controller
         if ($thread !== null) {
             /** @var \Ood\CommentBundle\Repository\CommentRepository $repository */
             $repository = $em->getRepository(Comment::Class);
-            $comments = $repository->findByThread($thread, $params);
-            $totalComments = $repository->getNbCommentsByThread($thread);
-            /** @var integer $restOfComments Number of comments remaining to be displayed */
-            $restOfComments = $totalComments - ($page + 1) * self::ITEMS_PER_PAGE;
-            /** @var integer $numberItemNext Next number of post to display */
-            $numberItemNext = ($restOfComments > self::ITEMS_PER_PAGE) ? self::ITEMS_PER_PAGE : $restOfComments;
+            $pagerfanta = $repository->findAllByThreadWithPaginate($thread, self::MAX_PER_PAGE, $currentPage);
+            $pagerfantaMeta = new PagerfantaMeta($pagerfanta);
 
             $assign['thread'] = $thread;
-            $assign['comments'] = $comments;
-            $assign['totalComments'] = $totalComments;
-            $assign['restOfComments'] = $restOfComments;
-            $assign['numberItemNext'] = $numberItemNext;
+            $assign['comments'] = $pagerfanta->getCurrentPageResults();
+            $assign['paginator'] = $pagerfantaMeta->getMetas();
         }
 
         if ($request->isXmlHttpRequest()) {

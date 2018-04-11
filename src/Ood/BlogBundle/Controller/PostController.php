@@ -8,6 +8,7 @@
 
 namespace Ood\BlogBundle\Controller;
 
+use Ood\AppBundle\Services\Paginate\PagerfantaMeta;
 use Ood\BlogBundle\Entity\Post;
 use Ood\BlogBundle\Form\PostType;
 use Ood\BlogBundle\Repository\PostRepository;
@@ -32,7 +33,7 @@ class PostController extends Controller
      */
 
     /** Maximum number of results from index */
-    const ITEMS_PER_PAGE = 15;
+    const MAX_PER_PAGE = 15;
 
     /* ********************************
      *  METHODS
@@ -93,47 +94,27 @@ class PostController extends Controller
 
     /**
      * Display posts list
-     * QueryParam (name="page", requirement="\d+", default="0", description="number page")
      *
      * @param Request $request
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \LogicException
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
-        if ($request->getMethod() === 'POST') {
-            $page = $request->get('page');
-        } else {
-            $page = 0;
-        }
+        $currentPage = $request->get('page', 1);
 
-        // Get param request
-        $params = [];
-        $params['page'] = $page;
-        $params['limit'] = $request->get('limit', self::ITEMS_PER_PAGE);
-        $params['offset'] = ((int)$page) * ((int)$params['limit']);
-
-        /** @var PostRepository $repository */
-        $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
-        $posts = $repository->findResources($params);
-        $totalPosts = $repository->getNbItems();
-
-        /** @var integer $restOfPosts Number of posts remaining to be displayed */
-        $restOfPosts = $totalPosts - ($page + 1) * self::ITEMS_PER_PAGE;
-        /** @var integer $numberItemNext Next number of post to display */
-        $numberItemNext = ($restOfPosts > self::ITEMS_PER_PAGE) ? self::ITEMS_PER_PAGE : $restOfPosts;
+        $pagerfanta = $this->getDoctrine()->getManager()
+                                          ->getRepository(Post::class)
+                                          ->findAllWithPaginate(self::MAX_PER_PAGE, $currentPage);
+        $pagerfantaMeta = new PagerfantaMeta($pagerfanta);
 
         $assign = [
-            'posts'          => $posts,
-            'page'           => $page,
-            'totalPosts'     => $totalPosts,
-            'restOfPosts'    => $restOfPosts,
+            'posts'          => $pagerfanta->getCurrentPageResults(),
+            'paginator'      => $pagerfantaMeta->getMetas(),
             'vURL'           => 'ood_blog_post_list',
-            'numberItemNext' => $numberItemNext,
-            'itemsPerPage'   => self::ITEMS_PER_PAGE
         ];
 
         if ($request->isXmlHttpRequest()) {

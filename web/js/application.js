@@ -195,7 +195,7 @@ var infinite_scroll = infinite_scroll || {};
     /** @var Number _itemByPage Maximum number of results from index */
     var itemPerPage = parseInt(_infiniteScrollBtn.data('itemByPage'))
 
-    var restOfPosts = totalPosts - (parseInt(_page.val()) + 1) * itemPerPage
+    var restOfPosts = totalPosts - (parseInt(_page.val()) * itemPerPage)
     var nextItems = (restOfPosts > itemPerPage) ? itemPerPage : restOfPosts
 
     if (restOfPosts <= 0) {
@@ -324,7 +324,7 @@ var comments_infinite_scroll = comments_infinite_scroll || {};
     /** @var Number _itemByPage Maximum number of results from index */
     var itemPerPage = parseInt(_infiniteScrollBtn.data('itemByPage'))
 
-    var restOfComments = totalComments - (parseInt(_page.val()) + 1) * itemPerPage
+    var restOfComments = totalComments - (parseInt(_page.val())) * itemPerPage
     var nextItems = (restOfComments > itemPerPage) ? itemPerPage : restOfComments
 
     if (restOfComments <= 0) {

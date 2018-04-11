@@ -8,32 +8,52 @@
 
 namespace Ood\CommentBundle\Repository;
 
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Ood\AppBundle\Services\Paginate\Paginator;
+use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Entity\Thread;
+use Pagerfanta\Pagerfanta;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Class CommentRepository
  *
  * @package Ood\CommentBundle\Repository
  */
-class CommentRepository extends EntityRepository
+class CommentRepository extends ServiceEntityRepository
 {
+    /**
+     * @var Paginator
+     */
+    protected $paginator;
+
+    /**
+     * CommentRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     * @param Paginator         $paginator
+     */
+    public function __construct(RegistryInterface $registry, Paginator $paginator)
+    {
+        $this->paginator = $paginator;
+
+        parent::__construct($registry, Comment::class);
+    }
+
     /**
      * Obtain the enable comment by thread with pagination option
      *
-     * @param Thread $thread
+     * @param Thread   $thread
+     * @param int|null $maxPerPage
+     * @param int|null $currentPage
      *
-     * @param array  $params
-     *      - "offset", Pagination start index
-     *      - "limit", Maximum number of results from index
+     * @throws \LogicException
      *
-     * @return mixed
+     * @return Pagerfanta
      */
-    public function findByThread(Thread $thread, array $params)
+    public function findAllByThreadWithPaginate(Thread $thread, $maxPerPage = null, $currentPage = null): Pagerfanta
     {
         $qb = $this->createQueryBuilder('C');
-        $this->wherePaginator($qb, $params);
 
         $qb->where('C.thread = :thread')
            ->andWhere('C.enabled = :enabled')
@@ -42,7 +62,7 @@ class CommentRepository extends EntityRepository
         $qb->setParameter('thread', $thread)
            ->setParameter('enabled', true);
 
-        return $qb->getQuery()->getResult();
+        return $this->paginator->paginate($qb, $maxPerPage, $currentPage);
     }
 
     /**
@@ -71,22 +91,5 @@ class CommentRepository extends EntityRepository
         }
 
         return $numberOf;
-    }
-
-    /**
-     * @param QueryBuilder $qb
-     * @param array        $params
-     *      - "offset", Pagination start index
-     *      - "limit", Maximum number of results from index
-     */
-    private function wherePaginator(QueryBuilder $qb, array $params)
-    {
-        if (is_numeric($params['offset']) && $e = isset($params['offset'])) {
-            $qb->setFirstResult($params['offset']);
-        }
-
-        if (is_numeric($params['limit']) && $e = isset($params['limit'])) {
-            $qb->setMaxResults($params['limit']);
-        }
     }
 }
