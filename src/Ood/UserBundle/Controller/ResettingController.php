@@ -14,6 +14,7 @@ use Ood\UserBundle\Form\ResettingResetType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -32,24 +33,22 @@ class ResettingController extends Controller
      *
      * @throws \LogicException
      *
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
-    public function requestAction(Request $request)
+    public function requestAction(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(
-            ResettingRequestType::class, $user, [
-            'action' => $this->generateUrl('ood_user_resetting_request'),
-            'method' => 'POST'
-        ]
+            ResettingRequestType::class,
+            $user, [
+                'action' => $this->generateUrl('ood_user_resetting_request'),
+                'method' => 'POST'
+            ]
         );
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // Forward next step
-            return new RedirectResponse(
-                $this->generateUrl('ood_user_resetting_send_email', ['username' => $user->getUsername()])
-            );
+            return $this->redirectToRoute('ood_user_resetting_send_email', ['username' => $user->getUsername()]);
         }
 
         return $this->render(
@@ -67,10 +66,20 @@ class ResettingController extends Controller
      * @param Request $request
      *
      * @throws NotFoundHttpException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \LogicException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      *
      * @return RedirectResponse
      */
-    public function sendEmailAction(Request $request)
+    public function sendEmailAction(Request $request): RedirectResponse
     {
         $username = $request->get('username');
 
@@ -93,7 +102,7 @@ class ResettingController extends Controller
         $messaging->passwordResettingRequest($user);
 
         // Forward next step
-        return new RedirectResponse($this->generateUrl('ood_user_resetting_check_email', ['username' => $username]));
+        return $this->redirectToRoute('ood_user_resetting_check_email', ['username' => $username]);
     }
 
     /**
@@ -101,15 +110,17 @@ class ResettingController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
+     *
+     * @return RedirectResponse|Response
      */
-    public function checkEmailAction(Request $request)
+    public function checkEmailAction(Request $request): Response
     {
         $username = $request->get('username');
 
         if (empty($username)) {
             // the user does not come from the sendEmail action
-            return new RedirectResponse($this->generateUrl('ood_user_resetting_request'));
+            return $this->redirectToRoute('ood_user_resetting_request');
         }
 
         return $this->render('OodUserBundle:Resetting:check_email.html.twig', ['step' => 2]);
@@ -124,11 +135,12 @@ class ResettingController extends Controller
      * @param UserPasswordEncoderInterface $encoder
      *
      * @throws NotFoundHttpException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \LogicException
      *
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
-    public function resetAction(Request $request, string $token, UserPasswordEncoderInterface $encoder)
+    public function resetAction(Request $request, string $token, UserPasswordEncoderInterface $encoder): Response
     {
         $em = $this->getDoctrine()->getManager();
         /** @var User $user */
@@ -150,7 +162,7 @@ class ResettingController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ood_user_security_login'));
+            return $this->redirectToRoute('ood_user_security_login');
         }
 
         return $this->render(

@@ -11,6 +11,8 @@ namespace Ood\UserBundle\Controller;
 use Ood\UserBundle\Entity\User;
 use Ood\UserBundle\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SecurityController
@@ -22,9 +24,9 @@ class SecurityController extends Controller
     /**
      * @throws \LogicException
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
-    public function loginAction()
+    public function loginAction(): Response
     {
         if (!is_null($this->getUser())) {
             return $this->redirectToRoute('ood_app_homepage');

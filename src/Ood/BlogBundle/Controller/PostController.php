@@ -46,10 +46,12 @@ class PostController extends Controller
      *
      * @Security("has_role('ROLE_BLOGGER')")
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \LogicException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
+     *
+     * @return Response
      */
-    public function newAction(Request $request, UserInterface $user)
+    public function newAction(Request $request, UserInterface $user): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -66,9 +68,7 @@ class PostController extends Controller
             $em->persist($post);
             $em->flush();
 
-            return $this->redirect(
-                $this->generateUrl('ood_blog_post_list', ['postId' => $post->getIdPost()])
-            );
+            return $this->redirectToRoute('ood_blog_post_list', ['postId' => $post->getIdPost()]);
         }
 
         return $this->render('@OodBlog/Post/new.html.twig', ['form' => $form->createView()]);
@@ -93,11 +93,14 @@ class PostController extends Controller
 
     /**
      * Display posts list
-     *
      * QueryParam (name="page", requirement="\d+", default="0", description="number page")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \LogicException
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(Request $request)
     {
@@ -178,6 +181,9 @@ class PostController extends Controller
      *
      * @Security("has_role('ROLE_BLOGGER')")
      *
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     *
      * @return Response
      */
     public function removeAction(Request $request, Post $post)
@@ -212,7 +218,7 @@ class PostController extends Controller
             return $response;
         } else {
             // From blogpost himself
-            return $this->redirect($this->generateUrl('ood_blog_post_list'));
+            return $this->redirectToRoute('ood_blog_post_list');
         }
     }
 }

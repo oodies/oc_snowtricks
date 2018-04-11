@@ -12,6 +12,7 @@ use Ood\UserBundle\Form\ProfileType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -26,8 +27,12 @@ class ProfileController extends Controller
      * @param UserInterface $user
      *
      * @Security("has_role('ROLE_AUTHOR')")
+     *
+     * @throws \LogicException
+     *
+     * @return Response
      */
-    public function editAction(Request $request, UserInterface $user)
+    public function editAction(Request $request, UserInterface $user): Response
     {
         // TODO Lorsqu'il n'y a pas de données pour le formulaire alors l'objet User est affecté et on perd la connexion
 

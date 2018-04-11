@@ -34,9 +34,19 @@ class RegistrationController extends Controller
      * @param Request                      $request
      * @param UserPasswordEncoderInterface $encoder
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     *
+     * @return RedirectResponse|Response
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $encoder)
+    public function registerAction(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
@@ -62,7 +72,7 @@ class RegistrationController extends Controller
             $this->get('session')->set('ood_user_registration/email', $user->getEmail());
 
             // Forward next step
-            return new RedirectResponse($this->generateUrl('ood_user_registration_check_email'));
+            return $this->redirectToRoute('ood_user_registration_check_email');
         }
 
         return $this->render('@OodUser/Registration/register.html.twig', ['form' => $form->createView()]);
@@ -71,13 +81,18 @@ class RegistrationController extends Controller
     /**
      * Tell the user to check their email provider
      *
+     * @throws NotFoundHttpException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \LogicException
+     *
+     * @return RedirectResponse|Response
      */
-    public function checkEmailAction()
+    public function checkEmailAction(): Response
     {
         $email = $this->get('session')->get('ood_user_registration/email');
 
         if (empty($email)) {
-            return new RedirectResponse($this->generateUrl('ood_user_registration_register'));
+            return $this->redirectToRoute('ood_user_registration_register');
         }
 
         $this->get('session')->remove('ood_user_registration/email');
@@ -95,14 +110,15 @@ class RegistrationController extends Controller
     /**
      * Receive the confirmation token from user email provider, login the user.
      *
-     * @param Request $request
      * @param string  $token
      *
-     * @throws NotFoundHttpException
+     * @throws NotFoundHttpException*
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \LogicException
      *
      * @return RedirectResponse
      */
-    public function confirmAction(Request $request, string $token): RedirectResponse
+    public function confirmAction(string $token): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         /** @var \Ood\UserBundle\Repository\UserRepository $repository */
@@ -127,7 +143,7 @@ class RegistrationController extends Controller
         $this->get('session')->set('_security_main', serialize($token));
 
         // Forward next step
-        return new RedirectResponse($this->generateUrl('ood_user_registration_confirmed'));
+        return $this->redirectToRoute('ood_user_registration_confirmed');
     }
 
 
@@ -135,6 +151,7 @@ class RegistrationController extends Controller
      * Tell the user his account is now confirmed
      *
      * @throws AccessDeniedException
+     * @throws \LogicException
      *
      * @return Response
      */
