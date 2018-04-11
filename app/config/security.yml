@@ -2,17 +2,12 @@
 # https://symfony.com/doc/current/security.html
 # https://symfony.com/doc/3.4/reference/configuration/security.html#reference-security-firewall-form-login
 security:
-    # Example: /foo/error403
-    access_denied_url: ~
-
-    # https://symfony.com/doc/current/security.html#c-encoding-the-user-s-password
     encoders:
         # BCrypt encoder
         Ood\UserBundle\Entity\User:
             algorithm: bcrypt
             cost: 12
-
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    #
     providers:
         user_db:
             entity:
@@ -21,17 +16,14 @@ security:
                 # property: username
                 # name of a non-default entity manager
                 manager_name: ~
-
+    #
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
             pattern: ^/
             provider: user_db
-
             # https://symfony.com/doc/current/security/form_login_setup.html
             form_login:
                 # the user is redirected here when they need to log in
@@ -45,17 +37,15 @@ security:
                 csrf_parameter:       _crsf_token
                 csrf_token_id:        authenticate
                 csrf_token_generator: security.csrf.token_manager
-
             logout:
                 path: /logout
                 target: /
                 invalidate_session: true
-
             anonymous: ~
-
+    #
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-
+    #
     role_hierarchy:
         ROLE_AUTHOR: [ROLE_USER]
         ROLE_BLOGGER: [ROLE_AUTHOR]
