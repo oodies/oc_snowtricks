@@ -34,7 +34,7 @@ class PagerfantaMeta
     {
         // Set metas property
         $remainingResults = $pagerfanta->getNbResults() - ($pagerfanta->getCurrentPage() * $pagerfanta->getMaxPerPage());
-        $nextPageResults = ($remainingResults > $pagerfanta->getCurrentPage()) ? $pagerfanta->getCurrentPage() : $remainingResults;
+        $nextPageResults = ($remainingResults > $pagerfanta->getMaxPerPage()) ? $pagerfanta->getMaxPerPage() : $remainingResults;
         $this->addMeta('current_page', $pagerfanta->getCurrentPage());
         $this->addMeta('max_per_page', $pagerfanta->getMaxPerPage());
         $this->addMeta('get_previous_page', $pagerfanta->hasPreviousPage() ? $pagerfanta->getPreviousPage() : false);
