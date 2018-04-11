@@ -28,6 +28,3 @@ ood_comment:
 ood_user:
     resource: "@OodUserBundle/Resources/config/routing.yml"
     prefix:   /
-
-logout:
-    path: /logout
