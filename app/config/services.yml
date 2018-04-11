@@ -18,11 +18,21 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     Ood\AppBundle\:
         resource: '../../src/Ood/AppBundle/*'
+        exclude: '../../src/Ood/AppBundle/{Tests}'
+
+    Ood\BlogBundle\:
+        resource: '../../src/Ood/BlogBundle/*'
+        exclude: '../../src/Ood/BlogBundle/{Tests}'
+
+    Ood\CommentBundle\:
+        resource: '../../src/Ood/CommentBundle/*'
+        exclude: '../../src/Ood/CommentBundle/{Tests}'
 
     Ood\CommentBundle\Handler\:
         resource: '../../src/Ood/CommentBundle/Handler/'
         autowire: true
         public: true
+
     # For registerAction
     Ood\UserBundle\Controller\:
         resource: '../../src/Ood/UserBundle/Controller/*'
