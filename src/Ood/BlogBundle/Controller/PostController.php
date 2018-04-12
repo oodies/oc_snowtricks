@@ -19,7 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class PostController
@@ -42,17 +41,15 @@ class PostController extends Controller
     /**
      * Create a post
      *
-     * @param Request       $request
-     * @param UserInterface $user
+     * @param Request $request
      *
      * @Security("has_role('ROLE_BLOGGER')")
      *
      * @throws \LogicException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
      *
      * @return Response
      */
-    public function newAction(Request $request, UserInterface $user): Response
+    public function newAction(Request $request): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -60,16 +57,10 @@ class PostController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($post->setBlogger($user));
-            $em->flush();
-
-            /** @var \Ood\BlogBundle\Services\Utils $utils */
-            $utils = $this->container->get('ood_blog.utils');
-            $post->setUniqueID($utils->tinyUrl($post->getIdPost()));
             $em->persist($post);
             $em->flush();
 
-            return $this->redirectToRoute('ood_blog_post_list', ['postId' => $post->getIdPost()]);
+            return $this->redirectToRoute('ood_blog_post_list');
         }
 
         return $this->render('@OodBlog/Post/new.html.twig', ['form' => $form->createView()]);
@@ -97,7 +88,6 @@ class PostController extends Controller
      *
      * @param Request $request
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \LogicException
      *
      * @return Response
@@ -107,14 +97,14 @@ class PostController extends Controller
         $currentPage = $request->get('page', 1);
 
         $pagerfanta = $this->getDoctrine()->getManager()
-                                          ->getRepository(Post::class)
-                                          ->findAllWithPaginate(self::MAX_PER_PAGE, $currentPage);
+                           ->getRepository(Post::class)
+                           ->findAllWithPaginate(self::MAX_PER_PAGE, $currentPage);
         $pagerfantaMeta = new PagerfantaMeta($pagerfanta);
 
         $assign = [
-            'posts'          => $pagerfanta->getCurrentPageResults(),
-            'paginator'      => $pagerfantaMeta->getMetas(),
-            'vURL'           => 'ood_blog_post_list',
+            'posts'     => $pagerfanta->getCurrentPageResults(),
+            'paginator' => $pagerfantaMeta->getMetas(),
+            'vURL'      => 'ood_blog_post_list',
         ];
 
         if ($request->isXmlHttpRequest()) {
