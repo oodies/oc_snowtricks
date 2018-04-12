@@ -18,11 +18,11 @@ class Utils
     /**
      * Generate tinyUrl
      *
-     * @param int $identifier
+     * @param string|int $identifier
      *
      * @return string
      */
-    public function tinyUrl(int $identifier): string
+    public function tinyUrl($identifier): string
     {
         return rtrim(strtr(base64_encode(crypt($identifier, md5($identifier))), '+/', '-_'), '=');
     }
