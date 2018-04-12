@@ -4,15 +4,28 @@
 # * @author: Sébastien CHOMY <sebastien.chomy@gmail.com>
 # * @since 2018/02
 # */
+#
 
 services:
+  ## Autowiring
+    #
+    Ood\UserBundle\:
+        resource: '%kernel.project_dir%/src/Ood/UserBundle/*'
+        autowire: true
+        autoconfigure: true
+    #
+    Ood\UserBundle\Controller\:
+        resource: '%kernel.project_dir%/src/Ood/UserBundle/Controller'
+        tags: ['controller.service_arguments']
   ## Services
     #
     ood_user.resetting.messaging:
         class: Ood\UserBundle\Services\Messaging
+        autowire: false
         arguments:
             - '@Swift_Mailer'
             - '@Twig_Environment'
             - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
             - '%sender_no_reply%'
             - '%sender_name%'
+    Ood\UserBundle\Services\Messaging: '@ood_user.resetting.messaging'

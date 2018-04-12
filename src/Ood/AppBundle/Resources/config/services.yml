@@ -6,3 +6,5 @@
 # */
 
 services:
+    Ood\AppBundle\:
+        resource: '%kernel.project_dir%/src/Ood/AppBundle/*'
