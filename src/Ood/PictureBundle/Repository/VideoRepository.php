@@ -8,13 +8,24 @@
 
 namespace Ood\PictureBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Ood\PictureBundle\Entity\Video;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Class VideoRepository
  *
  * @package Ood\PictureBundle\Repository
  */
-class VideoRepository extends EntityRepository
+class VideoRepository extends ServiceEntityRepository
 {
+    /**
+     * VideoRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Video::class);
+    }
 }

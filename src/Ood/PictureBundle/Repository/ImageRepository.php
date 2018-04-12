@@ -8,13 +8,24 @@
 
 namespace Ood\PictureBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Ood\PictureBundle\Entity\Image;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Class ImageRepository
  *
  * @package Ood\PictureBundle\Repository
  */
-class ImageRepository extends EntityRepository
+class ImageRepository extends ServiceEntityRepository
 {
+    /**
+     * ImageRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Image::class);
+    }
 }

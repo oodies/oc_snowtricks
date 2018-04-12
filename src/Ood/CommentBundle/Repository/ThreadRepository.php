@@ -8,11 +8,25 @@
 
 namespace Ood\CommentBundle\Repository;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Ood\CommentBundle\Entity\Thread;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+
+
 /**
  * Class ThreadRepository
  *
- * @package Ood\CommentBundle\Repository
+ * @package Ood\ThreadBundle\Repository
  */
-class ThreadRepository extends \Doctrine\ORM\EntityRepository
+class ThreadRepository extends ServiceEntityRepository
 {
+    /**
+     * ThreadRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Thread::class);
+    }
 }

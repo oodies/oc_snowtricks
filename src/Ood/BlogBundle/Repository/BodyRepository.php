@@ -8,11 +8,24 @@
 
 namespace Ood\BlogBundle\Repository;
 
+use Ood\BlogBundle\Entity\Body;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+
 /**
  * Class BodyRepository
  *
  * @package Ood\BlogBundle\Repository
  */
-class BodyRepository extends \Doctrine\ORM\EntityRepository
+class BodyRepository extends ServiceEntityRepository
 {
+    /**
+     * BodyRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Body::class);
+    }
 }
