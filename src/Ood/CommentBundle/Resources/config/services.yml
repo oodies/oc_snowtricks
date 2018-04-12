@@ -6,6 +6,19 @@
 # */
 
 services:
-#    ood_comment.example:
-#        class: Ood\CommentBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  ## Autowiring
+    #
+    Ood\CommentBundle\:
+        resource: '%kernel.project_dir%/src/Ood/CommentBundle/*'
+        autowire: true
+        autoconfigure: true
+    #
+    Ood\CommentBundle\Controller\:
+        resource: '%kernel.project_dir%/src/Ood/CommentBundle/Controller'
+        tags: ['controller.service_arguments']
+    #
+    Ood\CommentBundle\Handler\:
+        resource: '%kernel.project_dir%/src/Ood/CommentBundle/Handler/'
+        autowire: true
+        autoconfigure: true
+        public: true

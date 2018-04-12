@@ -62,9 +62,7 @@ class BlogPostFixtures extends Fixture implements DependentFixtureInterface
                 ->setCategory($category)
                 ->setBlogger($blogger)
                 ->setHeader($header)
-                ->setBody($body)
-                ->setUniqueID(rtrim(strtr(base64_encode(crypt($i, md5($i))), '+/', '-_'), '='))
-            ;
+                ->setBody($body);
 
             for ($v = 0; $v <= 4; $v++) {
                 /** @var \Ood\PictureBundle\Entity\Image $image */

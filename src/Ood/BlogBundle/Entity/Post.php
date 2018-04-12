@@ -24,6 +24,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="blog_post",
  *            indexes={@ORM\Index(name="IDX_uniqueID", columns={"unique_id"} ) } )
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\PostRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({"Ood\BlogBundle\EventListener\Entity\PostListener"})
  */
 class Post
 {
@@ -142,7 +144,7 @@ class Post
     protected $body = null;
 
     /**
-     * @var \Ood\UserBundle\Entity\User
+     * @var null|\Ood\UserBundle\Entity\User
      *
      * @ORM\ManyToOne(
      *     targetEntity="Ood\UserBundle\Entity\User",
@@ -308,9 +310,9 @@ class Post
     }
 
     /**
-     * @return Blogger
+     * @return null|Blogger
      */
-    public function getBlogger(): Blogger
+    public function getBlogger(): ?Blogger
     {
         return $this->blogger;
     }

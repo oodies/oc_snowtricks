@@ -6,6 +6,16 @@
 # */
 
 services:
+  ## Autowiring
+    #
+    Ood\BlogBundle\:
+        resource: '%kernel.project_dir%/src/Ood/BlogBundle/*'
+        autowire: true
+        autoconfigure: true
+    #
+    Ood\BlogBundle\Controller\:
+        resource: '%kernel.project_dir%/src/Ood/BlogBundle/Controller'
+        tags: ['controller.service_arguments']
   ## Services
     #
     ood_blog.slugify:
@@ -21,6 +31,15 @@ services:
         arguments:
             - '@ood_blog.slugify'
         class: Ood\BlogBundle\EventListener\Entity\HeaderListener
+        tags:
+            - { name: doctrine.orm.entity_listener }
+        public: true
+    #
+    ood_blog.post_listener:
+        arguments:
+            - '@ood_blog.utils'
+            - '@security.token_storage'
+        class: Ood\BlogBundle\EventListener\Entity\PostListener
         tags:
             - { name: doctrine.orm.entity_listener }
         public: true
