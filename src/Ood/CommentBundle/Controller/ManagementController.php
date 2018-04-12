@@ -10,9 +10,12 @@ namespace Ood\CommentBundle\Controller;
 
 use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Form\CommentType;
+use Ood\CommentBundle\Handler\CommentHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,9 +30,11 @@ class ManagementController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN')")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
+     *
+     * @return Response
      */
-    public function listAction()
+    public function listAction(): Response
     {
         $repository = $this->getDoctrine()->getManager()->getRepository(Comment::class);
         $comments = $repository->findAll();
@@ -40,19 +45,18 @@ class ManagementController extends Controller
     /**
      * Approve a comment
      *
-     * @param Comment $comment
+     * @Security("has_role('ROLE_ADMIN')")
+     *
+     * @param Comment        $comment
+     * @param CommentHandler $handler
      *
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
      *
-     * @Security("has_role('ROLE_ADMIN')")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse
      */
-    public function approveAction(Comment $comment)
+    public function approveAction(Comment $comment, CommentHandler $handler): RedirectResponse
     {
-        /** @var \Ood\CommentBundle\Handler\CommentHandler $handler */
-        $handler = $this->container->get('Ood\CommentBundle\Handler\CommentHandler');
         $handler->approve($comment);
 
         return $this->redirectToRoute('ood_comment_management_list');
@@ -61,19 +65,20 @@ class ManagementController extends Controller
     /**
      * Disapprove a comment
      *
-     * @param Comment $comment
+     * @Security("has_role('ROLE_ADMIN')")
+     *
+     * @param Comment        $comment
+     * @param CommentHandler $handler
      *
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \Exception
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse
      */
-    public function disapproveAction(Comment $comment)
+    public function disapproveAction(Comment $comment, CommentHandler $handler): RedirectResponse
     {
-        /** @var \Ood\CommentBundle\Handler\CommentHandler $handler */
-        $handler = $this->container->get('Ood\CommentBundle\Handler\CommentHandler');
         $handler->disapprove($comment);
 
         return $this->redirectToRoute('ood_comment_management_list');
@@ -82,17 +87,20 @@ class ManagementController extends Controller
     /**
      * Change a text comment
      *
-     * @param Request $request
-     * @param Comment $comment
+     * @Security("has_role('ROLE_ADMIN')")
+     *
+     * @param Request        $request
+     * @param Comment        $comment
+     * @param CommentHandler $handler
      *
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
      *
-     * @Security("has_role('ROLE_ADMIN')")
+     * @throws \LogicException
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
-    public function editAction(Request $request, Comment $comment)
+    public function editAction(Request $request, Comment $comment, CommentHandler $handler): Response
     {
         $form = $this->createForm(
             CommentType::class,
@@ -106,8 +114,6 @@ class ManagementController extends Controller
             ]
         );
 
-        /** @var \Ood\CommentBundle\Handler\CommentHandler $handler */
-        $handler = $this->container->get('Ood\CommentBundle\Handler\CommentHandler');
         if ($handler->change($request, $form, $comment)) {
             return $this->redirectToRoute('ood_comment_management_list');
         }
