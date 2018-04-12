@@ -9,7 +9,9 @@
 <!-- Comments -->
 <div class="container-fluid">
     <form id="searchCommentsForm" action="{{ vURL }}">
+        {% if comments|length %}
         <input type="hidden" value="{{ paginator.current_page }}" name="page" id="searchCommentsForm_page">
+        {% endif %}
     </form>
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
