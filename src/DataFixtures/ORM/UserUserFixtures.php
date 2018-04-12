@@ -17,6 +17,7 @@ use Faker\Provider\fr_FR\Internet as FakerInternet;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 
 /**
@@ -31,6 +32,9 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
      */
     protected $container;
 
+    /**
+     * @var UserPasswordEncoder
+     */
     protected $encoder;
 
     /**
@@ -101,9 +105,9 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
 
     /**
      *
-     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
+     * @param ObjectManager $manager
      */
-    protected function createSpecificUser($manager)
+    protected function createSpecificUser(ObjectManager $manager)
     {
 
         $users = [
