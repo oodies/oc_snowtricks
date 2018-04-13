@@ -11,14 +11,13 @@ namespace Ood\BlogBundle\Controller;
 use Ood\AppBundle\Services\Paginate\PagerfantaMeta;
 use Ood\BlogBundle\Entity\Post;
 use Ood\BlogBundle\Form\PostType;
-use Ood\BlogBundle\Repository\PostRepository;
-use Ood\CommentBundle\Entity\Comment;
-use Ood\CommentBundle\Entity\Thread;
+use Ood\BlogBundle\Manager\PostManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Class PostController
@@ -41,7 +40,8 @@ class PostController extends Controller
     /**
      * Create a post
      *
-     * @param Request $request
+     * @param Request     $request
+     * @param PostManager $postManager
      *
      * @Security("has_role('ROLE_BLOGGER')")
      *
@@ -49,16 +49,14 @@ class PostController extends Controller
      *
      * @return Response
      */
-    public function newAction(Request $request): Response
+    public function newAction(Request $request, PostManager $postManager): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
+            $postManager->add($post);
 
             return $this->redirectToRoute('ood_blog_post_list');
         }
@@ -67,38 +65,37 @@ class PostController extends Controller
     }
 
     /**
-     * Display a blog
+     * Display a blog post
      *
-     * @param string $uniqueID
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \LogicException
-     */
-    public function showAction($uniqueID)
-    {
-        /** @var PostRepository $repository */
-        $repository = $this->getDoctrine()->getManager()->getRepository(Post::class);
-        $post = $repository->getByUniqueID($uniqueID);
-
-        return $this->render('@OodBlog/Post/show.html.twig', ['post' => $post]);
-    }
-
-    /**
-     * Display posts list
-     *
-     * @param Request $request
+     * @param string      $uniqueID
+     * @param PostManager $postManager
      *
      * @throws \LogicException
      *
      * @return Response
      */
-    public function listAction(Request $request): Response
+    public function showAction($uniqueID, PostManager $postManager): Response
+    {
+        $post = $postManager->getByUniqueID($uniqueID);
+
+        return $this->render('@OodBlog/Post/show.html.twig', ['post' => $post]);
+    }
+
+    /**
+     * Display blog posts list
+     *
+     * @param Request     $request
+     * @param PostManager $postManager
+     *
+     * @throws \LogicException
+     *
+     * @return Response
+     */
+    public function listAction(Request $request, PostManager $postManager): Response
     {
         $currentPage = $request->get('page', 1);
 
-        $pagerfanta = $this->getDoctrine()->getManager()
-                           ->getRepository(Post::class)
-                           ->findAllWithPaginate(self::MAX_PER_PAGE, $currentPage);
+        $pagerfanta = $postManager->findAllWithPaginate(self::MAX_PER_PAGE, $currentPage);
         $pagerfantaMeta = new PagerfantaMeta($pagerfanta);
 
         $assign = [
@@ -117,69 +114,53 @@ class PostController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Post    $post
-     *
-     * @ParamConverter("post", options={"id"="postId"})
+     * Edit a blog post
      *
      * @Security("has_role('ROLE_BLOGGER')")
      *
+     * @param Request     $request
+     * @param Post        $post
+     * @param PostManager $postManager
+     *
+     * @ParamConverter("post", options={"id"="postId"})
+     *
      * @throws \LogicException
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response*
+     * @return Response
      */
-    public function editAction(Request $request, Post $post)
+    public function editAction(Request $request, Post $post, PostManager $postManager): Response
     {
         $form = $this->createForm(PostType::class, $post);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $postManager->update($post);
 
-            // TODO FlashBag
+            $this->addFlash('notice', 'post.msg.saved_done');
         }
 
         return $this->render('@OodBlog/Post/edit.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * Remove a post + Thread of comments + Images + videos
-     *
-     * @param Request $request
-     * @param Post    $post
-     *
-     * @ParamConverter("post", options={"id"="postId"})
+     * Remove a blog post + Thread of comments + Images + videos
      *
      * @Security("has_role('ROLE_BLOGGER')")
+     *
+     * @param Request     $request
+     * @param Post        $post
+     * @param PostManager $postManager
+     *
+     * @ParamConverter("post", options={"id"="postId"})
      *
      * @throws \InvalidArgumentException
      * @throws \LogicException
      *
      * @return Response
      */
-    public function removeAction(Request $request, Post $post)
+    public function removeAction(Request $request, Post $post, PostManager $postManager): Response
     {
-        // TODO vérifier que les images et bien les videos se suppriment de la DB
-        $em = $this->getDoctrine()->getManager();
-
-        if ($post) {
-            $repositoryThread = $em->getRepository(Thread::class);
-            $thread = $repositoryThread->find($post->getIdPost());
-
-            if ($thread) {
-                $repositoryComment = $em->getRepository(Comment::class);
-                $comments = $repositoryComment->findBy(['thread' => $thread]);
-
-                foreach ($comments as $comment) {
-                    $em->remove($comment);
-                }
-                $em->remove($thread);
-            }
-            $em->remove($post);
-            $em->flush();
-
-            // TODO Supprimer les images en dur sur le serveur
-        }
+        $postManager->remove($post);
 
         if ($request->isXmlHttpRequest()) {
             // From blogpost list
