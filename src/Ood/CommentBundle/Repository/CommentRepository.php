@@ -85,6 +85,6 @@ class CommentRepository extends ServiceEntityRepository
         $qb->setParameter('thread', $thread)
            ->setParameter('enabled', true);
 
-        return $numberOf = (int)$qb->getQuery()->getSingleScalarResult();
+        return (int)$qb->getQuery()->getSingleScalarResult();
     }
 }
