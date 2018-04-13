@@ -13,7 +13,7 @@ use Ood\UserBundle\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 /**
  * Class SecurityController
  *
@@ -22,18 +22,16 @@ use Symfony\Component\HttpFoundation\Response;
 class SecurityController extends Controller
 {
     /**
-     * @throws \LogicException
+     * @param AuthenticationUtils $authUtils
      *
      * @return RedirectResponse|Response
+     * @throws \LogicException
      */
-    public function loginAction(): Response
+    public function loginAction(AuthenticationUtils $authUtils): Response
     {
         if (!is_null($this->getUser())) {
             return $this->redirectToRoute('ood_app_homepage');
         }
-
-        /** @var \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authUtils */
-        $authUtils = $this->get('security.authentication_utils');
 
         $user = new User();
         $form = $this->createForm(

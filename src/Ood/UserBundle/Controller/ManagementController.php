@@ -10,10 +10,14 @@ namespace Ood\UserBundle\Controller;
 
 use Ood\UserBundle\Entity\User;
 use Ood\UserBundle\Form\UserType;
+use Ood\UserBundle\Manager\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Class ManagementController
@@ -22,19 +26,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ManagementController extends Controller
 {
-
     /**
      * Show all users
      *
      * @Security("has_role('ROLE_ADMIN')")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param UserManager $userManager
+     *
+     * @return Response
+     * @throws \LogicException
      */
-    public function listAction()
+    public function listAction(UserManager $userManager): Response
     {
-
-        $repository = $this->getDoctrine()->getManager()->getRepository(User::class);
-        $users = $repository->findAll();
+        $users = $userManager->findAll();
 
         return $this->render('@OodUser/Management/list.html.twig', ['users' => $users]);
     }
@@ -42,28 +46,25 @@ class ManagementController extends Controller
     /**
      * Edit an user
      *
-     * @param Request $resquest
-     * @param User    $user
+     * @param Request     $request
+     * @param User        $user
+     * @param UserManager $userManager
      *
+     * @return RedirectResponse|Response
+     * @throws \LogicException
      * @ParamConverter("user",
      *                  options={"id"="id"} )
      *
      * @Security("has_role('ROLE_ADMIN')")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, User $user)
+    public function editAction(Request $request, User $user, UserManager $userManager): Response
     {
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setUpdateAt(new \DateTime());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $userManager->update($user);
 
             if ($request->isXmlHttpRequest()) {
                 $this->json(['user' => $user]);
@@ -84,23 +85,19 @@ class ManagementController extends Controller
     /**
      * Lock an user
      *
-     * @param User    $user
+     * @param User        $user
+     * @param UserManager $userManager
      *
      * @ParamConverter("user",
      *                  options={"id"="id"} )
      *
      * @Security("has_role('ROLE_ADMIN')")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse
      */
-    public function lockAction(User $user)
+    public function lockAction(User $user, UserManager $userManager): RedirectResponse
     {
-        $user->setUpdateAt(new \DateTime())
-             ->setLocked(true);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+        $userManager->lock($user);
 
         return $this->redirectToRoute('ood_user_management_list');
     }
@@ -108,23 +105,19 @@ class ManagementController extends Controller
     /**
      * Unlock an user
      *
-     * @param User    $user
+     * @param User        $user
+     * @param UserManager $userManager
      *
      * @ParamConverter("user",
      *                  options={"id"="id"} )
      *
      * @Security("has_role('ROLE_ADMIN')")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse
      */
-    public function unlockAction(User $user)
+    public function unlockAction(User $user, UserManager $userManager): RedirectResponse
     {
-        $user->setUpdateAt(new \DateTime())
-             ->setLocked(false);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+        $userManager->unlock($user);
 
         return $this->redirectToRoute('ood_user_management_list');
     }
