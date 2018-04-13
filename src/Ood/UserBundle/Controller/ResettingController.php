@@ -11,12 +11,13 @@ namespace Ood\UserBundle\Controller;
 use Ood\UserBundle\Entity\User;
 use Ood\UserBundle\Form\ResettingRequestType;
 use Ood\UserBundle\Form\ResettingResetType;
+use Ood\UserBundle\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 /**
  * Class ResettingController
@@ -63,11 +64,13 @@ class ResettingController extends Controller
     /**
      * Request reset user password: submit form and send email.
      *
-     * @param Request $request
+     * @param Request     $request
      *
+     * @param UserManager $userManager
+     *
+     * @return RedirectResponse
      * @throws NotFoundHttpException
      * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \LogicException
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -76,16 +79,12 @@ class ResettingController extends Controller
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
-     *
-     * @return RedirectResponse
      */
-    public function sendEmailAction(Request $request): RedirectResponse
+    public function sendEmailAction(Request $request, UserManager $userManager): RedirectResponse
     {
         $username = $request->get('username');
 
-        $em = $this->getDoctrine()->getManager();
-        /** @var User $user */
-        $user = $em->getRepository(User::class)->loadUserByUsername($username);
+        $user = $userManager->loadUserByUsername($username);
 
         if (null === $user) {
             throw new NotFoundHttpException(
@@ -93,9 +92,7 @@ class ResettingController extends Controller
             );
         }
 
-        $user->setConfirmationToken(rtrim(strtr(base64_encode(random_bytes(20)), '+/', '-_'), '='));
-        $em->persist($user);
-        $em->flush();
+        $userManager->confirmationToken($user);
 
         /** @var \Ood\UserBundle\Services\Messaging $messaging */
         $messaging = $this->container->get('ood_user.resetting.messaging');
@@ -130,21 +127,18 @@ class ResettingController extends Controller
     /**
      * Reset user password.
      *
-     * @param Request                      $request
-     * @param string                       $token
-     * @param UserPasswordEncoderInterface $encoder
+     * @param Request     $request
+     * @param string      $token
+     * @param UserManager $userManager
      *
+     * @return RedirectResponse|Response
      * @throws NotFoundHttpException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \LogicException
-     *
-     * @return RedirectResponse|Response
      */
-    public function resetAction(Request $request, string $token, UserPasswordEncoderInterface $encoder): Response
+    public function resetAction(Request $request, string $token, UserManager $userManager): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        /** @var User $user */
-        $user = $em->getRepository(User::class)->findByConfirmationToken($token);
+        $user = $userManager->findByConfirmationToken($token);
 
         if (null === $user) {
             throw new NotFoundHttpException(
@@ -155,12 +149,7 @@ class ResettingController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($encoder->encodePassword($user, $user->getPlainPassword()))
-                 ->setPlainPassword(null)
-                 ->setConfirmationToken(null);
-
-            $em->persist($user);
-            $em->flush();
+            $userManager->changePassword($user);
 
             return $this->redirectToRoute('ood_user_security_login');
         }
