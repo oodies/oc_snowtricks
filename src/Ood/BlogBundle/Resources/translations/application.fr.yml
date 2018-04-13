@@ -27,3 +27,5 @@ post_new:
 
 post:
     see_medias : "Voir les médias"
+    msg:
+        saved_done: "Vos données ont été sauvegardées"
