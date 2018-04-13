@@ -68,11 +68,12 @@ class CommentRepository extends ServiceEntityRepository
     /**
      * Obtain the number of enable comment by thread
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @param Thread $thread
      *
      * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getNbCommentsByThread(Thread $thread)
+    public function getNbCommentsByThread(Thread $thread): int
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -84,12 +85,6 @@ class CommentRepository extends ServiceEntityRepository
         $qb->setParameter('thread', $thread)
            ->setParameter('enabled', true);
 
-        try {
-            $numberOf= (int)$qb->getQuery()->getSingleScalarResult();
-        } catch (\Exception $e) {
-            $numberOf = 0;
-        }
-
-        return $numberOf;
+        return $numberOf = (int)$qb->getQuery()->getSingleScalarResult();
     }
 }

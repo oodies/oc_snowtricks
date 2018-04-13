@@ -10,13 +10,13 @@ namespace Ood\CommentBundle\Controller;
 
 use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Form\CommentType;
-use Ood\CommentBundle\Handler\CommentHandler;
+use Ood\CommentBundle\Manager\CommentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ManagementController
@@ -30,14 +30,15 @@ class ManagementController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN')")
      *
+     * @param CommentManager $commentManager
+     *
      * @throws \LogicException
      *
      * @return Response
      */
-    public function listAction(): Response
+    public function listAction(CommentManager $commentManager): Response
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository(Comment::class);
-        $comments = $repository->findAll();
+        $comments = $commentManager->findAll();
 
         return $this->render('@OodComment/Management/list.html.twig', ['comments' => $comments]);
     }
@@ -48,16 +49,18 @@ class ManagementController extends Controller
      * @Security("has_role('ROLE_ADMIN')")
      *
      * @param Comment        $comment
-     * @param CommentHandler $handler
+     * @param CommentManager $commentManager
      *
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
      *
+     * @throws \Exception
+     *
      * @return RedirectResponse
      */
-    public function approveAction(Comment $comment, CommentHandler $handler): RedirectResponse
+    public function approveAction(Comment $comment, CommentManager $commentManager): RedirectResponse
     {
-        $handler->approve($comment);
+        $commentManager->approve($comment);
 
         return $this->redirectToRoute('ood_comment_management_list');
     }
@@ -68,7 +71,7 @@ class ManagementController extends Controller
      * @Security("has_role('ROLE_ADMIN')")
      *
      * @param Comment        $comment
-     * @param CommentHandler $handler
+     * @param CommentManager $commentManager
      *
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
@@ -77,9 +80,9 @@ class ManagementController extends Controller
      *
      * @return RedirectResponse
      */
-    public function disapproveAction(Comment $comment, CommentHandler $handler): RedirectResponse
+    public function disapproveAction(Comment $comment, CommentManager $commentManager): RedirectResponse
     {
-        $handler->disapprove($comment);
+        $commentManager->disapprove($comment);
 
         return $this->redirectToRoute('ood_comment_management_list');
     }
@@ -91,7 +94,7 @@ class ManagementController extends Controller
      *
      * @param Request        $request
      * @param Comment        $comment
-     * @param CommentHandler $handler
+     * @param CommentManager $commentManager
      *
      * @ParamConverter("comment",
      *                  options={"id"="commentId"})
@@ -100,29 +103,17 @@ class ManagementController extends Controller
      *
      * @return RedirectResponse|Response
      */
-    public function editAction(Request $request, Comment $comment, CommentHandler $handler): Response
+    public function editAction(Request $request, Comment $comment, CommentManager $commentManager): Response
     {
-        $form = $this->createForm(
-            CommentType::class,
-            $comment,
-            [
-                'action' => $this->generateUrl(
-                    'ood_comment_management_edit',
-                    ['commentId' => $comment->getIdComment()]
-                ),
-                'method' => 'POST'
-            ]
-        );
+        $form = $this->createForm(CommentType::class, $comment);
 
-        if ($handler->change($request, $form, $comment)) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentManager->update($comment);
+
             return $this->redirectToRoute('ood_comment_management_list');
         }
 
-        return $this->render(
-            '@OodComment/Management/edit.html.twig',
-            [
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('@OodComment/Management/edit.html.twig', ['form' => $form->createView()]);
     }
 }
