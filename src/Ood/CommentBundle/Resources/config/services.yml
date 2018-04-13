@@ -17,8 +17,8 @@ services:
         resource: '%kernel.project_dir%/src/Ood/CommentBundle/Controller'
         tags: ['controller.service_arguments']
     #
-    Ood\CommentBundle\Handler\:
-        resource: '%kernel.project_dir%/src/Ood/CommentBundle/Handler/'
+    Ood\CommentBundle\Manager\:
+        resource: '%kernel.project_dir%/src/Ood/CommentBundle/Manager/'
         autowire: true
         autoconfigure: true
         public: true
