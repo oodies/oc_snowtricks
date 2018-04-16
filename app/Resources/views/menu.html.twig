@@ -36,7 +36,7 @@
                         {# link dashboard #}
                         {% if is_granted('ROLE_ADMIN') %}
                             <a class="dropdown-item"
-                               href="{{ path('ood_app_dashboard') }}">{{ 'menu.admin'|trans }}</a>
+                               href="{{ path('ood_user_management_list') }}">{{ 'menu.admin'|trans }}</a>
                         {% endif %}
                     </div>
                 </li>
