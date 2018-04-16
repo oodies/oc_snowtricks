@@ -9,7 +9,6 @@
 namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider\Lorem as FakerLorem;
 use Ood\BlogBundle\Entity\Body;
@@ -19,14 +18,12 @@ use Ood\BlogBundle\Entity\Body;
  *
  * @package DataFixtures\ORM
  */
-class BlogBodyFixtures extends Fixture
+class BlogBodyFixtures extends AbstractFixture
 {
     /**
-     * Load data fixtures with the passed EntityManager
-     *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    protected function doLoad(ObjectManager $manager)
     {
         $faker = new FakerGenerator();
         $faker->addProvider(new FakerLorem($faker));
@@ -39,5 +36,13 @@ class BlogBodyFixtures extends Fixture
             $this->addReference('body_' . (string)$i, $body);
         }
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironments(): array
+    {
+        return ['dev'];
     }
 }

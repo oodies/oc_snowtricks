@@ -8,7 +8,6 @@
 
 namespace DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Generator as FakerGenerator;
@@ -20,7 +19,7 @@ use Ood\CommentBundle\Entity\Comment;
  *
  * @package DataFixtures\ORM
  */
-class CommentCommentFixtures extends Fixture implements DependentFixtureInterface
+class CommentCommentFixtures extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * This method must return an array of fixtures classes
@@ -41,22 +40,26 @@ class CommentCommentFixtures extends Fixture implements DependentFixtureInterfac
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function doLoad(ObjectManager $manager)
     {
         $faker = new FakerGenerator();
         $faker->addProvider(new FakerLorem($faker));
 
-        for ($i=1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             /** @var \Ood\CommentBundle\Entity\Thread $thread */
             $thread = $this->getReference('thread_' . $i);
             // 5 comments by thread
-            for ($j=1; $j<=40; $j++) {
-                $date = new \DateTime('@' . mktime(rand(7, 22),
-                                                   rand(0, 60),
-                                                   '0',
-                                                   rand(1, 12),
-                                                   rand(1, 30),
-                                                   rand('2016', '2017')));
+            for ($j = 1; $j <= 40; $j++) {
+                $date = new \DateTime(
+                    '@' . mktime(
+                        rand(7, 22),
+                        rand(0, 60),
+                        '0',
+                        rand(1, 12),
+                        rand(1, 30),
+                        rand('2016', '2017')
+                    )
+                );
 
                 $comment = new Comment();
                 /** @var \Ood\UserBundle\Entity\User $author */
@@ -67,11 +70,19 @@ class CommentCommentFixtures extends Fixture implements DependentFixtureInterfac
                     ->setAuthor($author)
                     ->setUpdateAt($date)
                     ->setCreateAt($date)
-                    ->setEnabled(rand(0,1));
+                    ->setEnabled(rand(0, 1));
 
                 $manager->persist($comment);
             }
         }
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironments(): array
+    {
+        return ['dev'];
     }
 }

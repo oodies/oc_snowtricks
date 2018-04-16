@@ -8,7 +8,6 @@
 
 namespace DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Ood\PictureBundle\Entity\Image;
 
@@ -17,16 +16,12 @@ use Ood\PictureBundle\Entity\Image;
  *
  * @package DataFixtures\ORM
  */
-class PictureImageFixtures extends Fixture
+class PictureImageFixtures extends AbstractFixture
 {
     /**
-     * Load data fixtures with the passed EntityManager
-     *
      * @param ObjectManager $manager
-     *
-     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
      */
-    public function load(ObjectManager $manager)
+    public function doLoad(ObjectManager $manager)
     {
         $extension = ['jpg', 'png'];
 
@@ -41,5 +36,13 @@ class PictureImageFixtures extends Fixture
             $this->addReference($refName, $image);
         }
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironments(): array
+    {
+        return ['dev'];
     }
 }

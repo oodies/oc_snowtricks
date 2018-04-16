@@ -9,7 +9,6 @@
 namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider\Lorem as FakerLorem;
 use Ood\BlogBundle\Entity\Header;
@@ -19,16 +18,14 @@ use Ood\BlogBundle\Entity\Header;
  *
  * @package DataFixtures\ORM
  */
-class BlogHeaderFixtures extends Fixture
+class BlogHeaderFixtures extends AbstractFixture
 {
     /**
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
-     *
-     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
      */
-    public function load(ObjectManager $manager)
+    public function doLoad(ObjectManager $manager)
     {
         $faker = new FakerGenerator();
         $faker->addProvider(new FakerLorem($faker));
@@ -45,5 +42,13 @@ class BlogHeaderFixtures extends Fixture
             $this->addReference('header_' . (string)$i, $header);
         }
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironments(): array
+    {
+        return ['dev'];
     }
 }

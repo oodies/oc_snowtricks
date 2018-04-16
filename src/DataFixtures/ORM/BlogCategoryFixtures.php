@@ -10,21 +10,20 @@ namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Ood\BlogBundle\Entity\Category;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /**
  * Class BlogCategoryFixtures
  *
  * @package DataFixtures\ORM
  */
-class BlogCategoryFixtures extends Fixture
+class BlogCategoryFixtures extends AbstractFixture
 {
     /**
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function doLoad(ObjectManager $manager)
     {
         for ($i = 1; $i <= 10; $i++) {
             $category = new Category();
@@ -36,5 +35,13 @@ class BlogCategoryFixtures extends Fixture
             $this->addReference($index, $category);
         }
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironments(): array
+    {
+        return ['dev', 'prod'];
     }
 }

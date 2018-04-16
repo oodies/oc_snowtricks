@@ -14,7 +14,6 @@ use Ood\UserBundle\Entity\User;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider\fr_FR\Person as FakerPerson;
 use Faker\Provider\fr_FR\Internet as FakerInternet;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
@@ -25,7 +24,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
  *
  * @package DataFixtures\ORM
  */
-class UserUserFixtures extends Fixture implements ContainerAwareInterface, DependentFixtureInterface
+class UserUserFixtures extends AbstractFixture implements ContainerAwareInterface, DependentFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -56,37 +55,41 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
      *
      * @param ObjectManager $manager The object manager.
      */
-    public function Load(ObjectManager $manager)
+    public function doLoad(ObjectManager $manager)
     {
         $faker = new FakerGenerator();
         $faker->addProvider(new FakerPerson($faker));
         $faker->addProvider(new FakerInternet($faker));
 
-        for ($i = 1; $i <= 25; $i++) {
-            $user = new User();
-            $email = $faker->email;
-            $firstName = $faker->firstName;
-            $lastName = $faker->lastName;
+        if (in_array('dev', $this->getEnvironments())) {
+            for ($i = 1; $i <= 25; $i++) {
+                $user = new User();
+                $email = $faker->email;
+                $firstName = $faker->firstName;
+                $lastName = $faker->lastName;
 
-            $user->setLastname($lastName)
-                 ->setFirstname($firstName)
-                 ->setUsername( mb_strtolower(substr($firstName,0,1) . $lastName))
-                 ->setNickname($faker->firstName)
-                 ->setEmail($email)
-                 ->setRoles(['ROLE_AUTHOR']);
+                $user->setLastname($lastName)
+                     ->setFirstname($firstName)
+                     ->setUsername(mb_strtolower(substr($firstName, 0, 1) . $lastName))
+                     ->setNickname($faker->firstName)
+                     ->setEmail($email)
+                     ->setRoles(['ROLE_AUTHOR']);
 
-            $hashPassword = $this->encoder->encodePassword($user, '12345');
-            $user->setPassword($hashPassword);
-            /** @var \Ood\PictureBundle\Entity\Image $image */
-            $image = $this->getReference('image_' . (string)$i);
-            $user->setPhoto($image);
+                $hashPassword = $this->encoder->encodePassword($user, '12345');
+                $user->setPassword($hashPassword);
+                /** @var \Ood\PictureBundle\Entity\Image $image */
+                $image = $this->getReference('image_' . (string)$i);
+                $user->setPhoto($image);
 
-            $manager->persist($user);
+                $manager->persist($user);
 
-            $this->addReference('user_' . (string)$i, $user);
+                $this->addReference('user_' . (string)$i, $user);
+            }
         }
 
-        $this->createSpecificUser($manager);
+        if (in_array('prod', $this->getEnvironments())) {
+            $this->createSpecificUser($manager);
+        }
 
         $manager->flush();
     }
@@ -104,18 +107,16 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
     }
 
     /**
-     *
      * @param ObjectManager $manager
      */
     protected function createSpecificUser(ObjectManager $manager)
     {
-
         $users = [
-            'user_jdoe' => ['joe', 'doe', 'ROLE_USER'],
-            'user_author' => ['smith', 'author', 'ROLE_AUTHOR'],
+            'user_jdoe'    => ['joe', 'doe', 'ROLE_USER'],
+            'user_author'  => ['smith', 'author', 'ROLE_AUTHOR'],
             'user_blogger' => ['smith', 'blogger', 'ROLE_BLOGGER'],
-            'user_admin' => ['smith', 'admin', 'ROLE_ADMIN']
-        ];    
+            'user_admin'   => ['smith', 'admin', 'ROLE_ADMIN']
+        ];
 
         foreach ($users as list($firstName, $lastName, $role)) {
             $user = new User();
@@ -123,15 +124,23 @@ class UserUserFixtures extends Fixture implements ContainerAwareInterface, Depen
                  ->setFirstname($firstName)
                  ->setUsername($lastName)
                  ->setNickname($lastName)
-                 ->setEmail($firstName.'.'.$lastName.'@email.com')
+                 ->setEmail($firstName . '.' . $lastName . '@email.com')
                  ->setRoles([$role]);
-    
+
             $hashPassword = $this->encoder->encodePassword($user, '12345');
             $user->setPassword($hashPassword);
-    
-            $this->addReference('user_'.$lastName, $user);
+
+            $this->addReference('user_' . $lastName, $user);
 
             $manager->persist($user);
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironments(): array
+    {
+        return ['dev', 'prod'];
     }
 }
