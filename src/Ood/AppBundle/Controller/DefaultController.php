@@ -10,6 +10,7 @@ namespace Ood\AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DefaultController
@@ -21,10 +22,10 @@ class DefaultController extends Controller
     /**
      * Show homepage
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \LogicException
      */
-    public function homepageAction()
+    public function homepageAction(): Response
     {
         return $this->render('@OodApp/Default/homepage.html.twig');
     }
@@ -34,10 +35,10 @@ class DefaultController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN')")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \LogicException
      */
-    public function dashboardAction()
+    public function dashboardAction(): Response
     {
         return $this->render('@OodApp/Default/dashboard.html.twig');
     }
