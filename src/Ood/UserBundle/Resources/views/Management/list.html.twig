@@ -36,15 +36,15 @@
                                     - {{ role|lower|trans({}, 'configuration') }}
                                 {% endfor %}
                             </td>
-                            <td>
+                            <td class="table-actions">
                                 {% if (user.locked) %}
                                     <a href="{{ path('ood_user_management_unlock', {"id": user.id }) }}"
-                                       class="btn btn-outline-success" title="{{ 'users_list.btn_unlock'|trans }}">
-                                        <i class="fa fa-unlock"></i></a>
+                                       class="btn btn-outline-danger" title="{{ 'users_list.btn_unlock'|trans }}">
+                                        <i class="fa fa-lock"></i></a>
                                 {% else %}
                                     <a href="{{ path('ood_user_management_lock', {"id": user.id }) }}"
-                                       class="btn btn-outline-danger" title="{{ 'users_list.btn_lock'|trans }}">
-                                        <i class="fa fa-lock"></i></a>
+                                       class="btn btn-outline-success" title="{{ 'users_list.btn_lock'|trans }}">
+                                        <i class="fa fa-unlock"></i></a>
                                 {% endif %}
                                 <a class="btn btn-outline-primary"
                                    href="{{ path('ood_user_management_edit', {'id': user.id }) }}" title="{{ 'users_list.btn_edit'|trans }}">

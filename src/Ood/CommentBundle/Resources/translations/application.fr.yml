@@ -23,6 +23,7 @@ comments:
 ## Type         : Page
 comments_list:
   title: "Commentaires"
+  page_title : "Admin comments"
   table_header:
       author: "Auteur"
       commentary: "Message"

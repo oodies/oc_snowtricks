@@ -34,16 +34,19 @@
                             </td>
                             <td>{{ comment.body }}</td>
                             <td>{{ comment.createAt|localizeddate('full', 'short', null, null, "EEE dd MMM yyyy  H:mm" ) }}</td>
-                            <td>
+                            <td class="table-actions">
                                 {% if (comment.enabled) %}
                                     <a href="{{ path('ood_comment_management_disapprove', {"commentId": comment.IdComment }) }}"
-                                       class="btn btn-primary">{{ 'comments_list.btn_disapprove'|trans }}</a>
+                                       class="btn btn-outline-success"
+                                       title="{{ 'comments_list.btn_disapprove'|trans }}"><i class="fa fa-eye"></i></a>
                                 {% else %}
                                     <a href="{{ path('ood_comment_management_approve', {"commentId": comment.IdComment }) }}"
-                                       class="btn btn-primary">{{ 'comments_list.btn_approve'|trans }}</a>
+                                       class="btn btn-outline-danger"
+                                       title="{{ 'comments_list.btn_approve'|trans }}"><i class="fa fa-eye-slash"></i></a>
                                 {% endif %}
                                 <a href="{{ path('ood_comment_management_edit', {"commentId": comment.IdComment }) }}"
-                                   class="btn btn-danger">{{ 'comments_list.btn_change'|trans }}</a>
+                                   class="btn btn-outline-primary"
+                                   title="{{ 'comments_list.btn_change'|trans }}"><i class="fa fa-pencil"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -54,4 +57,5 @@
     </div>
 {% endblock content %}
 
-{% block actionTitle %}Comments{% endblock actionTitle %}
+{% block title %}{{ 'comments_list.page_title'|trans }}{% endblock title %}
+{% block page %}admin_comments{% endblock page %}
