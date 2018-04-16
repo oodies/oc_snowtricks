@@ -8,7 +8,6 @@
 
 namespace DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Ood\CommentBundle\Entity\Thread;
@@ -18,7 +17,7 @@ use Ood\CommentBundle\Entity\Thread;
  *
  * @package DataFixtures\ORM
  */
-class CommentThreadFixtures extends Fixture implements DependentFixtureInterface
+class CommentThreadFixtures extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * This method must return an array of fixtures classes
@@ -37,8 +36,10 @@ class CommentThreadFixtures extends Fixture implements DependentFixtureInterface
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
+     *
+     * @throws \Exception
      */
-    public function load(ObjectManager $manager)
+    public function doLoad(ObjectManager $manager)
     {
         for ($i = 1; $i <= 50; $i++) {
             $thread = new Thread();
@@ -52,5 +53,13 @@ class CommentThreadFixtures extends Fixture implements DependentFixtureInterface
             $this->addReference('thread_' . (string)$i, $thread);
         }
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironments(): array
+    {
+        return ['dev'];
     }
 }

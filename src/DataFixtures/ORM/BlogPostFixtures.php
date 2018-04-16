@@ -10,7 +10,6 @@ namespace DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 
 use Ood\BlogBundle\Entity\Post;
 
@@ -19,7 +18,7 @@ use Ood\BlogBundle\Entity\Post;
  *
  * @package DataFixtures\ORM
  */
-class BlogPostFixtures extends Fixture implements DependentFixtureInterface
+class BlogPostFixtures extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * This method must return an array of fixtures classes
@@ -44,7 +43,7 @@ class BlogPostFixtures extends Fixture implements DependentFixtureInterface
      *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function doLoad(ObjectManager $manager)
     {
         $jump = 26;
         for ($i = 1; $i <= 50; $i++) {
@@ -80,5 +79,13 @@ class BlogPostFixtures extends Fixture implements DependentFixtureInterface
             $jump = $jump + 5;
         }
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironments(): array
+    {
+        return ['dev'];
     }
 }

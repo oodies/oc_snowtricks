@@ -8,7 +8,6 @@
 
 namespace DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Ood\PictureBundle\Entity\Video;
 
@@ -17,14 +16,12 @@ use Ood\PictureBundle\Entity\Video;
  *
  * @package DataFixtures\ORM
  */
-class PictureVideoFixtures extends Fixture
+class PictureVideoFixtures extends AbstractFixture
 {
     /**
-     * Load data fixtures with the passed EntityManager
-     *
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function doLoad(ObjectManager $manager)
     {
         $platforms = ['dailymotion', 'vimeo', 'youtube'];
 
@@ -49,24 +46,17 @@ class PictureVideoFixtures extends Fixture
             $video->setPlatform($platform)
                   ->setIdentifier($identifier)
                   ->setUrl($url);
-
             $manager->persist($video);
-
             $this->addReference('video_' . (string)$i, $video);
         }
-
         $manager->flush();
     }
 
     /**
-     * Generate tinyUrl
-     *
-     * @param int $id
-     *
-     * @return string
+     * @return array
      */
-    private function tinyUrl(int $id): string
+    protected function getEnvironments(): array
     {
-        return rtrim(strtr(base64_encode(crypt($id, md5($id))), '+/', '-_'), '=');
+        return ['dev'];
     }
 }
