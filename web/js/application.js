@@ -1,4 +1,38 @@
 /* ####################################
+ *  SWAP HEAD / FIGURES HOMEPAGE
+ */
+var swap_head_figures = swap_head_figures || {};
+(function (publics) {
+  'use strict';
+
+  /**
+   * Privates function
+   */
+  var privates = {};
+
+  privates.onClickFigures = function () {
+    $("a[href='#figures']").click( function (event) {
+      $("#head").hide();
+      $("#figures").show();
+      $("a[href='#head']").parent('nav').show();
+    });
+  }
+
+  privates.onClickHead = function () {
+    $("a[href='#head']").click( function (event) {
+      $("#head").show();
+      $("#figures").hide();
+      $(this).parent('nav').hide();
+    });
+  }
+
+  publics.init = function () {
+    privates.onClickFigures();
+    privates.onClickHead();
+  }
+} (swap_head_figures) );
+
+/* ####################################
  *  IMAGE AND VIDEO UPLOAD
  */
 var picture_upload = picture_upload || {};

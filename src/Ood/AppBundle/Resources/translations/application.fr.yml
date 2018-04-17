@@ -37,6 +37,7 @@ menu_admin:
 ## Type         : Page
 homepage:
   title : "Snowtricks"
+  head-title: "Bienvenue sur \n Snow Tricks !"
 
 ## ************************************
 ## Title        : Snowtricks admin

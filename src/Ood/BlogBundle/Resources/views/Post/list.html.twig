@@ -10,57 +10,61 @@
 
 {% trans_default_domain 'application' %}
 {% block main %}
+    <section id="head">
+        <div class="content d-flex justify-content-center align-items-center text-center">
+            <h2>{{ 'homepage.head-title'|trans|nl2br }}</h2>
+        </div>
+        <div class="gutter">
+            <a href="#figures">
+                <i class="fa fa-arrow-down fa-3x"></i>
+            </a>
+        </div>
+    </section>
 
-<section id="head">
-    <div class="content">
-    </div>
-    <div class="gutter">
-        <a href="#figures">
-            <i class="fa fa-angle-down fa-4x"></i>
-        </a>
-    </div>
-</section>
-
-<section id="figures" class="medias">
-    <div class="content">
-        {% if posts == false %}
-        {# View with nothing posts #}
-        <div id="msgNoResult">Aucun résultat</div>
-        {% else %}
-        {# View with posts list #}
-        <div class="postsListContainer p-2">
-            <form id="searchPostsForm" action="{{ path(vURL) }}">
-                <input type="hidden" value="{{ paginator.current_page }}" name="page" id="searchPostsForm_page">
-            </form>
-            <div class="cards postsList d-flex flex-wrap justify-content-center justify-content-md-start">
+    <section id="figures" class="medias" style="display: none;">
+        <div class="content">
+            {% if posts == false %}
+                {# View with nothing posts #}
+                <div id="msgNoResult">Aucun résultat</div>
+            {% else %}
+                {# View with posts list #}
+                <div class="postsListContainer p-2">
+                    <form id="searchPostsForm" action="{{ path(vURL) }}">
+                        <input type="hidden" value="{{ paginator.current_page }}" name="page" id="searchPostsForm_page">
+                    </form>
+                    <div class="cards postsList d-flex flex-wrap justify-content-center justify-content-md-start">
                 {{ include ('@OodBlog/Post/list_content.html.twig') }}
             </div>
-        </div>
-        {% endif %}
-    </div>
-    <div class="gutter">
-        {# view Button + Arrow infinite scroll #}
-        <div id="infiniteScroll" class="d-flex justify-content-around w-100">
-            <a href="#head">
-                <i class="fa fa-4x fa-angle-up"></i>
-            </a>
-            {% if paginator.remaining_results > 0 %}
-                <a class="js-infiniteScroll" href="{{ path(vURL) }}"
-                   data-restof="{{ paginator.remaining_results }}"
-                   data-total="{{ paginator.nb_results }}"
-                   data-item-by-page="{{ paginator.max_per_page }}">
-                    <i class="fa fa-4x fa-angle-down"></i>
-                </a>
+                </div>
             {% endif %}
         </div>
-    </div>
-</section>
-<script>
-  $(document).ready(function() {
-        infinite_scroll.init();
-        post_remove.init();
-  });
-</script>
+        <div class="gutter">
+            {# view Button + Arrow infinite scroll #}
+            <div id="infiniteScroll" class="d-flex justify-content-around w-100">
+                {% if paginator.remaining_results > 0 %}
+                    <a class="js-infiniteScroll border p-2 m-2" href="{{ path(vURL) }}"
+                       data-restof="{{ paginator.remaining_results }}"
+                       data-total="{{ paginator.nb_results }}"
+                       data-item-by-page="{{ paginator.max_per_page }}">
+                        <span><i class="fa fa-2x fa-spinner"></i></span>
+                        <span>Load more</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <nav id="nav-up" style="display: none;">
+        <a href="#head">
+            <i class="fa fa-arrow-up fa-3x text-secondary"></i>
+        </a>
+    </nav>
+    <script>
+      $(document).ready(function () {
+        swap_head_figures.init()
+        infinite_scroll.init()
+        post_remove.init()
+      })
+    </script>
 {% endblock main %}
 
 {% block title %}{{ 'posts_list.page_title'|trans }}{% endblock title %}

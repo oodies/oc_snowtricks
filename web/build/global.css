@@ -22,7 +22,7 @@ html {
 
 body {
   display: grid;
-  grid-template-rows: 56px 1fr 60px;
+  grid-template-rows: 56px 1fr 1px;
   grid-template-areas: "header" "main" "footer";
   min-height: 100%;
   width: 100%;
@@ -47,8 +47,16 @@ footer {
 }
 
 footer > .i-container {
+  background-color: #343e40;
+}
+
+footer > .i-container > .container {
   padding: 15px;
   vertical-align: bottom;
+}
+
+footer a {
+  color: #343e40;
 }
 
 :root {
@@ -310,11 +318,12 @@ section#form {
 
 #infiniteScroll > a {
   display: inline-block;
+  text-decoration: none;
 }
 
 #infiniteScroll > a > span {
-  display: block;
-  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /** ***********************************
@@ -384,6 +393,7 @@ section#form {
 #page-figures section {
   display: grid;
   width: 100%;
+  height: 100%;
   grid-template-rows: 1fr 70px;
   grid-template-areas: 'content' 'gutter';
 }
@@ -395,16 +405,37 @@ section#form {
 #page-figures section > .gutter {
   grid-area: gutter;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 1rem;
+}
+
+#page-figures section a {
+  color: #343a40;
 }
 
 #page-figures section#head {
   background: url(../img/wintry.jpg) no-repeat;
-  background-color: #66afe9;
+  background-color: #cdcdcd;
   background-origin: border-box;
   background-position: center center;
   background-size: cover;
+  height: 100%;
+}
+
+#page-figures section#head h2 {
+  font-family: 'Lobster', cursive;
+  font-size: 4rem;
+  color: chocolate;
+}
+
+#page-figures #nav-up {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1030;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
 }
 
 #page-figures .st_card img {
@@ -434,7 +465,7 @@ section#form {
  */
 
 #page-resetting main {
-  background-color: rgba(205, 205, 205, 0.73);
+  background-color: #f7f7f7;
 }
 
 #page-resetting .segment {
@@ -446,5 +477,5 @@ section#form {
  */
 
 #page-registration main {
-  background-color: rgba(205, 205, 205, 0.73);
+  background-color: #f7f7f7;
 }
