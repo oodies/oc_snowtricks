@@ -28,7 +28,8 @@ class BlogCategoryFixtures extends AbstractFixture
         for ($i = 1; $i <= 10; $i++) {
             $category = new Category();
             $index = 'category_' . (string)$i;
-            $category->setName($index);
+            $category->setName($index)
+                     ->setSlug($index);
 
             $manager->persist($category);
 

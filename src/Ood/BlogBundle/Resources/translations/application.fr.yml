@@ -29,3 +29,33 @@ post:
     see_medias : "Voir les médias"
     msg:
         saved_done: "Vos données ont été sauvegardées"
+
+category_form:
+    name:
+        label: "Groupe"
+        placeholder: "Groupe de figure"
+    description:
+        label: "Description"
+        placeholder: "Description du groupe de figures"
+    submit:
+        label: "Enregistrer"
+
+category_new:
+    page_title: "Nouveau groupe de figures"
+
+category_edit:
+    page_title: "Modifier groupe de figures"
+
+category:
+    msg:
+        saved_done: "Vos données ont été sauvegardées"
+
+## ************************************
+## Title        : Show all categories
+## page         : categories
+## Description  :
+## URL          : /groupes
+## Type         : Page
+category_list:
+    title: "Groupes de figures"
+    page_title: "Groupes"

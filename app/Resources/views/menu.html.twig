@@ -19,6 +19,9 @@
             <li class="nav-item {% if ('ood_blog_post_list' == myRoute) %}active{% endif %}">
                 <a class="nav-link" href="{{ path('ood_blog_post_list') }}">{{ 'menu.tricks'|trans }}</a>
             </li>
+            <li class="nav-item {% if ('ood_blog_category_list' == myRoute) %}active{% endif %}">
+                <a class="nav-link" href="{{ path('ood_blog_category_list') }}">{{ 'menu.groups'|trans }}</a>
+            </li>
             {% if is_granted('ROLE_BLOGGER') %}
                 <li class="nav-item {% if ('ood_blog_post_new' == myRoute) %}active{% endif %}">
                     <a class="nav-link" href="{{ path('ood_blog_post_new') }}">{{ 'menu.add_trick'|trans }}</a>

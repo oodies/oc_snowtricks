@@ -9,6 +9,7 @@
 namespace Ood\BlogBundle\Repository;
 
 use Ood\AppBundle\Services\Paginate\Paginator;
+use Ood\BlogBundle\Entity\Category;
 use Ood\BlogBundle\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Pagerfanta\Pagerfanta;
@@ -55,9 +56,30 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param Category $category
+     * @param int|null $maxPerPage
+     * @param int|null $currentPage
+     *
+     * @throws \LogicException
+     *
+     * @return Pagerfanta
+     */
+    public function findAllByCategoryWithPaginate(Category $category, $maxPerPage = null, $currentPage = null): Pagerfanta
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->where('p.category = :category');
+
+        $qb->setParameter('category', $category);
+
+        return $this->paginator->paginate($qb, $maxPerPage, $currentPage);
+    }
+
+    /**
      * @param string $uniqueID
      *
      * @return mixed
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getByUniqueID(string $uniqueID) {
 
@@ -72,9 +94,9 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Obtain the number of items
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     *
      * @return int
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getNbItems()
     {
@@ -83,12 +105,6 @@ class PostRepository extends ServiceEntityRepository
         $qb->select('COUNT(R)')
            ->from('OodBlogBundle:Post', 'R');
 
-        try {
-            $numberOfEvents = (int)$qb->getQuery()->getSingleScalarResult();
-        } catch (\Exception $e) {
-            $numberOfEvents = 0;
-        }
-
-        return (int)$numberOfEvents;
+        return (int)$qb->getQuery()->getSingleScalarResult();
     }
 }

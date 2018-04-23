@@ -8,6 +8,7 @@
 
 namespace Ood\BlogBundle\Manager;
 
+use Ood\BlogBundle\Entity\Category;
 use Ood\BlogBundle\Entity\Post;
 use Ood\CommentBundle\Entity\Comment;
 use Ood\CommentBundle\Entity\Thread;
@@ -55,6 +56,8 @@ class PostManager
      * @param $uniqueID
      *
      * @return mixed
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getByUniqueID($uniqueID)
     {
@@ -66,11 +69,27 @@ class PostManager
      * @param $currentPage
      *
      * @return \Pagerfanta\Pagerfanta
+     *
      * @throws \LogicException
      */
     public function findAllWithPaginate($maxPerPage, $currentPage)
     {
         return $this->repository->findAllWithPaginate($maxPerPage, $currentPage);
+    }
+
+
+    /**
+     * @param Category $category
+     * @param $maxPerPage
+     * @param $currentPage
+     *
+     * @return \Pagerfanta\Pagerfanta
+     *
+     * @throws \LogicException
+     */
+    public function findAllByCategoryWithPaginate(Category $category, $maxPerPage, $currentPage)
+    {
+        return $this->repository->findAllByCategoryWithPaginate($category, $maxPerPage, $currentPage);
     }
 
     /**

@@ -10,6 +10,11 @@ ood_blog_post_list:
     defaults: { _controller: OodBlogBundle:Post:list }
     methods: ['GET','POST']
 
+ood_blog_post_category:
+    path:     /groupe/{slug}
+    defaults: { _controller: OodBlogBundle:Post:category }
+    methods: ['GET','POST']
+
 ood_blog_post_new:
     path:     /ajouter-figure
     defaults: { _controller: OodBlogBundle:Post:new }
@@ -30,3 +35,15 @@ ood_blog_post_show:
     defaults: { _controller: OodBlogBundle:Post:show }
     methods: ['GET']
 
+
+ood_blog_category_list:
+    path: /groupes
+    defaults: { _controller: OodBlogBundle:Category:list }
+
+ood_blog_category_new:
+    path: /ajouter-groupe
+    defaults: { _controller: OodBlogBundle:Category:new }
+
+ood_blog_category_edit:
+    path: /modifier-groupe/{slug}
+    defaults: { _controller: OodBlogBundle:Category:edit }

@@ -9,6 +9,7 @@
 namespace Ood\BlogBundle\Controller;
 
 use Ood\AppBundle\Services\Paginate\PagerfantaMeta;
+use Ood\BlogBundle\Entity\Category;
 use Ood\BlogBundle\Entity\Post;
 use Ood\BlogBundle\Form\PostType;
 use Ood\BlogBundle\Manager\PostManager;
@@ -70,9 +71,10 @@ class PostController extends Controller
      * @param string      $uniqueID
      * @param PostManager $postManager
      *
-     * @throws \LogicException
-     *
      * @return Response
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \LogicException
      */
     public function showAction($uniqueID, PostManager $postManager): Response
     {
@@ -87,9 +89,9 @@ class PostController extends Controller
      * @param Request     $request
      * @param PostManager $postManager
      *
-     * @throws \LogicException
-     *
      * @return Response
+     *
+     * @throws \LogicException
      */
     public function listAction(Request $request, PostManager $postManager): Response
     {
@@ -101,13 +103,50 @@ class PostController extends Controller
         $assign = [
             'posts'     => $pagerfanta->getCurrentPageResults(),
             'paginator' => $pagerfantaMeta->getMetas(),
-            'vURL'      => 'ood_blog_post_list',
+            'vURL'      => $this->generateUrl('ood_blog_post_list')
         ];
 
         if ($request->isXmlHttpRequest()) {
             $template = 'OodBlogBundle:Post:list_content.html.twig';
         } else {
             $template = 'OodBlogBundle:Post:list.html.twig';
+        }
+
+        return $this->render($template, $assign);
+    }
+
+    /**
+     * Display blog posts list for a category
+     *
+     * @param Request     $request
+     * @param Category    $category
+     * @param PostManager $postManager
+     *
+     * @ParamConverter("category", options={"mapping": {"slug":"slug"}})
+     *
+     * @return Response
+     *
+     * @throws \LogicException
+     * @throws \Pagerfanta\Exception\LogicException
+     */
+    public function categoryAction(Request $request, Category $category, PostManager $postManager): Response
+    {
+        $currentPage = $request->get('page', 1);
+
+        $pagerfanta = $postManager->findAllByCategoryWithPaginate($category, self::MAX_PER_PAGE, $currentPage);
+        $pagerfantaMeta = new PagerfantaMeta($pagerfanta);
+
+        $assign = [
+            'category'  => $category,
+            'posts'     => $pagerfanta->getCurrentPageResults(),
+            'paginator' => $pagerfantaMeta->getMetas(),
+            'vURL'      => $this->generateUrl('ood_blog_post_category', ['slug' => $category->getSlug()])
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            $template = 'OodBlogBundle:Post:list_content.html.twig';
+        } else {
+            $template = 'OodBlogBundle:Post:category.html.twig';
         }
 
         return $this->render($template, $assign);
