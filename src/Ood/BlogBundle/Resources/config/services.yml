@@ -27,6 +27,14 @@ services:
         public: true
   ## Listeners
     #
+    ood_blog.category_listener:
+        arguments:
+            - '@ood_blog.slugify'
+        class: Ood\BlogBundle\EventListener\Entity\CategoryListener
+        tags:
+            - { name: doctrine.orm.entity_listener }
+        public: true
+    #
     ood_blog.header_listener:
         arguments:
             - '@ood_blog.slugify'

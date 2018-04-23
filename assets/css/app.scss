@@ -103,11 +103,11 @@ footer {
   background-color: #ffffff;
   border-radius: 4px;
   > .step {
-    border-bottom: 1px solid rgba(34,36,38,0.15);
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
     color: #cdcdcd;
     padding: 16px 28px 16px 28px;
     > .ordered {
-      font-size:1.4rem;
+      font-size: 1.4rem;
       padding-right: 0.5em;
     }
     &.active {
@@ -165,13 +165,19 @@ section#head {
     left: 0;
     text-align: center;
     > h3 {
-      background-color: rgba(255,255,255,0.5);
+      background-color: rgba(255, 255, 255, 0.5);
       padding: 0.8rem 1.2rem;
-      border-radius:8px;
+      border-radius: 8px;
     }
   }
 }
 
+/** ********************
+ *   SECTION FIGURES
+ */
+section#figures {
+  margin-top: 2rem;
+}
 /** ********************
  *   SECTION MEDIAS
  */
@@ -209,13 +215,13 @@ section#form {
  */
 .st_card {
   position: relative;
-  background-color: #fafafa;
-  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 2px rgba(0, 0, 0, .26);
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+  border-radius: 2px;
   width: 18rem;
   height: 12rem;
   margin: 0.5rem;
   padding: 0.25rem;
-  border: 1px solid #dee2e6;
   display: flex;
   flex-direction: column;
   .form-group {
@@ -230,6 +236,40 @@ section#form {
     max-height: 11.5rem;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+/** ********************
+ *   card (groups)
+ */
+#cards .card {
+  width: 18rem;
+  height: 12rem;
+  margin: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+  position: relative;
+  > .footer {
+    border-top: 1px solid #c4c4c4;
+    &:hover {
+      background-color: #c4c4c4;
+    }
+  }
+  p.card-text {
+    height: 4rem;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+  }
+  a {
+    color: #495057;
+    display: block;
+    width: 100%;
+    margin: 0.25rem;
+  }
+  .actions {
+    position: absolute;
+    top: 1vw;
+    right: 1vw;
   }
 }
 
@@ -318,10 +358,10 @@ section#form {
  *   segment block
  */
 .segment {
-  padding:1em 1.5em;
+  padding: 1em 1.5em;
   background-color: #ffffff;
   border-top: 2px solid #2185d0;
-  box-shadow: 0 2px 4px 0 rgba(34,36,38,0.12);
+  box-shadow: 0 2px 4px 0 rgba(34, 36, 38, 0.12);
 }
 
 /** ***********************************
@@ -368,17 +408,17 @@ section#form {
   }
 
   section#head {
-      background: url("../images/wintry.jpg") no-repeat;
-      background-color: #cdcdcd;
-      background-origin: border-box;
-      background-position: center center;
-      background-size: cover;
-      height: 100%;
-      h2 {
-        font-family: 'Lobster', cursive;
-        font-size: 4rem;
-        color: chocolate;
-      }
+    background: url("../images/wintry.jpg") no-repeat;
+    background-color: #cdcdcd;
+    background-origin: border-box;
+    background-position: center center;
+    background-size: cover;
+    height: 100%;
+    h2 {
+      font-family: 'Lobster', cursive;
+      font-size: 4rem;
+      color: chocolate;
+    }
   }
 
   #nav-up {

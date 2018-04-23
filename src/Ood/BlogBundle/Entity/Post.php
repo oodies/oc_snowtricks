@@ -165,7 +165,8 @@ class Post
      *
      * @ORM\ManyToOne(
      *     targetEntity="Ood\BlogBundle\Entity\Category",
-     *     cascade={"persist"}
+     *     cascade={"persist"},
+     *     inversedBy="posts"
      * )
      *
      * @ORM\JoinColumn(

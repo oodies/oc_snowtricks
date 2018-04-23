@@ -20,10 +20,10 @@ header:
         max_length: "{{ limit }} caractères au maximum"
 post:
     category:
-        not_null: "Choisissez une catégorie de figure"
+        not_null: "Choisissez un groupe de figures"
 
 category:
     name:
-        not_null: "Saisir un nom de catégorie"
-        unique_entity: "Catégorie déjà existante"
+        not_null: "Saisir un nom de groupe de figures"
+        unique_entity: "Groupe déjà existant"
         max_length: "{{ limit }} caractères au maximum"
