@@ -10,6 +10,7 @@ namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Ood\BlogBundle\Entity\Category;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class BlogCategoryFixtures
@@ -22,18 +23,19 @@ class BlogCategoryFixtures extends AbstractFixture
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
+     *
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
      */
     public function doLoad(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 10; $i++) {
+        foreach ($this->loadData() as $reference => $data) {
             $category = new Category();
-            $index = 'category_' . (string)$i;
-            $category->setName($index)
-                     ->setSlug($index);
+            $category->setName($data['name'])
+                     ->setSlug($data['slug'])
+                     ->setDescription($data['description']);
 
             $manager->persist($category);
-
-            $this->addReference($index, $category);
+            $this->addReference($reference, $category);
         }
         $manager->flush();
     }
@@ -44,5 +46,15 @@ class BlogCategoryFixtures extends AbstractFixture
     protected function getEnvironments(): array
     {
         return ['dev', 'prod'];
+    }
+
+    /**
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
+     */
+    protected function loadData()
+    {
+        $resources = Yaml::parse(file_get_contents(dirname(__DIR__) . '\BlogData.yml'));
+
+        return $resources['Groups'];
     }
 }

@@ -9,9 +9,8 @@
 namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Faker\Generator as FakerGenerator;
-use Faker\Provider\Lorem as FakerLorem;
 use Ood\BlogBundle\Entity\Header;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class BlogHeaderFixtures
@@ -24,24 +23,35 @@ class BlogHeaderFixtures extends AbstractFixture
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
+     *
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
      */
     public function doLoad(ObjectManager $manager)
     {
-        $faker = new FakerGenerator();
-        $faker->addProvider(new FakerLorem($faker));
-
-        for ($i = 1; $i <= 50; $i++) {
-            $header = new Header();
-            $header
-                ->setTitle('figure_' . $i)
-                ->setBrief($faker->paragraph(1))
-                ->setSlug('figure-' . $i);
-
-            $manager->persist($header);
-
-            $this->addReference('header_' . (string)$i, $header);
+        foreach ($this->loadData() as $referenceGroup => $group) {
+            if (isset($group['Tricks'])) {
+                foreach ($group['Tricks'] as $referenceTrick => $trick) {
+                    $header = new Header();
+                    $header
+                        ->setTitle($trick['title'])
+                        ->setBrief($trick['brief'])
+                        ->setSlug($trick['slug']);
+                    $manager->persist($header);
+                    $this->addReference(implode('-', [$referenceGroup, $referenceTrick, 'header']), $header);
+                }
+            }
+            $manager->flush();
         }
-        $manager->flush();
+    }
+
+    /**
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
+     */
+    protected function loadData()
+    {
+        $resources = Yaml::parse(file_get_contents(dirname(__DIR__) . '\BlogData.yml'));
+
+        return $resources['Groups'];
     }
 
     /**
@@ -49,6 +59,6 @@ class BlogHeaderFixtures extends AbstractFixture
      */
     protected function getEnvironments(): array
     {
-        return ['dev'];
+        return ['dev', 'prod'];
     }
 }

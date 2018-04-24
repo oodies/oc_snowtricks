@@ -78,8 +78,8 @@ class UserUserFixtures extends AbstractFixture implements ContainerAwareInterfac
                 $hashPassword = $this->encoder->encodePassword($user, '12345');
                 $user->setPassword($hashPassword);
                 /** @var \Ood\PictureBundle\Entity\Image $image */
-                $image = $this->getReference('image_' . (string)$i);
-                $user->setPhoto($image);
+                //$image = $this->getReference('image_' . (string)$i);
+                //$user->setPhoto($image);
 
                 $manager->persist($user);
 

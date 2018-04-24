@@ -10,8 +10,9 @@ namespace DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-
 use Ood\BlogBundle\Entity\Post;
+use Ood\PictureBundle\Entity\Image;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class BlogPostFixtures
@@ -42,43 +43,65 @@ class BlogPostFixtures extends AbstractFixture implements DependentFixtureInterf
      * Load data fixtures with the passed EntityManager
      *
      * @param ObjectManager $manager
+     *
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
      */
     public function doLoad(ObjectManager $manager)
     {
-        $jump = 26;
-        for ($i = 1; $i <= 50; $i++) {
-            $post = new Post();
-            /** @var \Ood\BlogBundle\Entity\Category $category */
-            $category = $this->getReference('category_' . (string)rand(1, 10));
-            /** @var \Ood\UserBundle\Entity\User $blogger */
-            $blogger = $this->getReference('user_blogger');
-            /** @var \Ood\BlogBundle\Entity\Header $header */
-            $header = $this->getReference('header_' . $i);
-            /** @var \Ood\BlogBundle\Entity\Body $body */
-            $body = $this->getReference('body_' . $i);
+        foreach ($this->loadData() as $referenceGroup => $group) {
+            if (isset($group['Tricks'])) {
+                foreach ($group['Tricks'] as $referenceTrick => $trick) {
+                    $post = new Post();
+                    /** @var \Ood\BlogBundle\Entity\Category $category */
+                    $category = $this->getReference($referenceGroup);
+                    /** @var \Ood\UserBundle\Entity\User $blogger */
+                    $blogger = $this->getReference('user_blogger');
+                    /** @var \Ood\BlogBundle\Entity\Header $header */
+                    $header = $this->getReference(implode('-', [$referenceGroup, $referenceTrick, 'header']));
+                    /** @var \Ood\BlogBundle\Entity\Body $body */
+                    $body = $this->getReference(implode('-', [$referenceGroup, $referenceTrick, 'body']));
 
-            $post
-                ->setCategory($category)
-                ->setBlogger($blogger)
-                ->setHeader($header)
-                ->setBody($body);
+                    $post
+                        ->setCategory($category)
+                        ->setBlogger($blogger)
+                        ->setHeader($header)
+                        ->setBody($body);
 
-            for ($v = 0; $v <= 4; $v++) {
-                /** @var \Ood\PictureBundle\Entity\Image $image */
-                $image = $this->getReference('image_' . (string)($jump+$v));
-                /** @var \Ood\PictureBundle\Entity\Video $video */
-                $video = $this->getReference('video_' . (string)($jump+$v));
+                    if (isset($trick['Videos'])) {
+                        foreach ($trick['Videos'] as $referenceVideo => $data) {
+                            /** @var \Ood\PictureBundle\Entity\Video $video */
+                            $video = $this->getReference(
+                                implode('-', [$referenceGroup, $referenceTrick, $referenceVideo])
+                            );
+                            $post->addVideo($video);
+                        }
+                    }
 
-                $post->addImage($image)
-                     ->addVideo($video);
+                    if (isset($trick['Pictures'])) {
+                        foreach ($trick['Pictures'] as $filename) {
+                            list($name, $ext) = explode('.', $filename);
+                            /** @var Image $image */
+                            $image = $this->getReference(implode('-', [$referenceGroup, $referenceTrick, $name]));
+                            $post->addImage($image);
+                        }
+                    }
+
+                    $manager->persist($post);
+                    $this->addReference(implode('-', [$referenceGroup, $referenceTrick, 'post']), $post);
+                }
             }
-
-            $manager->persist($post);
-            $this->addReference('post_' . (string)$i, $post);
-
-            $jump = $jump + 5;
         }
         $manager->flush();
+    }
+
+    /**
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
+     */
+    protected function loadData()
+    {
+        $resources = Yaml::parse(file_get_contents(dirname(__DIR__) . '\BlogData.yml'));
+
+        return $resources['Groups'];
     }
 
     /**
@@ -86,6 +109,6 @@ class BlogPostFixtures extends AbstractFixture implements DependentFixtureInterf
      */
     protected function getEnvironments(): array
     {
-        return ['dev'];
+        return ['dev', 'prod'];
     }
 }

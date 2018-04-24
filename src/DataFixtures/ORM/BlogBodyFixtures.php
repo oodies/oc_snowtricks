@@ -9,9 +9,8 @@
 namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Faker\Generator as FakerGenerator;
-use Faker\Provider\Lorem as FakerLorem;
 use Ood\BlogBundle\Entity\Body;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class BlogBodyFixtures
@@ -22,20 +21,32 @@ class BlogBodyFixtures extends AbstractFixture
 {
     /**
      * @param ObjectManager $manager
+     *
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
      */
     protected function doLoad(ObjectManager $manager)
     {
-        $faker = new FakerGenerator();
-        $faker->addProvider(new FakerLorem($faker));
-        for ($i=1 ; $i <= 50; $i++) {
-            $body = new Body();
-            $body->setContent($faker->paragraph(5));
-
-            $manager->persist($body);
-
-            $this->addReference('body_' . (string)$i, $body);
+        foreach ($this->loadData() as $referenceGroup => $group) {
+            if (isset($group['Tricks'])) {
+                foreach ($group['Tricks'] as $referenceTrick => $trick) {
+                    $body = new Body();
+                    $body->setContent($trick['content']);
+                    $manager->persist($body);
+                    $this->addReference(implode('-', [$referenceGroup, $referenceTrick, 'body']), $body);
+                }
+            }
+            $manager->flush();
         }
-        $manager->flush();
+    }
+
+    /**
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
+     */
+    protected function loadData()
+    {
+        $resources = Yaml::parse(file_get_contents(dirname(__DIR__) . '\BlogData.yml'));
+
+        return $resources['Groups'];
     }
 
     /**
@@ -43,6 +54,6 @@ class BlogBodyFixtures extends AbstractFixture
      */
     protected function getEnvironments(): array
     {
-        return ['dev'];
+        return ['dev', 'prod'];
     }
 }
