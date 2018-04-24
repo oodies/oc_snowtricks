@@ -66,7 +66,7 @@ class CommentThreadFixtures extends AbstractFixture implements DependentFixtureI
      */
     protected function loadData()
     {
-        $resources = Yaml::parse(file_get_contents(dirname(__DIR__) . '\BlogData.yml'));
+        $resources = Yaml::parse(file_get_contents(dirname(__DIR__) . '/BlogData.yml'));
 
         return $resources['Groups'];
     }
