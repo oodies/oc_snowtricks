@@ -1,0 +1,352 @@
+Groups:
+    Group1:
+        name: "Grabs"
+        slug: "grabs"
+        description: "Un grab consiste à attraper la planche avec la main pendant le saut. Le verbe anglais to grab
+        signifie « attraper. »\n
+        Il existe plusieurs types de grabs selon la position de la saisie et la main choisie pour l'effectuer, avec des
+        difficultés variables :\n
+        Un grab est d'autant plus réussi que la saisie est longue. De plus, le saut est d'autant plus esthétique que la
+        saisie du snowboard est franche, ce qui permet au rideur d'accentuer la torsion de son corps grâce à la tension
+        de sa main sur la planche. On dit alors que le grab est tweaké (le verbe anglais to tweak signifie « pincer »
+        mais a également le sens de « peaufiner »)."
+        Tricks:
+            Trick1:
+                title: "Mute"
+                slug: "mute"
+                brief: "Saisie de la carre frontside de la planche entre les deux pieds avec la main avant"
+                content: ""
+                Comments:
+                    - "Trop facile !"
+                    - "C'est la base, mais faut déjà le faire..."
+                    - "J'ai réussi !!!"
+                    - "Quelqu'un a une astuce pour réussir son mute ?"
+                    - "Qu'est-ce qui te pose problème ?"
+                    - "Tout..."
+                    - "Ah oui, c'est mal parti..."
+                    - "Moi j'y arrive trop bien !"
+                    - "Te la pète pas non plus..."
+                    - "La loose, je sais même pas faire un trick si basique"
+                    - "J'ose à peine imaginer ce que ça va donner pour les rotations..."
+                    - "Sinon il fait quel temps à Vars ?"
+                    - "Quel rapport ?"
+                    - "Ca ne répond pas à la question..."
+                    - "J'sais pas, moi j'suis à Tignes"
+                    - "Ok, et il fait quel temps alors à Tignes ?"
+                    - "Poudreuse comme on l'aime"
+                Videos:
+                    video1:
+                      platform: "youtube"
+                      identifier: "f9FjhCt_w2U"
+            Trick2:
+                title: "Sad"
+                slug: "sad"
+                brief: "Saisie de la carre backside de la planche, entre les deux pieds, avec la main avant."
+                content: ""
+                Comments:
+                    - "Trop facile !"
+                    - "C'est la base, mais faut déjà le faire..."
+                    - "J'ai réussi !!!"
+                    - "Quelqu'un a une astuce pour réussir son mute ?"
+                    - "Qu'est-ce qui te pose problème ?"
+                    - "Tout..."
+                    - "Ah oui, c'est mal parti..."
+                    - "Moi j'y arrive trop bien !"
+                    - "Te la pète pas non plus..."
+                    - "La loose, je sais même pas faire un trick si basique"
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "KEdFwJ4SWq4"
+            Trick3:
+                title: "Indy"
+                slug: "indy"
+                brief: "Saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière."
+                content: ""
+                Comments:
+                    - "Trop facile !"
+                    - "C'est la base, mais faut déjà le faire..."
+                    - "J'ai réussi !!!"
+                    - "Quelqu'un a une astuce pour réussir son mute ?"
+                    - "Qu'est-ce qui te pose problème ?"
+                    - "Tout..."
+                    - "Ah oui, c'est mal parti..."
+                    - "Moi j'y arrive trop bien !"
+                    - "Te la pète pas non plus..."
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "6QsLhWzXGu0"
+                Pictures:
+                    - "indy_1.jpg"
+            Trick4:
+                title: "Stalefish"
+                slug: "stalefish"
+                brief: "Saisie de la carre backside de la planche entre les deux pieds avec la main arrière."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "51sQRIK-TEI"
+            Trick5:
+                title: "Tail grab"
+                slug: "tail-grab"
+                brief: "Saisie de la partie arrière de la planche, avec la main arrière."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "id8VKl9RVQw"
+                Pictures:
+                    - "tail-grab_1.jpg"
+            Trick6:
+                title: "Nose Grab"
+                slug: "nose-grab"
+                brief: "Saisie de la partie avant de la planche, avec la main avant."
+                content: ""
+                Comments:
+                    - "Trop facile !"
+                    - "C'est la base, mais faut déjà le faire..."
+                    - "J'ai réussi !!!"
+                    - "Quelqu'un a une astuce pour réussir son mute ?"
+                    - "Ah oui, c'est mal parti..."
+                    - "Moi j'y arrive trop bien !"
+                    - "Te la pète pas non plus..."
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "M-W7Pmo-YMY"
+                Pictures:
+                    - "nose-grab_1.jpg"
+            Trick7:
+                title: "Japan air"
+                slug: "japan-air"
+                brief: "Saisie de l'avant de la planche, avec la main avant, du côté de la carre frontside."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "jH76540wSqU"
+                Pictures:
+                    - "japan-air_1.jpg"
+            Trick8:
+                title: "Seat belt"
+                slug: "seat-belt"
+                brief: "Saisie du carre frontside à l'arrière avec la main avant."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "4vGEOYNGi_c"
+                Pictures:
+                    - "seat-belt_1.jpg"
+            Trick9:
+                title: "Truck driver"
+                slug: "truck-driver"
+                brief: "Saisie du carre avant et carre arrière avec chaque main (comme tenir un volant de voiture)."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "6tgjY8baFT0"
+                Pictures:
+                    - "truck-driver_1.jpg"
+                    - "truck-driver_2.jpg"
+    Group2:
+        name: "Rotations"
+        slug: "rotations"
+        description: "On désigne par le mot « rotation » uniquement des rotations horizontales ; les rotations verticales
+        sont des flips. Le principe est d'effectuer une rotation horizontale pendant le saut, puis d'attérir en position
+        switch ou normal.\n
+        Une rotation peut être frontside ou backside : une rotation frontside correspond à une rotation orientée vers la
+        carre backside. Cela peut paraître incohérent mais l'origine étant que dans un halfpipe ou une rampe de skateboard,
+        une rotation frontside se déclenche naturellement depuis une position frontside (i.e. l'appui se fait sur la
+        carre frontside), et vice-versa. Ainsi pour un rider qui a une position regular (pied gauche devant), une rotation
+        frontside se fait dans le sens inverse des aiguilles d'une montre.\n
+
+        Une rotation peut être agrémentée d'un grab, ce qui rend le saut plus esthétique mais aussi plus difficile car
+        la position tweakée a tendance à déséquilibrer le rideur et désaxer la rotation. De plus, le sens de la rotation
+        a tendance à favoriser un sens de grab plutôt qu'un autre. Les rotations de plus de trois tours existent mais sont
+        plus rares, d'abord parce que les modules assez gros pour lancer un tel saut sont rares, et ensuite parce que la
+        vitesse de rotation est tellement élevée qu'un grab devient difficile, ce qui rend le saut considérablement moins
+        esthétique.\n
+
+        Pour entrer sur une barre de slide, le rideur peut se mettre perpendiculaire à l'axe de la barre et fera donc un
+        quart de tour en l'air, modulo 360 degrés — il est possible de faire n tours complets plus un quart de tour.\n
+         La nomenclature se base sur le nombre de degrés de rotation effectués :"
+        Tricks:
+            Trick1:
+                title: "180"
+                slug: "180"
+                brief: "Un demi-tour."
+                content: "Le Frontside 180 (Front 1) est l'astuce la plus facile à apprendre sur un snowboard et nous
+                 allons vous apprendre comment composer le vôtre! En dépit d'être relativement facile, il est devenu une
+                 astuce intemporelle qui, lorsqu'elle est exécutée avec le bon style, tient sa place contre le plus
+                 infime des triplés."
+                Comments:
+                    - "J'ai réussi !!!"
+                    - "Quelqu'un a une astuce pour réussir son mute ?"
+                    - "Ah oui, c'est mal parti..."
+                    - "Moi j'y arrive trop bien !"
+                    - "Te la pète pas non plus..."
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "XyARvRQhGgk"
+            Trick2:
+                title: "360"
+                slug: "360"
+                brief: "Trois six pour un tour complet."
+                content: ""
+                Comments:
+                    - "Les photos sont canons"
+                    - "C'est clair"
+                    - "Trop beau !"
+                    - "J'adore ce trick !!!"
+                    - "La classe quand même"
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "pi1nDmLxMcY"
+            Trick3:
+                title: "540"
+                slug: "540"
+                brief: "Cinq quatre pour un tour et demi."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "5Oy6g8FKESo"
+            Trick4:
+                title: "720"
+                slug: "720"
+                brief: "Sept deux pour deux tours complets."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "l18w36iI9LU"
+            Trick5:
+                title: "900"
+                slug: "900"
+                brief: "Pour deux tours et demi."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "8ifvMImDkew"
+            Trick6:
+                title: "1080"
+                slug: "1080"
+                brief: "Big foot pour trois tours."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "camHB0Rj4gA"
+            Trick7:
+                title: "90"
+                slug: "90"
+                brief: "Un quart de tour simple."
+                content: ""
+            Trick8:
+                title: "270"
+                slug: "270"
+                brief: "Trois quarts de tours."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "fweKH6XAduY"
+            Trick9:
+                title: "450"
+                slug: "450"
+                brief: "Un tour un quart."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "BIMLj-K4PlQ"
+            Trick10:
+                title: "630"
+                slug: "630"
+                brief: "Un tout trois quarts."
+                content: ""
+            Trick11:
+                title: "810"
+                slug: "810"
+                brief: "Deux tours un quart"
+                content: ""
+    Group3:
+        name: "Straight airs"
+        slug: "straight-airs"
+        description: ""
+        Tricks:
+            trick1:
+                title: "Ollie"
+                slug: "ollie"
+                brief: "Un tour dans lequel le snowboarder jaillit de la queue du plateau et dans les airs."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "H_tSuAipjWc"
+                Pictures:
+                    - "ollie_1.jpg"
+            trick2:
+                title: "Nollie"
+                slug: "nollie"
+                brief: "Une astuce dans laquelle le snowboarder jaillit du nez de la planche et dans les airs."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "H_tSuAipjWc"
+            trick3:
+                title: "Switch ollie"
+                slug: "switch-ollie"
+                brief: "En roulant, le snowboarder effectue une ollie."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "e7SKudIEvU0"
+            trick4:
+                title: "Fakie ollie"
+                slug: "fakie-ollie"
+                brief: "En roulant, le snowboarder sort de son «nouveau nez» et s'envole dans les airs. Cela ressemble à
+                une nollie, mais le snowboardeur monte en switch."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "C93roGvOpPo"
+            trick5:
+                title: "Ninety-ninety"
+                slug: "ninety-ninety"
+                brief: "Un tour aérien dans lequel un snowboarder tord son corps afin de déplacer ou de faire pivoter
+                son plateau d'environ 90°."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "hIiM-1H0msQ"
+            trick6:
+                title: "Air-to-fakie"
+                slug: "air-to-fakie"
+                brief: "Aérienne tout droit sortie d'une transition verticale (halfpipe, quarterpipe) puis réentrant
+                fakie, sans rotation."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "ONFLakP_xpw"
+            trick7:
+                title: "Poptart"
+                slug: "poptart"
+                brief: "Aération de fakie à l'avant sur un quarterpipe ou halfpipe sans rotation."
+                content: ""
+                Videos:
+                    video1:
+                        platform: "youtube"
+                        identifier: "r2BgV9NAWtk"

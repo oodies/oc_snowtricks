@@ -10,6 +10,7 @@ namespace DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Ood\PictureBundle\Entity\Video;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class PictureVideoFixtures
@@ -20,36 +21,55 @@ class PictureVideoFixtures extends AbstractFixture
 {
     /**
      * @param ObjectManager $manager
+     *
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
      */
     public function doLoad(ObjectManager $manager)
     {
-        $platforms = ['dailymotion', 'vimeo', 'youtube'];
-
-        for ($i = 1; $i <= 300; $i++) {
-            $video = new Video();
-            $platform = $platforms[array_rand($platforms, 1)];
-
-            switch ($platform) {
-                case 'youtube':
-                    $identifier = 'mH8-x5U7XsA';
-                    $url = 'https://youtu.be/'.$identifier;
-                    break;
-                case 'dailymotion':
-                    $identifier = 'x3rqaoa';
-                    $url = 'https://dai.ly/'.$identifier;
-                    break;
-                case 'vimeo':
-                    $identifier = '19314230';
-                    $url = 'https://vimeo.com/'.$identifier;
-                    break;
+        foreach ($this->loadData() as $referenceGroup => $group) {
+            if (isset($group['Tricks'])) {
+                foreach ($group['Tricks'] as $referenceTrick => $trick) {
+                    if (isset($trick['Videos'])) {
+                        foreach ($trick['Videos'] as $referenceVideo => $data) {
+                            switch ($data['platform']) {
+                                case 'youtube':
+                                    $url = 'https://youtu.be/' . $data['identifier'];
+                                    break;
+                                case 'dailymotion':
+                                    $url = 'https://dai.ly/' . $data['identifier'];
+                                    break;
+                                case 'vimeo':
+                                    $url = 'https://vimeo.com/' . $data['identifier'];
+                                    break;
+                                default:
+                                    $url = '';
+                                    break;
+                            }
+                            $video = new Video();
+                            $video->setPlatform($data['platform'])
+                                  ->setIdentifier($data['identifier'])
+                                  ->setUrl($url);
+                            $manager->persist($video);
+                            $this->addReference(
+                                implode('-', [$referenceGroup, $referenceTrick, $referenceVideo]),
+                                $video
+                            );
+                        }
+                    }
+                }
             }
-            $video->setPlatform($platform)
-                  ->setIdentifier($identifier)
-                  ->setUrl($url);
-            $manager->persist($video);
-            $this->addReference('video_' . (string)$i, $video);
         }
         $manager->flush();
+    }
+
+    /**
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
+     */
+    protected function loadData()
+    {
+        $resources = Yaml::parse(file_get_contents(dirname(__DIR__) . '\BlogData.yml'));
+
+        return $resources['Groups'];
     }
 
     /**
@@ -57,6 +77,6 @@ class PictureVideoFixtures extends AbstractFixture
      */
     protected function getEnvironments(): array
     {
-        return ['dev'];
+        return ['dev', 'prod'];
     }
 }
