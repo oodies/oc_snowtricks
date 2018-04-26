@@ -75,18 +75,18 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $uniqueID
+     * @param string $slug
      *
      * @return mixed
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getByUniqueID(string $uniqueID) {
-
-        $qb = $this->createQueryBuilder('P');
-        $qb->where('P.uniqueID = :uniqueID');
-
-        $qb->setParameter('uniqueID', $uniqueID);
+    public function getBySlug(string $slug)
+    {
+        $qb = $this->createQueryBuilder('p')
+                   ->join('p.header', 'h')
+                   ->where('h.slug = :slug')
+                   ->setParameter('slug', $slug);
 
         return $qb->getQuery()->getOneOrNullResult();
     }

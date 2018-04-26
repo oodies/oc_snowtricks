@@ -53,15 +53,17 @@ class PostManager
     }
 
     /**
-     * @param $uniqueID
+     * Get post by slug
+     *
+     * @param string $slug
      *
      * @return mixed
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getByUniqueID($uniqueID)
+    public function getBySlug(string $slug)
     {
-        return $this->repository->getByUniqueID($uniqueID);
+        return $this->repository->getBySlug($slug);
     }
 
     /**
@@ -80,8 +82,8 @@ class PostManager
 
     /**
      * @param Category $category
-     * @param $maxPerPage
-     * @param $currentPage
+     * @param          $maxPerPage
+     * @param          $currentPage
      *
      * @return \Pagerfanta\Pagerfanta
      *

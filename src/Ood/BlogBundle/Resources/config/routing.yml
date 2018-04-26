@@ -31,7 +31,7 @@ ood_blog_post_remove:
     methods: ['GET']
 
 ood_blog_post_show:
-    path:     /figure/{slug}/{uniqueID}
+    path:     /figure/{slug}
     defaults: { _controller: OodBlogBundle:Post:show }
     methods: ['GET']
 

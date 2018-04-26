@@ -21,10 +21,6 @@ services:
     ood_blog.slugify:
         class: Ood\BlogBundle\Services\Sluggable
         public: true
-    #
-    ood_blog.utils:
-        class: Ood\BlogBundle\Services\Utils
-        public: true
   ## Listeners
     #
     ood_blog.category_listener:
@@ -45,7 +41,6 @@ services:
     #
     ood_blog.post_listener:
         arguments:
-            - '@ood_blog.utils'
             - '@security.token_storage'
         class: Ood\BlogBundle\EventListener\Entity\PostListener
         tags:

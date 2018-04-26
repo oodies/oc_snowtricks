@@ -10,8 +10,6 @@ namespace Ood\BlogBundle\EventListener\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ood\BlogBundle\Entity\Post;
-use Ood\BlogBundle\Services\Utils;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -26,9 +24,6 @@ class PostListener
      *  PROPERTIES
      */
 
-    /** @var Utils */
-    protected $utils;
-
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
@@ -39,12 +34,10 @@ class PostListener
     /**
      * PostListener constructor.
      *
-     * @param Utils                 $utils
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(Utils $utils, TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->utils = $utils;
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -55,10 +48,6 @@ class PostListener
      */
     public function onPrePersist(Post $post)
     {
-        $uuid = Uuid::uuid4()->toString();
-        $uniqueID = $this->utils->tinyUrl($uuid);
-
-        $post->setUniqueID($uniqueID);
         // if data fixtures
         if (!$post->getBlogger() instanceof UserInterface) {
             $post->setBlogger($this->getUser());
