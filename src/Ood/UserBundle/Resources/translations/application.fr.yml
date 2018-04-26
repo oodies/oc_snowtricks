@@ -127,8 +127,8 @@ uc_resetting:
 ## URL          : mon-compte
 ## Type         : Page
 profile:
-    page_title: "Mon compte"
-    title: "Mon compte"
+    page_title: "Mon profil"
+    title: "Mon profil"
     # Input firstname
     firstname:
         label: "Prénom"

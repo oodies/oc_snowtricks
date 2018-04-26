@@ -19,12 +19,11 @@ menu:
   login: "Connexion"
   logout: "Déconnexion"
   register: "Inscription"
-  profile: "Mon Compte"
+  profile: "Mon profil"
   admin: "Administration"
 ## Backend
 #
 menu_admin:
-  brand: "Snowtricks Admin"
   site: "Site"
   users: "Utilisateurs"
   comments: "Commentaires"
