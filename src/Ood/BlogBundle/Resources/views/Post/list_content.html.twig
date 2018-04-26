@@ -22,7 +22,7 @@
         <div class="infos">
             <div class="d-flex">
                 <a class="card-title mr-auto m-1 w-100 d-block"
-                   href="{{ path('ood_blog_post_show', {"slug" : post.header.slug, "uniqueID" : post.uniqueID} ) }}">{{ post.header.title }}</a>
+                   href="{{ path('ood_blog_post_show', {"slug" : post.header.slug} ) }}">{{ post.header.title }}</a>
                 {% if is_granted('ROLE_BLOGGER') %}
                     <a class="btn btn-sm btn-light m-1" role="button"
                        href="{{ path('ood_blog_post_edit', {"postId" : post.idPost} ) }}">

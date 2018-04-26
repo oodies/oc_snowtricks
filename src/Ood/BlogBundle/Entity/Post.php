@@ -21,8 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package Ood\BlogBundle\Entity
  *
- * @ORM\Table(name="blog_post",
- *            indexes={@ORM\Index(name="IDX_uniqueID", columns={"unique_id"} ) } )
+ * @ORM\Table(name="blog_post")
  * @ORM\Entity(repositoryClass="Ood\BlogBundle\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\EntityListeners({"Ood\BlogBundle\EventListener\Entity\PostListener"})
@@ -52,22 +51,6 @@ class Post
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $idPost;
-
-
-    /**
-     * Contains the unique ID of the blogpost represented by a unique character string
-     *
-     * @var string|null
-     * @ORM\Column(
-     *     name="unique_id",
-     *     type="string",
-     *     length=255,
-     *     nullable=true,
-     *     unique=true,
-     *     options={"comment"="Contains the unique ID of the blogpost represented by a unique character string"}
-     * )
-     */
-    protected $uniqueID;
 
     /**
      * Contains the date of creation of the post
@@ -251,25 +234,6 @@ class Post
     public function getIdPost(): int
     {
         return $this->idPost;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUniqueID(): ?string
-    {
-        return $this->uniqueID;
-    }
-
-    /**
-     * @param string|null $uniqueID
-     *
-     * @return Post
-     */
-    public function setUniqueID(?string $uniqueID): Post
-    {
-        $this->uniqueID = $uniqueID;
-        return $this;
     }
 
     /**

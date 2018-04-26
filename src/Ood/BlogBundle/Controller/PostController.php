@@ -68,7 +68,7 @@ class PostController extends Controller
     /**
      * Display a blog post
      *
-     * @param string      $uniqueID
+     * @param string      $slug
      * @param PostManager $postManager
      *
      * @return Response
@@ -76,9 +76,9 @@ class PostController extends Controller
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \LogicException
      */
-    public function showAction($uniqueID, PostManager $postManager): Response
+    public function showAction($slug, PostManager $postManager): Response
     {
-        $post = $postManager->getByUniqueID($uniqueID);
+        $post = $postManager->getBySlug($slug);
 
         return $this->render('@OodBlog/Post/show.html.twig', ['post' => $post]);
     }
