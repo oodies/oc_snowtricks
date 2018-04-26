@@ -65,7 +65,7 @@
     </section>
     <section id="content" class="container">
         <!-- Text content -->
-        <p class="p-4">{{ post.body.content }}</p>
+        <p class="p-4">{{ post.body.content|nl2br }}</p>
         <!-- Extra information -->
         <div class="d-flex justify-content-center flex-column flex-sm-row">
             <div class="p-2 m-1 border border-info rounded">{{ post.createAt|localizeddate('full', 'short', null, null, "EEE dd MMM yyyy  H:mm" ) }}</div>
