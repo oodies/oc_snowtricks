@@ -38,12 +38,3 @@ menu_admin:
 homepage:
   title : "Snowtricks"
   head-title: "Bienvenue sur \n Snow Tricks !"
-
-## ************************************
-## Title        : Snowtricks admin
-## page         : dashboard
-## Description  :
-## URL          : /admin
-## Type         : Page
-dashboard:
-  title : "Snowtricks Admin"

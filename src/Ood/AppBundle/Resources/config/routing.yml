@@ -9,8 +9,3 @@
 ood_app_homepage:
     path: /page-accueil
     defaults: { _controller: OodAppBundle:Default:homepage }
-
-# Dashboard
-ood_app_dashboard:
-    path: /tableau-de-bord
-    defaults: { _controller: OodAppBundle:Default:dashboard }
