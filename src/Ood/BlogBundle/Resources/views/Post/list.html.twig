@@ -12,7 +12,7 @@
 {% block main %}
     <section id="head">
         <div class="content d-flex justify-content-center align-items-center text-center">
-            <h2>{{ 'homepage.head-title'|trans|nl2br }}</h2>
+            <h1>{{ 'homepage.head-title'|trans|nl2br }}</h1>
         </div>
         <div class="gutter">
             <a href="#figures">
@@ -28,11 +28,11 @@
                 <div id="msgNoResult">Aucun résultat</div>
             {% else %}
                 {# View with posts list #}
-                <div class="postsListContainer p-2">
+                <div class="postsListContainer">
                     <form id="searchPostsForm" action="{{ vURL }}">
                         <input type="hidden" value="{{ paginator.current_page }}" name="page" id="searchPostsForm_page">
                     </form>
-                    <div class="cards postsList d-flex flex-wrap justify-content-center justify-content-md-start">
+                    <div class="cards postsList d-flex flex-wrap justify-content-center">
                 {{ include ('@OodBlog/Post/list_content.html.twig') }}
             </div>
                 </div>

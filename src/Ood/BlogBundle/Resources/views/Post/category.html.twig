@@ -13,12 +13,8 @@
     <section id="figures" class="medias">
         <div class="content">
             <div class="container-fluid">
-                <div class="row col-12">
-                    <h2># {{ category.name|upper }}</h2>
-                    <p>
-                        {{ category.description|nl2br }}
-                    </p>
-                </div>
+                <h1># {{ category.name }}</h1>
+                <p>{{ category.description|nl2br }}</p>
             </div>
             {% if posts == false %}
                 {# View with nothing posts #}
@@ -30,7 +26,7 @@
                         <input type="hidden" value="{{ paginator.current_page }}" name="page"
                                id="searchPostsForm_page">
                     </form>
-                    <div class="cards postsList d-flex flex-wrap justify-content-center justify-content-md-start">
+                    <div class="cards postsList d-flex flex-wrap justify-content-center">
                 {{ include ('@OodBlog/Post/list_content.html.twig') }}
             </div>
                 </div>

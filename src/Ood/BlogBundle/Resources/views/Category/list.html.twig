@@ -9,49 +9,42 @@
 {% trans_default_domain 'application' %}
 {% block main %}
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>{{ 'category_list.title'|trans }}</h1>
-                <div id="cards" class="d-inline-flex flex-wrap justify-content-center">
-                    {% for category in categories %}
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ category.name }}</h5>
-                                <h6 class="card-subtitle">{{ category.posts|length }} figures</h6>
-                                <p class="card-text">{{ category.description }}</p>
-                            </div>
-                            <div class="footer text-center">
-                                <a href="{{ path('ood_blog_post_category', {'slug': category.slug} ) }}">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                            </div>
-                            {% if is_granted('ROLE_BLOGGER') %}
-                                <div class="actions">
-                                    <a href="{{ path('ood_blog_category_edit', {'slug': category.slug} ) }}">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
+        <div class="cards d-inline-flex flex-wrap justify-content-center">
+            {% for category in categories %}
+                <div class="card">
+                    <a href="{{ path('ood_blog_post_category', {'slug': category.slug} ) }}" class="card-header">
+                        <h4 class="card-title">{{ category.name }}</h4>
+                        <h5 class="card-subtitle">{{ category.posts|length }} figures</h5>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{ category.description }}</p>
+                    </div>
                     {% if is_granted('ROLE_BLOGGER') %}
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title">
-                                    UN GROUPE DE FIGURES MANQUANT ?
-                                </div>
-                                <div class="card-text">
-                                    Ajoutez-en un nouveau...
-                                </div>
-                            </div>
-                            <div class="footer text-center">
-                                <a href="{{ path('ood_blog_category_new') }}"><i
-                                            class="fa fa-plus"></i></a>
-                            </div>
+                        <div class="card-footer text-center">
+                            <a class="btn btn-sm"
+                               href="{{ path('ood_blog_category_edit', {'slug': category.slug} ) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
                         </div>
                     {% endif %}
                 </div>
-            </div>
+            {% endfor %}
+            {% if is_granted('ROLE_BLOGGER') %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            UN GROUPE DE FIGURES MANQUANT ?
+                        </div>
+                        <div class="card-text">
+                            Ajoutez-en un nouveau...
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a class="btn btn-sm" href="{{ path('ood_blog_category_new') }}"><i
+                                    class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock main %}

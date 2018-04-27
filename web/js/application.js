@@ -117,7 +117,15 @@ var image_handler = image_handler || {};
     var newForm = prototype.replace(/__name__/g, index);
     $imagePrototype.data('index', index + 1);
     // Create view form
-    var $newFormImage = $('<div class="st_card image"><img src="/web/img/image-not-found.png" alt="image-not-found" class="ing-fluid" /><a class="trash btn btn-sm btn-light" role="button" href="#"><i class="remove-card fa fa-trash-o" aria-hidden="true"></i></a><div class="input_file-container">'+ newForm + '</div></div>');
+    var $newFormImage = $('<div class="card image">' +
+      '<img src="/img/image-not-found.png" alt="image-not-found" class="card-img-top" />' +
+      '<div class="card-footer">' +
+      '<div class="btn-group f-flex">' +
+      '<a class="trash btn btn-light" role="button" href="#">' +
+      '<i class="remove-card fa fa-trash-o" aria-hidden="true"></i>' +
+      '</a>' +
+      '<div class="input_file-container w-100 flex-grow-1">' +
+      newForm + '</div></div></div></div>');
     // Display the form in the page
     $(".cards").append($newFormImage);
     picture_upload.init();
@@ -133,18 +141,14 @@ var image_handler = image_handler || {};
     var newForm = prototype.replace(/__name__/g, index);
     $videoPrototype.data('index', index + 1);
     // Create view form
-    var $newFormVideo = $('<div class="st_card video">' +
-      '<div class="embed-responsive embed-responsive-16by9 w-100"></div>' +
-      '<a class="trash btn btn-sm btn-light" role="button" href="#">' +
+    var $newFormVideo = $('<div class="card video">' +
+      '<img src="/img/image-not-found.png" alt="image-not-found" class="card-img-top" />' +
+      '<div class="card-footer">' +
+      '<div class="btn-group d-flex">' +
+      '<a class="trash btn btn-light" role="button" href="#">' +
       '<i class="remove-card fa fa-trash-o" aria-hidden="true"></i>' +
       '</a>' +
-      '<div>' +
-      '<div class="input-group">' +
-      '<div class="input-group-prepend">' +
-      '<div class="input-group-text"><i class="fa fa-external-link-square" aria-hidden="true"></i>' +
-      '</div>' +
-      '</div>' + newForm +
-      '</div>');
+      '<div class="w-100 flew-grow-1">' + newForm + '</div></div></div></div>');
     // Display the form in the page
     $(".cards").append($newFormVideo);
     picture_upload.init();
@@ -177,7 +181,7 @@ var image_handler = image_handler || {};
     // Remove image or video to the collection
     $(document).on('click', '.remove-card', function (e) {
       e.preventDefault();
-      $(this).parents('.st_card').remove();
+      $(this).parents('.card').remove();
       return false;
     });
 
@@ -300,7 +304,7 @@ var post_remove = post_remove || {};
           var jqXHR = $.get(url);
 
           jqXHR.done(function (response) {
-            scope.parents('.st_card').remove();
+            scope.parents('.card').remove();
           });
         }
         return false;

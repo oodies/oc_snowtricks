@@ -5,35 +5,34 @@
  # @since 2018/03
  #}
 {% for post in posts %}
-    <div class="st_card">
-        {% if post.images is not empty %}
-            {% set image = post.images|first %}
-            <img class="img-fluid" src="{{ asset(image.webpath) }}"
-                 alt="{{ image.alt }}">
-        {% elseif post.videos is not empty %}
-            {% set video = post.videos|first %}
-            <div class="embed-responsive embed-responsive-16by9">
-                {{ video.embed|raw }}
-            </div>
-        {% else %}
-            <img class="img-fluid" src="{{ asset('img/image-not-found.png') }}"
-                 alt="image not found">
-        {% endif %}
-        <div class="infos">
-            <div class="d-flex">
-                <a class="card-title mr-auto m-1 w-100 d-block"
-                   href="{{ path('ood_blog_post_show', {"slug" : post.header.slug} ) }}">{{ post.header.title }}</a>
-                {% if is_granted('ROLE_BLOGGER') %}
-                    <a class="btn btn-sm btn-light m-1" role="button"
-                       href="{{ path('ood_blog_post_edit', {"postId" : post.idPost} ) }}">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    </a>
-                    <a class="js-remove-post btn btn-sm btn-light m-1" role="button"
-                       href="{{ path('ood_blog_post_remove', { "postId": post.idPost } ) }} ">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </a>
-                {% endif %}
-            </div>
+    <div class="card">
+        <a href="{{ path('ood_blog_post_show', {"slug" : post.header.slug} ) }}">
+            {% if post.images is not empty %}
+                {% set image = post.images|first %}
+                <img class="card-img-top" src="{{ asset(image.webpath) }}" alt="{{ image.alt }}">
+            {% else %}
+                <img class="card-img-top" src="{{ asset('img/image-not-found.png') }}"
+                     alt="image not found">
+            {% endif %}
+        </a>
+        <div class="card-body">
+            <a href="{{ path('ood_blog_post_show', {"slug" : post.header.slug} ) }}"><h4 class="card-title">{{ post.header.title|upper }}</h4></a>
+            <p class="card-text">{{ post.header.brief }}</p>
+            <a class="card-link" href="{{ path('ood_blog_post_category', {'slug': post.category.slug} ) }}">
+                # {{ post.category.name }}
+            </a>
         </div>
+        {% if is_granted('ROLE_BLOGGER') %}
+            <div class="card-footer">
+                <a class="btn btn-sm" role="button"
+                   href="{{ path('ood_blog_post_edit', {"postId" : post.idPost} ) }}">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+                <a class="js-remove-post btn btn-sm" role="button"
+                   href="{{ path('ood_blog_post_remove', { "postId": post.idPost } ) }} ">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+            </div>
+        {% endif %}
     </div>
 {% endfor %}

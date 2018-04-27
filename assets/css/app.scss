@@ -24,6 +24,7 @@ header {
 main {
   grid-area: main;
   min-height: 100%;
+  background-color: rgba(166, 185, 204, 0.2);
   > .i-container {
     height: 100%;
   }
@@ -41,7 +42,12 @@ footer {
   }
   a {
     color: #343e40;
+    text-decoration: none;
   }
+}
+
+h1 {
+  color: #41607f;
 }
 
 :root {
@@ -139,21 +145,31 @@ footer {
  */
 section#head {
   position: relative;
-  height: 30vw;
-  background-color: #afafaf;
   // Image
   > img {
-    background-origin: border-box;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-origin: padding-box;
     background-position: center center;
     background-size: cover;
-    height: 100%;
-    width: 100%;
+    height: 50vh;
+    width: calc(16 / 9 * 50vh);
+    padding: 0.35rem;
+    border-radius: 2px;
+    background-color: #ffffff;
+    opacity: 0.5;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    @media (max-aspect-ratio: 4/3) {
+      width: calc(100vw - 1.1rem);
+      height: calc(9 / 16 * (100vw - 1.1rem));
+    }
   }
   // block actions
   > div.actions {
     position: absolute;
-    top: 1vw;
-    right: 1vw;
+    top: 1vh;
+    right: 4vw;
     z-index: 1000;
   }
   // Block titles
@@ -164,11 +180,6 @@ section#head {
     bottom: 0;
     left: 0;
     text-align: center;
-    > h3 {
-      background-color: rgba(255, 255, 255, 0.5);
-      padding: 0.8rem 1.2rem;
-      border-radius: 8px;
-    }
   }
 }
 
@@ -176,8 +187,9 @@ section#head {
  *   SECTION FIGURES
  */
 section#figures {
-  margin-top: 2rem;
+  // margin-top: 2rem;
 }
+
 /** ********************
  *   SECTION MEDIAS
  */
@@ -213,74 +225,59 @@ section#form {
 /** ********************
  *   card
  */
-.st_card {
-  position: relative;
-  background-color: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
-  border-radius: 2px;
-  width: 18rem;
-  height: 12rem;
-  margin: 0.5rem;
-  padding: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  .form-group {
-    margin-bottom: 0;
-  }
-  > .trash {
-    position: absolute;
-    top: 1vw;
-    right: 1vw;
-  }
-  img {
-    max-height: 11.5rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/** ********************
- *   card (groups)
- */
-#cards .card {
-  width: 18rem;
-  height: 12rem;
-  margin: 0.5rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
-  position: relative;
-  > .footer {
-    border-top: 1px solid #c4c4c4;
-    &:hover {
-      background-color: #c4c4c4;
+.cards {
+  .card {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+    border-radius: 2px;
+    width: 18rem;
+    margin: 0.5rem;
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      background-origin: padding-box;
+      background-position: center center;
+      background-size: cover;
+      width: 100%;
+      height: calc(9 / 16 * 100vw);
+      max-height: 10rem;
     }
-  }
-  p.card-text {
-    height: 4rem;
-    overflow: hidden;
-    white-space: normal;
-    text-overflow: ellipsis;
-  }
-  a {
-    color: #495057;
-    display: block;
-    width: 100%;
-    margin: 0.25rem;
-  }
-  .actions {
-    position: absolute;
-    top: 1vw;
-    right: 1vw;
+    a {
+      text-decoration: none;
+    }
+    .card-text {
+      white-space: normal;
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: 5rem;
+    }
+    .card-title {
+      font-family: 'Frijole', cursive;
+      color: #4160a0;
+      font-size: 1.15rem;
+    }
+    .card-footer {
+      > a.btn {
+        color: #343a40;
+        margin: 0.25rem;
+      }
+    }
   }
 }
 
 /** ***********************************
+ *  PAGE GROUPS
+ */
+#page-groups {
+  .card-text {
+    height: 10rem;
+  }
+}
+/** ***********************************
  *   UPLOAD
  */
 .input_file-container {
-  position: absolute;
-  bottom: 0.1rem;
-  left: 0.25rem;
-  right: 0.25rem;
   .input_file {
     height: 40px;
     line-height: 40px;
@@ -297,8 +294,8 @@ section#form {
     height: 40px;
     line-height: 40px;
     display: block;
-    background: #6c757d;
-    color: #ffffff;
+    background: #ffffff;
+    color: #000000;
     font-size: 1em;
     text-align: center;
     transition: all .4s;
@@ -414,10 +411,17 @@ section#form {
     background-position: center center;
     background-size: cover;
     height: 100%;
-    h2 {
+    h1 {
       font-family: 'Lobster', cursive;
       font-size: 4rem;
-      color: chocolate;
+      color: #41607f;
+    }
+  }
+
+  section#figures {
+    h1 {
+      font-family: 'Lobster', cursive;
+      color: #41607f;
     }
   }
 
@@ -429,11 +433,31 @@ section#form {
     padding-right: 1rem;
     padding-bottom: 1rem;
   }
+}
 
-  // Override
-  .st_card {
-    img {
-      max-height: 9rem;
+/** ***********************************
+ *   PAGE FIGURE (ONE)
+ */
+#page-figure {
+  section#head {
+    margin-top: 1rem;
+  }
+  h1 {
+    font-family: 'Frijole', cursive;
+  }
+}
+
+
+/** ***********************************
+ *   PAGE EDIT FIGURE
+ */
+#page-figure-edit {
+  h1 {
+    font-family: 'Frijole', cursive;
+  }
+  .card {
+    .form-group {
+      margin-bottom: 0;
     }
   }
 }

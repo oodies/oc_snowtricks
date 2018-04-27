@@ -7,12 +7,7 @@
         {# Image #}
         {% if form.images is not empty %}
             {% set image = form.images|first %}
-            <img class="" src="{{ asset(image.vars.value.webpath) }}" alt="{{ image.vars.value.alt }}">
-        {% elseif form.videos is not empty %}
-            {% set video = form.videos|first %}
-            <div class="embed-responsive embed-responsive-16by9">
-                {{ video.vars.value.embed|raw }}
-            </div>
+            <img src="{{ asset(image.vars.value.webpath) }}" alt="{{ image.vars.value.alt }}">
         {% else %}
             <img class="" src="{{ asset('img/image-not-found.png') }}" alt="image not found">
         {% endif %}
@@ -22,11 +17,13 @@
                 <i class="fa fa-eye" aria-hidden="true"></i>
             </a>
         </div>
-        <div class="titles d-flex flex-column justify-content-center align-items-center">
-            <h3>{{ form.vars.value.header.title }}</h3>
-            <h4 class="mt-4 d-none d-md-block">{{ form.vars.value.header.brief }}</h4>
+        <div class="titles text-center d-flex flex-column justify-content-end">
+            <h1>{{ form.vars.value.header.title }}</h1>
         </div>
     </section>
+    <div class="container text-center">
+        <h5 class="mt-4 text-secondary">{{ form.vars.value.header.brief }}</h5>
+    </div>
     <div class="container d-flex mx-auto">
         <button type="button" class="btn btn-info d-block d-lg-none mx-auto my-3" data-target="#medias"
                 data-toggle="collapse">{{ 'post.see_medias'|trans }}</button>
@@ -39,39 +36,40 @@
              data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"></div>
         <div class="cards d-flex flex-wrap justify-content-center">
             {% for image in form.images %}
-                <div class="st_card image">
-                    <img id="image_{{ image.vars.value.idImage }}" src="{{ asset(image.vars.value.webpath) }}"
-                         alt="{{ image.vars.value.alt }}" class="img-fluid">
-                    <a class="trash btn btn-sm btn-light" role="button"
-                       href="#">
-                        <i class="remove-card fa fa-trash-o" aria-hidden="true"></i>
-                    </a>
-                    <div class="input_file-container">
-                        {{ form_widget(image) }}
-                        {{ form_label(image) }}
-                        {{ form_errors(image) }}
+                <div class="card image">
+                    <img class="card-img-top" id="image_{{ image.vars.value.idImage }}"
+                         src="{{ asset(image.vars.value.webpath) }}"
+                         alt="{{ image.vars.value.alt }}">
+                    <div class="card-footer">
+                        <div class="btn-group d-flex">
+                            <a class="trash btn btn-light" role="button" href="#">
+                                <i class="remove-card fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
+                            <div class="input_file-container w-100 flex-grow-1">
+                                {{ form_widget(image) }}
+                                {{ form_label(image) }}
+                                {{ form_errors(image) }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
             {% for video in form.videos %}
-                <div class="st_card video">
-                    <div class="embed-responsive embed-responsive-16by9">
+                <div class="card video">
+                    <div class="card-img-top">
                         {{ video.vars.value.embed|raw }}
                     </div>
-                    <a class="trash btn btn-sm btn-light" role="button"
-                       href="#">
-                        <i class="remove-card fa fa-trash-o" aria-hidden="true"></i>
-                    </a>
-                    <div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fa fa-external-link-square"
-                                                                 aria-hidden="true"></i></div>
-                            </div>
+                    <div class="card-footer">
+                        <div class="btn-group d-flex">
+                            <a class="trash btn btn-light" role="button" href="#">
+                                <i class="remove-card fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
+                            <div class="w-100 flex-grow-1">
                             {{ form_widget(video) }}
+                            {{ form_label(video) }}
+                            {{ form_errors(video) }}
+                            </div>
                         </div>
-                        {{ form_label(video) }}
-                        {{ form_errors(video) }}
                     </div>
                 </div>
             {% endfor %}
@@ -88,7 +86,7 @@
     {{ form_rest(form) }}
     {{ form_end(form) }}
     <script>
-      $(document).ready( function() {image_handler.init();});
+      $(document).ready(function () {image_handler.init()})
     </script>
 {% endblock %}
 
