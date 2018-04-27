@@ -38,6 +38,8 @@ Groups:
                     video1:
                       platform: "youtube"
                       identifier: "f9FjhCt_w2U"
+                Pictures:
+                    - "mute_1.jpg"
             Trick2:
                 title: "Sad"
                 slug: "sad"
@@ -58,6 +60,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "KEdFwJ4SWq4"
+                Pictures:
+                    - "sad_1.jpg"
             Trick3:
                 title: "Indy"
                 slug: "indy"
@@ -88,6 +92,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "51sQRIK-TEI"
+                Pictures:
+                    - "stalefish_1.jpg"
             Trick5:
                 title: "Tail grab"
                 slug: "tail-grab"
@@ -193,6 +199,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "XyARvRQhGgk"
+                Pictures:
+                    - "180_1.jpg"
             Trick2:
                 title: "360"
                 slug: "360"
@@ -208,6 +216,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "pi1nDmLxMcY"
+                Pictures:
+                    - "360_1.jpg"
             Trick3:
                 title: "540"
                 slug: "540"
@@ -217,6 +227,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "5Oy6g8FKESo"
+                Pictures:
+                    - "540_1.jpg"
             Trick4:
                 title: "720"
                 slug: "720"
@@ -226,6 +238,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "l18w36iI9LU"
+                Pictures:
+                    - "720_1.jpg"
             Trick5:
                 title: "900"
                 slug: "900"
@@ -235,6 +249,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "8ifvMImDkew"
+                Pictures:
+                    - "900_1.jpg"
             Trick6:
                 title: "1080"
                 slug: "1080"
@@ -244,6 +260,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "camHB0Rj4gA"
+                Pictures:
+                    - "1080_1.jpg"
             Trick7:
                 title: "90"
                 slug: "90"
@@ -302,6 +320,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "H_tSuAipjWc"
+                Pictures:
+                    - "nollie_1.jpg"
             trick3:
                 title: "Switch ollie"
                 slug: "switch-ollie"
@@ -311,6 +331,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "e7SKudIEvU0"
+                Pictures:
+                    - "switch-ollie_1.jpg"
             trick4:
                 title: "Fakie ollie"
                 slug: "fakie-ollie"
@@ -321,6 +343,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "C93roGvOpPo"
+                Pictures:
+                    - "fakie-ollie_1.jpg"
             trick5:
                 title: "Ninety-ninety"
                 slug: "ninety-ninety"
@@ -331,6 +355,8 @@ Groups:
                     video1:
                         platform: "youtube"
                         identifier: "hIiM-1H0msQ"
+                Pictures:
+                    - "ninety-ninety_1.jpg"
             trick6:
                 title: "Air-to-fakie"
                 slug: "air-to-fakie"
