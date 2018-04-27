@@ -13,10 +13,6 @@
 # ###############################
 # Application bundle
 
-ood_app:
-    resource: "@OodAppBundle/Resources/config/routing.yml"
-    prefix:   /
-
 ood_blogpost:
     resource: "@OodBlogBundle/Resources/config/routing.yml"
     prefix:   /
