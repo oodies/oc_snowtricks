@@ -20,19 +20,23 @@
                     {{ form_start(form, {'attr' : {'class':'was-validated', 'novalidate':'novalidate'}} ) }}
                     <div class="form-group">
                         {{ form_widget(form.email, {'attr' : {'placeholder': 'registration.email.label' }} ) }}
-                        {{ form_label(form.email)}}
+                        {{ form_label(form.email) }}
+                        {{ form_errors(form.email) }}
                     </div>
                     <div class="form-group">
                         {{ form_widget(form.username, {'attr' : {'placeholder': 'registration.username.label' }} ) }}
                         {{ form_label(form.username) }}
+                        {{ form_errors(form.username) }}
                     </div>
                     <div class="form-group">
                         {{ form_widget(form.plainPassword.first, {'attr' : {'placeholder': 'registration.plain_password.label' }} ) }}
                         {{ form_label(form.plainPassword.first) }}
+                        {{ form_errors(form.plainPassword.first) }}
                     </div>
                     <div class="form-group">
                         {{ form_widget(form.plainPassword.second, {'attr' : {'placeholder': 'registration.plain_password_repeat.label' }} ) }}
                         {{ form_label(form.plainPassword.second) }}
+                        {{ form_errors(form.plainPassword.second) }}
                     </div>
                     {{ form_widget(form.submit, {'attr': {'class':'btn btn-lg btn-primary btn-block'}} ) }}
                     {{ form_rest(form) }}

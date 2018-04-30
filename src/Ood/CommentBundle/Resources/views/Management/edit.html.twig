@@ -16,6 +16,7 @@
     <div class="form-group">
     {{ form_widget(form.body, {attr: {'placeholder' : 'comment_edit.placeholder' }} ) }}
     {{ form_label(form.body) }}
+    {{ form_errors(form.body) }}
     </div>
     {{ form_rest(form) }}
     {{ form_end(form) }}

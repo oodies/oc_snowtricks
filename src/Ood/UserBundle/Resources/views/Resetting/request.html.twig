@@ -17,6 +17,7 @@
                 <div class="form-group">
                     {{ form_widget(form.username, {'attr' : {'placeholder' : 'resetting_request.username.label' }} ) }}
                     {{ form_label(form.username) }}
+                    {{ form_errors(form.username) }}
                 </div>
                 <div>
                     {{ form_widget(form.submit, {'attr' : {'class' : 'btn btn-primary w-100'}} ) }}
