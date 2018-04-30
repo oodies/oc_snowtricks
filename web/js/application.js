@@ -12,16 +12,12 @@ var swap_head_figures = swap_head_figures || {};
 
   privates.onClickFigures = function () {
     $("a[href='#figures']").click( function (event) {
-      $("#head").hide();
-      $("#figures").show();
       $("a[href='#head']").parent('nav').show();
     });
   }
 
   privates.onClickHead = function () {
     $("a[href='#head']").click( function (event) {
-      $("#head").show();
-      $("#figures").hide();
       $(this).parent('nav').hide();
     });
   }

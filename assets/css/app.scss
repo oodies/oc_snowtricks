@@ -383,6 +383,8 @@ section#form {
  *   PAGE FIGURES posts list
  */
 #page-figures {
+    display: inherit;
+    min-height: inherit;
   section {
     display: grid;
     width: 100%;
@@ -410,15 +412,17 @@ section#form {
     background-origin: border-box;
     background-position: center center;
     background-size: cover;
-    height: 100%;
+    height: 100vh;
     h1 {
       font-family: 'Lobster', cursive;
       font-size: 4rem;
       color: #41607f;
+      text-shadow: 3px 1px 5px #ffffff;
     }
   }
 
   section#figures {
+    padding-top: 56px;
     h1 {
       font-family: 'Lobster', cursive;
       color: #41607f;
