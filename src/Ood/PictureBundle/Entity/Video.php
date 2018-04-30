@@ -146,19 +146,19 @@ class Video
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPlatform(): string
+    public function getPlatform(): ?string
     {
         return $this->platform;
     }
 
     /**
-     * @param string $platform
+     * @param null|string $platform
      *
      * @return Video
      */
-    public function setPlatform(string $platform): Video
+    public function setPlatform(?string $platform): Video
     {
         $this->platform = $platform;
         return $this;
