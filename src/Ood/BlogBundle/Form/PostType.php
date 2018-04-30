@@ -15,6 +15,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -66,7 +68,14 @@ class PostType extends AbstractType
                     'allow_delete'  => true,
                 ]
             )
-        ;
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                [$this, 'onPreSubmit']
+            )
+            ->addEventListener(
+                FormEvents::POST_SUBMIT,
+                [$this, 'onPostSubmit']
+            );
     }
 
     /**
@@ -92,5 +101,41 @@ class PostType extends AbstractType
         parent::getBlockPrefix();
 
         return 'form_post';
+    }
+
+
+    /**
+     * @param FormEvent $formEvent
+     */
+    public function onPreSubmit(FormEvent $formEvent)
+    {
+        $post = $formEvent->getData();
+
+        if (isset($post['videos'])) {
+            foreach ($post['videos'] as $key => $video) {
+                if (empty($video['url'])) {
+                    unset($post['videos'][$key]);
+                }
+            }
+        }
+
+        $formEvent->setData($post);
+    }
+
+    /**
+     * @param FormEvent $formEvent
+     */
+    public function onPostSubmit(FormEvent $formEvent)
+    {
+        /** @var Post $post */
+        $post = $formEvent->getData();
+
+        foreach ($post->getImages() as $image) {
+            if (null === $image->getIdImage() && null === $image->getFile()) {
+                $post->removeImage($image);
+            }
+        }
+
+        $formEvent->setData($post);
     }
 }
