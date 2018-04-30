@@ -192,6 +192,8 @@ user_edit:
 user_form:
     username:
         label: "Identifiant"
+    email:
+        label: "Email"
     roles:
         label: "Roles"
     submit: "Valider"

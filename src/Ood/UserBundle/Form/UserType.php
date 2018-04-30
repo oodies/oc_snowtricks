@@ -11,6 +11,7 @@ namespace Ood\UserBundle\Form;
 use Ood\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,7 +30,6 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add(
                 'username', TextType::class,
@@ -38,6 +38,11 @@ class UserType extends AbstractType
                     'required' => true
                 ]
             )
+            ->add('email', EmailType::class,
+                ['label' => 'user_form.email.label',
+                 'required' => true
+                ]
+                )
             ->add(
                 'roles', ChoiceType::class,
                 [
@@ -73,6 +78,7 @@ class UserType extends AbstractType
             [
                 'data_class'         => User::class,
                 'translation_domain' => 'application',
+                'validation_groups'  => [$this, 'getValidationGroups']
             ]
         );
     }
@@ -83,5 +89,15 @@ class UserType extends AbstractType
     public function getBlockPrefix()
     {
         return 'ood_user_bundle_user_type';
+    }
+
+    /**
+     * Obtain validation groups according to data form
+     *
+     * @return array
+     */
+    public function getValidationGroups(): array
+    {
+        return ['edit'];
     }
 }

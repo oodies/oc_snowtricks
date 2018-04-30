@@ -25,7 +25,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *          "username"
  *     },
  *     message="user.username.unique_entity",
- *     groups={"registration"}
+ *     groups={"registration", "edit"}
  * )
  *
  * @UniqueEntity(
@@ -33,7 +33,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *          "email"
  *     },
  *     message="user.email.unique_entity",
- *     groups={"registration"}
+ *     groups={"registration", "edit"}
  * )
  */
 class User implements AdvancedUserInterface, \Serializable
@@ -138,13 +138,13 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @Assert\NotBlank(
      *     message="user.username.not_blank",
-     *     groups={"registration", "resettingRequest"}
+     *     groups={"registration", "resettingRequest", "edit", "login"}
      * )
      *
      * @Assert\Length(
      *     max=60,
      *     maxMessage="user.username.max_length",
-     *     groups={"registration","login"}
+     *     groups={"registration", "resettingRequest", "edit", "login"}
      * )
      */
     protected $username;
@@ -166,17 +166,18 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @Assert\NotBlank(
      *     message="user.email.not_blank",
-     *     groups={"registration"}
+     *     groups={"registration", "edit"}
      * )
      *
      * @Assert\Email(
      *     message="user.email.not_valid",
-     *     groups={"registration"}
+     *     groups={"registration", "edit"}
      * )
      *
      * @Assert\Length(
      *     max=60,
-     *     maxMessage="user.email.max_length"
+     *     maxMessage="user.email.max_length",
+     *     groups={"registration", "edit"}
      * )
      */
     protected $email;
