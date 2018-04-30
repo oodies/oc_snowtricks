@@ -20,6 +20,10 @@ user:
         not_blank: "Saisir un identifiant ou mail"
         max_length: "{{ limit }} caractères au maximum"
         unique_entity: "Identifiant déjà utilisé"
+    firstname:
+        max_length: "{{ limit }} caractères au maximum"
+    lastname:
+        max_length: "{{ limit }} caractères au maximum"
     plainPassword:
         not_blank: "Saisir un mot de passe"
         max_length: "{{ limit }} caractères au maximum"
