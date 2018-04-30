@@ -8,6 +8,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -17,6 +19,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProfileType extends AbstractType
 {
+    /**
+     * @var bool
+     */
+    protected $hasRemovePhoto;
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -40,11 +47,22 @@ class ProfileType extends AbstractType
             )
             ->add(
                 'photo', ImageType::class,
-                ['label' => false]
+                [
+                    'label'    => false,
+                    'required' => false
+                ]
             )
             ->add(
                 'submit', SubmitType::class,
                 ['label' => 'profile.submit.label']
+            )
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                [$this, 'onPreSubmit']
+            )
+            ->addEventListener(
+                FormEvents::POST_SUBMIT,
+                [$this, 'onPostSubmit']
             );
     }
 
@@ -69,5 +87,30 @@ class ProfileType extends AbstractType
     public function getBlockPrefix()
     {
         return 'ood_user_bundle_profile_type';
+    }
+
+
+    /**
+     * @param FormEvent $formEvent
+     */
+    public function onPreSubmit(FormEvent $formEvent)
+    {
+        $user = $formEvent->getData();
+
+        if (empty($user['photo'])) {
+            $this->hasRemovePhoto = true;
+        }
+    }
+
+    /**
+     * @param FormEvent $formEvent
+     */
+    public function onPostSubmit(FormEvent $formEvent)
+    {
+        $user = $formEvent->getData();
+
+        if ($this->hasRemovePhoto) {
+            $user->setPhoto(null);
+        }
     }
 }

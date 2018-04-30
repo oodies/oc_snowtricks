@@ -9,6 +9,7 @@
 namespace Ood\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ood\PictureBundle\Entity\Image;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -338,7 +339,8 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @ORM\OneToOne(
      *     targetEntity="Ood\PictureBundle\Entity\Image",
-     *     cascade={"persist", "remove"}
+     *     cascade={"persist", "remove"},
+     *     orphanRemoval=true
      * )
      *
      * @ORM\JoinColumn(
@@ -638,19 +640,19 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return null|\Ood\PictureBundle\Entity\Image
+     * @return null|Image
      */
-    public function getPhoto(): ?\Ood\PictureBundle\Entity\Image
+    public function getPhoto(): ?Image
     {
         return $this->photo;
     }
 
     /**
-     * @param \Ood\PictureBundle\Entity\Image $photo
+     * @param null|Image $photo
      *
      * @return User
      */
-    public function setPhoto(\Ood\PictureBundle\Entity\Image $photo): User
+    public function setPhoto(?Image $photo): User
     {
         $this->photo = $photo;
         return $this;

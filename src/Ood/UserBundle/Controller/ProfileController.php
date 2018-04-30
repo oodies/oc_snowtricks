@@ -34,8 +34,6 @@ class ProfileController extends Controller
      */
     public function editAction(Request $request, UserInterface $user): Response
     {
-        // TODO Lorsqu'il n'y a pas de données pour le formulaire alors l'objet User est affecté et on perd la connexion
-
         $form = $this->createForm(
             ProfileType::class, $user
         );

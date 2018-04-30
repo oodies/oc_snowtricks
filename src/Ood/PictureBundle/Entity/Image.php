@@ -27,7 +27,7 @@ class Image
      **/
 
     /**
-     * @var int
+     * @var null|int
      *
      * @ORM\Id()
      * @ORM\Column(
@@ -90,9 +90,9 @@ class Image
     /**
      * Get idImage
      *
-     * @return int
+     * @return null|int
      */
-    public function getIdImage(): int
+    public function getIdImage(): ?int
     {
         return $this->idImage;
     }
