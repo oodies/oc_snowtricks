@@ -12,7 +12,7 @@
 ## URL          : /comments/{threadId}
 ## Type         : subview
 comments:
-  title: "[0,0]Aucun commentaire|[1,1]Comment|[2,+Inf]Comments"
+  title: "[0,0]Aucun commentaire|[1,1]Commentaire|[2,+Inf]Commentaires"
   unknown: "Soyez le premier à poster un commentaire !"
 
 ## ************************************
