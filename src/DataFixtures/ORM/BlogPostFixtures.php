@@ -68,7 +68,7 @@ class BlogPostFixtures extends AbstractFixture implements DependentFixtureInterf
                         ->setBody($body);
 
                     if (isset($trick['Videos'])) {
-                        foreach ($trick['Videos'] as $referenceVideo) {
+                        foreach ($trick['Videos'] as $referenceVideo => $dataVideo) {
                             /** @var \Ood\PictureBundle\Entity\Video $video */
                             $video = $this->getReference(
                                 implode('-', [$referenceGroup, $referenceTrick, $referenceVideo])
